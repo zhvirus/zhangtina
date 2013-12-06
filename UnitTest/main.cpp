@@ -10,8 +10,6 @@ void main()
     vectorTestor.doTest("Vector");
     vectorTestor.endTest( "Vector" );
 
-
-
     // Pause
     system("PAUSE");
 }
