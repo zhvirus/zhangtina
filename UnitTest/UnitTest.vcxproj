@@ -21,10 +21,12 @@
   <ItemGroup>
     <ClCompile Include="BaseTestor.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MatrixTestor.cpp" />
     <ClCompile Include="VectorTestor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseTestor.h" />
+    <ClInclude Include="MatrixTestor.h" />
     <ClInclude Include="VectorTestor.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
