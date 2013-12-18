@@ -6,6 +6,20 @@
 *.exe
 *.o
 *.so
+*.obj
+*.tlog
+*.pdb
+*.idb
+*.exp
+*.ilk
+*.sdf
+*.opensdf
+*.lastbuildstate
+*.pch
+TinaWidget.lib
+TinaMath.lib
+TinaEngine.lib
+Tina.res
 
 # Packages #
 ############
