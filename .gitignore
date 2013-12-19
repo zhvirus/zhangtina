@@ -15,7 +15,10 @@
 *.sdf
 *.opensdf
 *.lastbuildstate
+*.suo
 *.pch
+*~
+*.swp
 TinaWidget.lib
 TinaMath.lib
 TinaEngine.lib
