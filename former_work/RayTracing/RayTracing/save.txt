@@ -1,0 +1,241 @@
+[POLYGON]
+VertexSet: 4
+-75 -75 -75
+75 -75 -75
+75 75 -75
+-75 75 -75
+Material: 0.3 0.3 0
+RefractRate: 1.5
+Transparency: 0
+Reflectable: 0
+HasTexture: 0
+TextureName: NULL
+[POLYGON]
+VertexSet: 4
+75 -75 -75
+75 -75 75
+75 75 75
+75 75 -75
+Material: 0 0 0.3
+RefractRate: 1.5
+Transparency: 0
+Reflectable: 0
+HasTexture: 0
+TextureName: NULL
+[POLYGON]
+VertexSet: 4
+-75 -75 75
+-75 -75 -75
+-75 75 -75
+-75 75 75
+Material: 0.2 0.5 0
+RefractRate: 1.5
+Transparency: 0
+Reflectable: 0
+HasTexture: 0
+TextureName: NULL
+[POLYGON]
+VertexSet: 4
+-75 75 75
+-75 75 -75
+75 75 -75
+75 75 75
+Material: 0 0.8 0.5
+RefractRate: 1.5
+Transparency: 0
+Reflectable: 0
+HasTexture: 0
+TextureName: NULL
+[POLYGON]
+VertexSet: 4
+-75 -75 -75
+-75 -75 75
+75 -75 75
+75 -75 -75
+Material: 0.2 0.2 0.2
+RefractRate: 1.5
+Transparency: 0
+Reflectable: 0
+HasTexture: 1
+TextureName: F:\RayTracing\e398\pic007s.jpg
+[POLYGON]
+VertexSet: 4
+-70 -40 -40
+-70 40 -40
+-70 40 40
+-70 -40 40
+Material: 0.5 0.5 0.5
+RefractRate: 1.5
+Transparency: 0
+Reflectable: 1
+HasTexture: 0
+TextureName: NULL
+[POLYGON]
+VertexSet: 4
+-50 50 -70
+-50 -50 -70
+50 -50 -70
+50 50 -70
+Material: 1 1 1
+RefractRate: 1.5
+Transparency: 0
+Reflectable: 0
+HasTexture: 1
+TextureName: f:\RayTracing\e398\13-03-05_2144.jpg
+[POLYGON]
+VertexSet: 4
+-40 20 -15
+40 20 -40
+40 -70 -40
+-40 -70 -15
+Material: 1 1 1
+RefractRate: 1.5
+Transparency: 1
+Reflectable: 0
+HasTexture: 0
+TextureName: NULL
+[POLYGON]
+VertexSet: 4
+-40 -70 -20
+-40 20 -20
+40 20 -45
+40 -70 -45
+Material: 1 1 1
+RefractRate: 1.5
+Transparency: 1
+Reflectable: 0
+HasTexture: 0
+TextureName: NULL
+[POLYGON]
+VertexSet: 4
+-40 20 -20
+40 20 -45
+40 20 -40
+-40 20 -15
+Material: 0.2 0.2 0.2
+RefractRate: 1.5
+Transparency: 0
+Reflectable: 0
+HasTexture: 0
+TextureName: NULL
+[POLYGON]
+VertexSet: 4
+-40 -70 -20
+40 -70 -45
+40 -70 -40
+-40 -70 -15
+Material: 0.2 0.2 0.2
+RefractRate: 1.5
+Transparency: 0
+Reflectable: 0
+HasTexture: 0
+TextureName: NULL
+[POLYGON]
+VertexSet: 4
+-40 20 -15
+-40 20 -20
+-40 -70 -20
+-40 -70 -15
+Material: 0.2 0.2 0.2
+RefractRate: 1.5
+Transparency: 0
+Reflectable: 0
+HasTexture: 0
+TextureName: NULL
+[POLYGON]
+VertexSet: 4
+40 20 -45
+40 20 -40
+40 -70 -40
+40 -70 -45
+Material: 0.2 0.2 0.2
+RefractRate: 1.5
+Transparency: 0
+Reflectable: 0
+HasTexture: 0
+TextureName: NULL
+[SPHERE]
+Center: 20 -30 40
+Radius: 20
+Material: 1 1 1
+RefractRate: 1.5
+Transparency: 1
+Reflectable: 0
+[SPHERE]
+Center: -30 -50 40
+Radius: 20
+Material: 1 1 1
+RefractRate: 1.5
+Transparency: 1
+Reflectable: 0
+[POLYGON]
+VertexSet: 4
+70 50 -50
+70 -50 -50
+70 -50 50
+70 50 50
+Material: 0.5 0.5 0.5
+RefractRate: 1.5
+Transparency: 0
+Reflectable: 1
+HasTexture: 0
+TextureName: NULL
+[POLYGON]
+VertexSet: 3
+40 -70 50
+70 -70 50
+50 -70 70
+Material: 1 0 0
+RefractRate: 1.5
+Transparency: 0
+Reflectable: 0
+HasTexture: 0
+TextureName: NULL
+[POLYGON]
+VertexSet: 3
+50 0 60
+50 -70 70
+40 -70 50
+Material: 1 0 0
+RefractRate: 1.5
+Transparency: 0
+Reflectable: 0
+HasTexture: 0
+TextureName: NULL
+[POLYGON]
+VertexSet: 3
+50 0 60
+50 -70 70
+70 -70 50
+Material: 1 0 0
+RefractRate: 1.5
+Transparency: 0
+Reflectable: 0
+HasTexture: 0
+TextureName: NULL
+[POLYGON]
+VertexSet: 3
+50 0 60
+40 -70 50
+70 -70 50
+Material: 1 0 0
+RefractRate: 1.5
+Transparency: 0
+Reflectable: 0
+HasTexture: 0
+TextureName: NULL
+[POINTLIGHT]
+Postion: -70 70 0
+Color: 255 255 255 255
+Attenuation: 1 0.0001 0
+Coefficient(ka,kd,ks): 1 1 1
+[POINTLIGHT]
+Postion: 70 70 0
+Color: 255 255 255 255
+Attenuation: 1 0.0001 0
+Coefficient(ka,kd,ks): 1 1 1
+[POINTLIGHT]
+Postion: 0 70 0
+Color: 255 255 255 255
+Attenuation: 1 0.0001 0
+Coefficient(ka,kd,ks): 1 1 1

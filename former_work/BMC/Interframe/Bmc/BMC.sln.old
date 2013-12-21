@@ -1,0 +1,53 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ArcBall", "..\ArcBall\ArcBall.vcproj", "{B6207FEC-C477-4B12-9953-210DEA2906A1}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Bmc", "Bmc.vcproj", "{68B66742-51B6-4052-BB7C-87C7319498AF}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Bsp Basic", "..\Bsp Basic\Bsp Basic.vcproj", "{9ABDF37B-CC9B-4960-B296-38C875B8DEAB}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MCRT test", "..\MCRT\MCRT.vcproj", "{77858819-DAE8-4864-BBEB-9635E2373168}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PhotonMap", "..\PhotonMap\PhotonMap.vcproj", "{6C021BB4-439A-4791-AA71-91355CFB97A7}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{B6207FEC-C477-4B12-9953-210DEA2906A1}.Debug.ActiveCfg = Debug|Win32
+		{B6207FEC-C477-4B12-9953-210DEA2906A1}.Debug.Build.0 = Debug|Win32
+		{B6207FEC-C477-4B12-9953-210DEA2906A1}.Release.ActiveCfg = Release|Win32
+		{B6207FEC-C477-4B12-9953-210DEA2906A1}.Release.Build.0 = Release|Win32
+		{68B66742-51B6-4052-BB7C-87C7319498AF}.Debug.ActiveCfg = Debug|Win32
+		{68B66742-51B6-4052-BB7C-87C7319498AF}.Debug.Build.0 = Debug|Win32
+		{68B66742-51B6-4052-BB7C-87C7319498AF}.Release.ActiveCfg = Release|Win32
+		{68B66742-51B6-4052-BB7C-87C7319498AF}.Release.Build.0 = Release|Win32
+		{9ABDF37B-CC9B-4960-B296-38C875B8DEAB}.Debug.ActiveCfg = Debug|Win32
+		{9ABDF37B-CC9B-4960-B296-38C875B8DEAB}.Debug.Build.0 = Debug|Win32
+		{9ABDF37B-CC9B-4960-B296-38C875B8DEAB}.Release.ActiveCfg = Release|Win32
+		{9ABDF37B-CC9B-4960-B296-38C875B8DEAB}.Release.Build.0 = Release|Win32
+		{77858819-DAE8-4864-BBEB-9635E2373168}.Debug.ActiveCfg = Debug|Win32
+		{77858819-DAE8-4864-BBEB-9635E2373168}.Debug.Build.0 = Debug|Win32
+		{77858819-DAE8-4864-BBEB-9635E2373168}.Release.ActiveCfg = Release|Win32
+		{77858819-DAE8-4864-BBEB-9635E2373168}.Release.Build.0 = Release|Win32
+		{6C021BB4-439A-4791-AA71-91355CFB97A7}.Debug.ActiveCfg = Debug|Win32
+		{6C021BB4-439A-4791-AA71-91355CFB97A7}.Debug.Build.0 = Debug|Win32
+		{6C021BB4-439A-4791-AA71-91355CFB97A7}.Release.ActiveCfg = Release|Win32
+		{6C021BB4-439A-4791-AA71-91355CFB97A7}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal
