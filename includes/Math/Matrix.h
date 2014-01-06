@@ -11,6 +11,7 @@
         ZH_TEMPLATE_DLL template ZH_DLL bool operator == ( CLASS, const Matrix<CLASS>& ); \
         ZH_TEMPLATE_DLL template ZH_DLL bool operator != ( const CLASS* const, const Matrix<CLASS>& ); \
         ZH_TEMPLATE_DLL template ZH_DLL bool operator != ( CLASS, const Matrix<CLASS>& );
+
 #endif
 
 namespace ZH{
@@ -24,10 +25,13 @@ namespace ZH{
             Matrix( const Matrix& );
             Matrix( const T* const );
             Matrix( T );
+            Matrix( T,T,T,T,
+                    T,T,T,T,
+                    T,T,T,T,
+                    T,T,T,T);
 
             // inline
             inline T& operator [](unsigned int i){ return v[i];}
-            inline T& operator [][](unsigned int i,unsigned int j){ return v[i*4+j];}
 
             // =
             Matrix& operator = ( const Matrix& );
@@ -63,18 +67,22 @@ namespace ZH{
             void identityIt();
             void transposeIt();
             bool inverseIt();
-            bool inverseMatrix( Matrix& )const;
-            
-            bool isDiagonal()const;
-            bool isUpperTriangular()const;
-            bool isLowerTriangular()const;
+            Matrix transposeMatrix()const;
+            Matrix inverseMatrix()const;    
             bool isIdentity()const;
-            bool isInvertible()const;
-            bool isOrthogonal()const;
+            Matrix<T> Matrix<T>::adjoint() const;
+            T determinant() const;
 
-            T traceValue()const;
         public:
-            T v[16];
+            static const Matrix<T> ZERO;
+            static const Matrix<T> IDENTITY;
+            union{
+                T v[16];
+                T _v[4][4];
+            };
+
+        static T MINOR(const Matrix<T>&, int,int,int,int,int,int);
+            
         };
 
         // ==
@@ -91,6 +99,8 @@ namespace ZH{
         // Exports
         common_matrix_export_defines( float,  matrix_f );
         common_matrix_export_defines( double, matrix_d );
+
+        float4 operator* (const float4&, const matrix_f&);
     }
 } // namespace ZH
 
