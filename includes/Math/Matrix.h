@@ -96,11 +96,7 @@ namespace ZH{
         template <class T>
         bool operator != ( T, const Matrix<T>& );
 
-        // Exports
-        common_matrix_export_defines( float,  matrix_f );
-        common_matrix_export_defines( double, matrix_d );
-
-        float4 operator* (const float4&, const matrix_f&);
+ 
     }
 } // namespace ZH
 

@@ -18,12 +18,18 @@
     <ClCompile Include="VectorTestor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MatrixTestor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseTestor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="VectorTestor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MatrixTestor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

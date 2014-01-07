@@ -17,6 +17,7 @@
 *.lastbuildstate
 *.suo
 *.pch
+*.filters
 *~
 *.swp
 TinaWidget.lib

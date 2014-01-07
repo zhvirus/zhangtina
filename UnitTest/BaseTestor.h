@@ -11,7 +11,7 @@ namespace ZH{
             virtual void endTest(const std::string&);
             virtual void doTest(const std::string&);
 
-            void printResult(bool, const std::string&);
+            void printResult(bool, const unsigned int);
         };
 
 

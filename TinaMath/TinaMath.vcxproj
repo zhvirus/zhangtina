@@ -19,17 +19,33 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Double2.cpp" />
+    <ClCompile Include="src\Double3.cpp" />
+    <ClCompile Include="src\Double4.cpp" />
+    <ClCompile Include="src\Float2.cpp" />
+    <ClCompile Include="src\Float3.cpp" />
+    <ClCompile Include="src\Float4.cpp" />
+    <ClCompile Include="src\Int2.cpp" />
+    <ClCompile Include="src\Int3.cpp" />
+    <ClCompile Include="src\Int4.cpp" />
     <ClCompile Include="src\Matrix.cpp" />
-    <ClCompile Include="src\Vector2.cpp" />
-    <ClCompile Include="src\Vector3.cpp" />
-    <ClCompile Include="src\Vector4.cpp" />
+    <ClCompile Include="src\Matrix4x4_d.cpp" />
+    <ClCompile Include="src\Matrix4x4_f.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\includes\Math\Double2.h" />
+    <ClInclude Include="..\includes\Math\Double3.h" />
+    <ClInclude Include="..\includes\Math\Double4.h" />
+    <ClInclude Include="..\includes\Math\Float2.h" />
+    <ClInclude Include="..\includes\Math\Float3.h" />
+    <ClInclude Include="..\includes\Math\Float4.h" />
+    <ClInclude Include="..\includes\Math\Int2.h" />
+    <ClInclude Include="..\includes\Math\Int3.h" />
+    <ClInclude Include="..\includes\Math\Int4.h" />
     <ClInclude Include="..\includes\Math\MathCommon.h" />
     <ClInclude Include="..\includes\Math\Matrix.h" />
-    <ClInclude Include="..\includes\Math\Vector2.h" />
-    <ClInclude Include="..\includes\Math\Vector3.h" />
-    <ClInclude Include="..\includes\Math\Vector4.h" />
+    <ClInclude Include="..\includes\Math\Matrix4x4_d.h" />
+    <ClInclude Include="..\includes\Math\Matrix4x4_f.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{303AFDA7-1F72-4D80-BFF1-1CC86BCB939D}</ProjectGuid>

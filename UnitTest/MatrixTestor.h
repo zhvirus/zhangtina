@@ -13,7 +13,8 @@ namespace ZH{
             virtual void endTest(const std::string&);
             virtual void doTest(const std::string&);
         private:
-            void testMatrix();
+            void testMatrix4x4_f();
+            void testMatrix4x4_d();
         };
     }
 }

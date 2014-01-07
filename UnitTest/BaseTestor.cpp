@@ -1,5 +1,6 @@
 #include "BaseTestor.h"
 #include <iostream>
+#include <stdio.h>
 
 namespace ZH{
     namespace TEST{
@@ -20,12 +21,15 @@ namespace ZH{
 
         }
 
-        void BaseTestor::printResult(bool b, const std::string& s)
+        void BaseTestor::printResult(bool b, const unsigned int index)
         {
+            char index_str[50];
+            sprintf_s(index_str,50,"%d",index);
+
             if ( b ){
-                std::cout<<"["<<s<<"]"<<"   ......   PASSED."<<std::endl;
+                std::cout<<"["<<index_str<<"]"<<"   ......   PASSED."<<std::endl;
             }else{
-                std::cout<<"'"<<s<<"'"<<"   ......   FAILED=========>!!"<<std::endl;
+                std::cout<<"["<<index_str<<"]"<<"   ......   FAILED========>!!!."<<std::endl;
             }
         }
 
