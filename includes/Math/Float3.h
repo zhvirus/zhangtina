@@ -9,11 +9,15 @@ namespace ZH{
 
         class ZH_DLL float3{
         public:
+#pragma warning( push )
+#pragma warning( disable : 4201 )
             union {
                 struct{float x;float y;float z;};
                 struct{float r;float g;float b;};
                 float val[3];
             };
+#pragma warning( pop ) 
+
         public:
             float3();
             float3( float, float, float);

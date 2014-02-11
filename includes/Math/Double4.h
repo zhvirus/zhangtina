@@ -9,11 +9,15 @@ namespace ZH{
 
         class ZH_DLL double4{
         public:
+#pragma warning( push )
+#pragma warning( disable : 4201 )
             union {
                 struct{double x;double y;double z;double w;};
                 struct{double r;double g;double b;double a;};
                 double val[4];
             };
+#pragma warning( pop ) 
+
         public:
             double4();
             double4( double, double, double, double);
