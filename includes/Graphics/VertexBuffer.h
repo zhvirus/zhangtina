@@ -7,7 +7,7 @@
 namespace ZH{
     namespace Graphics{
 
-        class ZH_DLL VertexBuffer: public Resource
+        class ZH_GRAPHICS_DLL VertexBuffer: public Resource
         {
         public:
             VertexBuffer();

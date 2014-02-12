@@ -9,7 +9,7 @@ namespace ZH{
         // Forwards
         class double4;
 
-        class ZH_DLL matrix4x4_d{
+        class ZH_MATH_DLL matrix4x4_d{
         public:
             ~matrix4x4_d(){}
             matrix4x4_d();
@@ -85,14 +85,14 @@ namespace ZH{
         };
 
         // ==
-        ZH_DLL bool operator == ( const double* const, const matrix4x4_d& );
-        ZH_DLL bool operator == ( double, const matrix4x4_d& );
+        ZH_MATH_DLL bool operator == ( const double* const, const matrix4x4_d& );
+        ZH_MATH_DLL bool operator == ( double, const matrix4x4_d& );
         // !=
-        ZH_DLL bool operator != ( const double* const, const matrix4x4_d& );
-        ZH_DLL bool operator != ( double, const matrix4x4_d& );
+        ZH_MATH_DLL bool operator != ( const double* const, const matrix4x4_d& );
+        ZH_MATH_DLL bool operator != ( double, const matrix4x4_d& );
  
         // matrix4x4_d * double4
-        ZH_DLL double4 operator * (const matrix4x4_d&, const double4&);
+        ZH_MATH_DLL double4 operator * (const matrix4x4_d&, const double4&);
     }
 } // namespace ZH
 

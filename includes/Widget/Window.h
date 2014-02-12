@@ -8,7 +8,7 @@
 
 namespace ZH{
     namespace Widgets{
-        class ZH_DLL WindowsInfo
+        class ZH_WIDGET_DLL WindowsInfo
         {
         public:
             WindowsInfo();
@@ -21,7 +21,7 @@ namespace ZH{
             TCHAR        fWndTitle[100];
         };
 
-        class ZH_DLL Window
+        class ZH_WIDGET_DLL Window
         {
         public:
             static Window* CreateZHWindow(

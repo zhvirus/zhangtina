@@ -1,13 +1,31 @@
 #ifndef ZH_STD_H
 #define ZH_STD_H
 
-#ifdef _ZH_DLL_
-#define ZH_DLL _declspec(dllexport)
-#define ZH_TEMPLATE_DLL
+#ifdef _ZH_GRAPHICS_DLL_
+#define ZH_GRAPHICS_DLL _declspec(dllexport)
+#define ZH_GRAPHICS_EXTERN
 #else
-#define ZH_DLL _declspec(dllimport)
-#define ZH_TEMPLATE_DLL extern
+#define ZH_GRAPHICS_DLL _declspec(dllimport)
+#define ZH_GRAPHICS_EXTERN extern
 #endif
+
+#ifdef _ZH_MATH_DLL_
+#define ZH_MATH_DLL _declspec(dllexport)
+#define ZH_MATH_EXTERN
+#else
+#define ZH_MATH_DLL _declspec(dllimport)
+#define ZH_MATH_EXTERN extern
+#endif
+
+#ifdef _ZH_WIGET_DLL_
+#define ZH_WIDGET_DLL _declspec(dllexport)
+#define ZH_WIDGET_EXTERN
+#else
+#define ZH_WIDGET_DLL _declspec(dllimport)
+#define ZH_WIDGET_EXTERN extern
+#endif
+
+
 
 #ifndef NULL
 #define NULL 0

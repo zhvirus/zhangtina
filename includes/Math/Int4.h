@@ -7,7 +7,7 @@
 namespace ZH{
     namespace Math{
 
-        class ZH_DLL int4{
+        class ZH_MATH_DLL int4{
         public:
 #pragma warning( push )
 #pragma warning( disable : 4201 )
@@ -62,42 +62,42 @@ namespace ZH{
         }; // class int4
 
         // ==
-        ZH_DLL bool operator == ( const int* const, const int4& );
+        ZH_MATH_DLL bool operator == ( const int* const, const int4& );
 
         // !=
-        ZH_DLL bool operator != ( const int* const, const int4& );
+        ZH_MATH_DLL bool operator != ( const int* const, const int4& );
 
         // +
-        ZH_DLL int4 operator + ( const int* const, const int4& );
+        ZH_MATH_DLL int4 operator + ( const int* const, const int4& );
 
-        ZH_DLL int4 operator + ( const int&, const int4& );
+        ZH_MATH_DLL int4 operator + ( const int&, const int4& );
 
         // -
-        ZH_DLL int4 operator - ( const int* const, const int4& );
+        ZH_MATH_DLL int4 operator - ( const int* const, const int4& );
 
-        ZH_DLL int4 operator - ( const int&, const int4& );
+        ZH_MATH_DLL int4 operator - ( const int&, const int4& );
 
         // *
-        ZH_DLL int4 operator * ( const int* const, const int4& );
+        ZH_MATH_DLL int4 operator * ( const int* const, const int4& );
 
-        ZH_DLL int4 operator * ( const int&, const int4& );
+        ZH_MATH_DLL int4 operator * ( const int&, const int4& );
 
         // /
-        ZH_DLL int4 operator / ( const int* const, const int4& );
+        ZH_MATH_DLL int4 operator / ( const int* const, const int4& );
 
-        ZH_DLL int4 operator / ( const int&, const int4& );
+        ZH_MATH_DLL int4 operator / ( const int&, const int4& );
 
         // +=
-        ZH_DLL void operator += ( int* const, const int4& );
+        ZH_MATH_DLL void operator += ( int* const, const int4& );
 
         // -=
-        ZH_DLL void operator -= ( int* const, const int4& );
+        ZH_MATH_DLL void operator -= ( int* const, const int4& );
 
         // *=
-        ZH_DLL void operator *= ( int* const, const int4& );
+        ZH_MATH_DLL void operator *= ( int* const, const int4& );
 
         // /=
-        ZH_DLL void operator /= ( int* const, const int4& );
+        ZH_MATH_DLL void operator /= ( int* const, const int4& );
 
 
     } // namespace Math

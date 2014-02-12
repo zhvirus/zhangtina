@@ -6,7 +6,7 @@
 namespace ZH {
     namespace Graphics{
 
-        class ZH_DLL World
+        class ZH_GRAPHICS_DLL World
         {
         public:
             static World* instance(){static World w; return &w;}

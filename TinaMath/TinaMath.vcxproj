@@ -28,6 +28,7 @@
     <ClCompile Include="src\Int2.cpp" />
     <ClCompile Include="src\Int3.cpp" />
     <ClCompile Include="src\Int4.cpp" />
+    <ClCompile Include="src\MathCommon.cpp" />
     <ClCompile Include="src\Matrix.cpp" />
     <ClCompile Include="src\Matrix4x4_d.cpp" />
     <ClCompile Include="src\Matrix4x4_f.cpp" />

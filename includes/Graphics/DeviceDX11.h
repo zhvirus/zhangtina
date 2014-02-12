@@ -7,7 +7,7 @@
 namespace ZH{
     namespace Graphics{
 
-        class ZH_DLL DeviceDX11 : public Device
+        class ZH_GRAPHICS_DLL DeviceDX11 : public Device
         {
         public:
             static DeviceDX11* instance(){static DeviceDX11 d; return &d;}

@@ -1,5 +1,5 @@
-#ifndef _ZH_DLL_
-#define _ZH_DLL_
+#ifndef _ZH_GRAPHICS_DLL_
+#define _ZH_GRAPHICS_DLL_
 #endif
 
 #include "Graphics/Caches.h"

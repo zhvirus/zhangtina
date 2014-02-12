@@ -64,12 +64,12 @@ namespace ZH{
         //******************************************
         // ResourceCaches
         //******************************************
-        ZH_TEMPLATE_DLL template class ZH_DLL Cache<Texture2D>;
-        ZH_TEMPLATE_DLL template class ZH_DLL Cache<VertexBuffer>;
-        ZH_TEMPLATE_DLL template class ZH_DLL Cache<IndexBuffer>;
-        ZH_TEMPLATE_DLL template class ZH_DLL Cache<EffectInstance>;
+        ZH_GRAPHICS_EXTERN template class ZH_GRAPHICS_DLL Cache<Texture2D>;
+        ZH_GRAPHICS_EXTERN template class ZH_GRAPHICS_DLL Cache<VertexBuffer>;
+        ZH_GRAPHICS_EXTERN template class ZH_GRAPHICS_DLL Cache<IndexBuffer>;
+        ZH_GRAPHICS_EXTERN template class ZH_GRAPHICS_DLL Cache<EffectInstance>;
 
-        class ZH_DLL ResourceCaches
+        class ZH_GRAPHICS_DLL ResourceCaches
         {
         public:
             static ResourceCaches& Instance(){ static ResourceCaches r; return r; }

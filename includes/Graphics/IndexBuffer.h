@@ -7,7 +7,7 @@
 namespace ZH{
     namespace Graphics{
 
-        class ZH_DLL IndexBuffer: public Resource
+        class ZH_GRAPHICS_DLL IndexBuffer: public Resource
         {
         public:
             IndexBuffer();

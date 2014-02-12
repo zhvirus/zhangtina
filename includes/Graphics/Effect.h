@@ -7,7 +7,7 @@
 namespace ZH{
     namespace Graphics{
 
-        class ZH_DLL Effect: public Resource
+        class ZH_GRAPHICS_DLL Effect: public Resource
         {
         public:
             Effect();
@@ -19,7 +19,7 @@ namespace ZH{
             CLASS_TYPE_NAME_DECLEARATION
         };
 
-        class ZH_DLL EffectInstance: public Resource
+        class ZH_GRAPHICS_DLL EffectInstance: public Resource
         {
         public:
             EffectInstance();

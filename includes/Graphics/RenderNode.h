@@ -11,7 +11,7 @@ namespace ZH{
         class VertexBuffer;
         class EffectInstance;
 
-        class ZH_DLL RenderNode : public Resource
+        class ZH_GRAPHICS_DLL RenderNode : public Resource
         {
         public:
             RenderNode();

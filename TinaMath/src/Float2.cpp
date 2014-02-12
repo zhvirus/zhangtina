@@ -1,5 +1,5 @@
-#ifndef _ZH_DLL_
-#define _ZH_DLL_
+#ifndef _ZH_MATH_DLL_
+#define _ZH_MATH_DLL_
 #endif
 #include "Math/Float2.h"
 #include <math.h>

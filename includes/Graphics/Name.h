@@ -6,7 +6,7 @@
 
 namespace ZH{
     namespace Graphics{
-        class ZH_DLL Name
+        class ZH_GRAPHICS_DLL Name
         {
         public:
             Name();

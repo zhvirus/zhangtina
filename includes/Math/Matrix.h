@@ -5,12 +5,12 @@
 
 #ifndef common_matrix_export_defines
 #define common_matrix_export_defines( CLASS, CLASS_MATRIX ) \
-        ZH_TEMPLATE_DLL template class ZH_DLL Matrix<CLASS> ; \
+        ZH_MATH_EXTERN template class ZH_MATH_DLL Matrix<CLASS> ; \
         typedef Matrix<CLASS> CLASS_MATRIX; \
-        ZH_TEMPLATE_DLL template ZH_DLL bool operator == ( const CLASS* const, const Matrix<CLASS>& ); \
-        ZH_TEMPLATE_DLL template ZH_DLL bool operator == ( CLASS, const Matrix<CLASS>& ); \
-        ZH_TEMPLATE_DLL template ZH_DLL bool operator != ( const CLASS* const, const Matrix<CLASS>& ); \
-        ZH_TEMPLATE_DLL template ZH_DLL bool operator != ( CLASS, const Matrix<CLASS>& );
+        ZH_MATH_EXTERN template ZH_MATH_DLL bool operator == ( const CLASS* const, const Matrix<CLASS>& ); \
+        ZH_MATH_EXTERN template ZH_MATH_DLL bool operator == ( CLASS, const Matrix<CLASS>& ); \
+        ZH_MATH_EXTERN template ZH_MATH_DLL bool operator != ( const CLASS* const, const Matrix<CLASS>& ); \
+        ZH_MATH_EXTERN template ZH_MATH_DLL bool operator != ( CLASS, const Matrix<CLASS>& );
 
 #endif
 

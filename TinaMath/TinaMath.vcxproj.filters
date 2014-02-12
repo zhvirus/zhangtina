@@ -45,6 +45,9 @@
     <ClCompile Include="src\Matrix4x4_f.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\MathCommon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\includes\Math\Matrix.h">

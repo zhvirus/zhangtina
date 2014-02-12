@@ -7,7 +7,7 @@
 namespace ZH{
     namespace Math{
 
-        class ZH_DLL float2{
+        class ZH_MATH_DLL float2{
         public:
 #pragma warning( push )
 #pragma warning( disable : 4201 )
@@ -58,29 +58,29 @@ namespace ZH{
         };
 
         // ==
-        ZH_DLL bool operator == ( const float* const, const float2& );
+        ZH_MATH_DLL bool operator == ( const float* const, const float2& );
         // !=
-        ZH_DLL bool operator != ( const float* const, const float2& );
+        ZH_MATH_DLL bool operator != ( const float* const, const float2& );
         // +
-        ZH_DLL float2 operator + ( const float* const, const float2& );
-        ZH_DLL float2 operator + ( const float&, const float2& );
+        ZH_MATH_DLL float2 operator + ( const float* const, const float2& );
+        ZH_MATH_DLL float2 operator + ( const float&, const float2& );
         // -
-        ZH_DLL float2 operator - ( const float* const, const float2& );
-        ZH_DLL float2 operator - ( const float&, const float2& );
+        ZH_MATH_DLL float2 operator - ( const float* const, const float2& );
+        ZH_MATH_DLL float2 operator - ( const float&, const float2& );
         // *
-        ZH_DLL float2 operator * ( const float* const, const float2& );
-        ZH_DLL float2 operator * ( const float&, const float2& );
+        ZH_MATH_DLL float2 operator * ( const float* const, const float2& );
+        ZH_MATH_DLL float2 operator * ( const float&, const float2& );
         // /
-        ZH_DLL float2 operator / ( const float* const, const float2& );
-        ZH_DLL float2 operator / ( const float&, const float2& );
+        ZH_MATH_DLL float2 operator / ( const float* const, const float2& );
+        ZH_MATH_DLL float2 operator / ( const float&, const float2& );
         // +=
-        ZH_DLL void operator += ( float* const, const float2& );
+        ZH_MATH_DLL void operator += ( float* const, const float2& );
         // -=
-        ZH_DLL void operator -= ( float* const, const float2& );
+        ZH_MATH_DLL void operator -= ( float* const, const float2& );
         // *=
-        ZH_DLL void operator *= ( float* const, const float2& );
+        ZH_MATH_DLL void operator *= ( float* const, const float2& );
         // /=
-        ZH_DLL void operator /= ( float* const, const float2& );
+        ZH_MATH_DLL void operator /= ( float* const, const float2& );
 
     }
 } // namespace ZH

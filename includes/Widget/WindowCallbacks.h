@@ -7,7 +7,7 @@
 namespace ZH{
     namespace Widgets{
 
-        class ZH_DLL WindowCallbacks
+        class ZH_WIDGET_DLL WindowCallbacks
         {
         public:
             typedef void    (*LPRESHAPE)        (int,int);                  // Window resize

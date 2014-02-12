@@ -9,7 +9,7 @@ namespace ZH{
     namespace Graphics{
 
         // Describes multi-sampling parameters for a resource
-        class ZH_DLL TEX2D_SAMPLE_DESC {
+        class ZH_GRAPHICS_DLL TEX2D_SAMPLE_DESC {
         public:
             TEX2D_SAMPLE_DESC(unsigned int c, unsigned int q):
                 Count(c),Quality(q){}
@@ -22,7 +22,7 @@ namespace ZH{
             // ID3D10Device::CheckMultisampleQualityLevels.
         };
 
-        class ZH_DLL TEX2D_DESC
+        class ZH_GRAPHICS_DLL TEX2D_DESC
         {
         public:
             TEX2D_DESC():
@@ -48,7 +48,7 @@ namespace ZH{
             unsigned int        MiscFlags;
         };
 
-        class ZH_DLL Texture2D : public Resource
+        class ZH_GRAPHICS_DLL Texture2D : public Resource
         {
         public:
             Texture2D();

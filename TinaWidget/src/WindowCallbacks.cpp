@@ -1,5 +1,5 @@
-#ifndef _ZH_DLL_
-#define _ZH_DLL_
+#ifndef _ZH_WIGET_DLL_
+#define _ZH_WIGET_DLL_
 #endif
 #include "Widget/WindowCallbacks.h"
 
