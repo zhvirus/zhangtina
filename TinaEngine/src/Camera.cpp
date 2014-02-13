@@ -128,7 +128,7 @@ namespace ZH{
 
         CameraPersp::CameraPersp():
             Camera(),
-            m_fovy( Math::COM_MATH::PI/3.0f ),
+            m_fovy( Math::PI/3.0f ),
             m_aspect( 1.0f ),
             m_nearZ( 0.1f ),
             m_farZ( 50000.0f )

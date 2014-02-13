@@ -6,7 +6,7 @@
 
 namespace ZH{
     namespace Math{
-        const float COM_MATH::PI = 3.1415926f;
+        const float PI = 3.1415926f;
 
 
     }

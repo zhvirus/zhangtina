@@ -22,12 +22,7 @@ namespace ZH{
         ZH_MATH_EXTERN template ZH_MATH_DLL void VALUE_SWAP( int& a, int& b );
         ZH_MATH_EXTERN template ZH_MATH_DLL void VALUE_SWAP( unsigned int& a, unsigned int& b );
 
-        class ZH_MATH_DLL COM_MATH
-        {
-        public:
-            static const float PI;
-        };
-
+        extern ZH_MATH_DLL const float PI;
     }
 } // namespace ZH
 
