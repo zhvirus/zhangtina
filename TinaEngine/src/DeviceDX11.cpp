@@ -3,6 +3,8 @@
 #endif
 #include "Graphics/DeviceDX11.h"
 #include "Internal/Graphics/DeviceDX11Imp.h"
+#include "Graphics/Texture2D.h"
+#include "Graphics/RenderTarget.h"
 
 #define IMP_PTR ((ZH::Graphics::DeviceDX11Imp*)m_pImp)
 
@@ -54,5 +56,48 @@ namespace ZH{
 
             return true;
         }
+
+        bool DeviceDX11::createRenderTarget( Texture2D* tex2d, RenderTarget** rt )
+        {
+            if( !tex2d ){
+                return false;
+            }
+
+            ID3D11Texture2D* tex2d_d3d = NULL;
+            tex2d_d3d = tex2d->getTex();
+            if( !tex2d_d3d ){
+                return false;
+            }
+
+            ID3D11RenderTargetView* rtv_d3d = NULL;
+
+            ID3D11Device* device_d3d = IMP_PTR->m_pDevice;
+            if( !device_d3d ){
+                return false;
+            }
+
+            HRESULT hr = S_OK;
+            hr = device_d3d->CreateRenderTargetView( tex2d_d3d, NULL, &rtv_d3d );
+
+            if ( FAILED(hr) ){
+                return false;
+            }
+
+            *rt = new RenderTarget( tex2d, rtv_d3d );
+
+            return true;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }

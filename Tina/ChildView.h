@@ -44,5 +44,8 @@ public:
     afx_msg void OnSize(UINT nType, int cx, int cy);
 private:
     ZH::Graphics::Device* m_pDevice;
+public:
+    int startDevice(void);
+    int createDefaultRenderFragment(void);
 };
 

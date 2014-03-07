@@ -11,7 +11,7 @@ namespace ZH {
         public:
             Resource();
             virtual ~Resource();
-            virtual bool isValid() = 0;
+            virtual bool isValid() { return false; };
         protected:
 
         };

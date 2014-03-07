@@ -2,7 +2,7 @@
 #define _ZH_GRAPHICS_DLL_
 #endif
 #include "Graphics/Texture2D.h"
-#include "Internal/Common/internal_common.h"
+
 
 namespace ZH{
     namespace Graphics{

@@ -4,6 +4,7 @@
 #include "Common/ZHSTD.h"
 #include "Graphics/Resource.h"
 #include "Graphics/Enums.h"
+#include "Internal/Common/internal_common.h"
 
 namespace ZH{
     namespace Graphics{
@@ -56,6 +57,8 @@ namespace ZH{
 
             virtual bool isValid();
 
+            ID3D11Texture2D* getTex() { return m_tex2D; }
+
         private:
 
 
@@ -63,6 +66,7 @@ namespace ZH{
 
         private:
             TEX2D_DESC m_sDesc;
+            ID3D11Texture2D* m_tex2D;
 
             // Put at last line
             CLASS_TYPE_NAME_DECLEARATION

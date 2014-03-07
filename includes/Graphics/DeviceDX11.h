@@ -7,6 +7,9 @@
 namespace ZH{
     namespace Graphics{
 
+        class Texture2D;
+        class RenderTarget;
+
         class ZH_GRAPHICS_DLL DeviceDX11 : public Device
         {
         public:
@@ -14,6 +17,7 @@ namespace ZH{
         public:
             virtual bool start( ZH::Widgets::WindowsInfo* );
             virtual bool shutdown();
+            bool createRenderTarget( Texture2D*, RenderTarget** );
         private:
             void* m_pImp;
         private:

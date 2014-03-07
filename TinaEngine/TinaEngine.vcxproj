@@ -28,7 +28,9 @@
     <ClInclude Include="..\includes\Graphics\Enums.h" />
     <ClInclude Include="..\includes\Graphics\IndexBuffer.h" />
     <ClInclude Include="..\includes\Graphics\Name.h" />
+    <ClInclude Include="..\includes\Graphics\RenderFragment.h" />
     <ClInclude Include="..\includes\Graphics\RenderNode.h" />
+    <ClInclude Include="..\includes\Graphics\RenderTarget.h" />
     <ClInclude Include="..\includes\Graphics\Resource.h" />
     <ClInclude Include="..\includes\Graphics\Texture2D.h" />
     <ClInclude Include="..\includes\Graphics\VertexBuffer.h" />
@@ -46,7 +48,9 @@
     <ClCompile Include="src\Effect.cpp" />
     <ClCompile Include="src\IndexBuffer.cpp" />
     <ClCompile Include="src\Name.cpp" />
+    <ClCompile Include="src\RenderFragment.cpp" />
     <ClCompile Include="src\RenderNode.cpp" />
+    <ClCompile Include="src\RenderTarget.cpp" />
     <ClCompile Include="src\Resource.cpp" />
     <ClCompile Include="src\Texture2D.cpp" />
     <ClCompile Include="src\VertexBuffer.cpp" />
