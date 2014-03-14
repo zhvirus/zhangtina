@@ -14,6 +14,10 @@ namespace ZH{
         {
         }
 
-
+        bool RenderTarget::operator== ( const RenderTarget& v)
+        {
+            // TODO
+            return (*(v.m_name) == *m_name);
+        }
     }
 }

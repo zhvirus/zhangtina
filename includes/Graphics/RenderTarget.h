@@ -14,6 +14,8 @@ namespace ZH{
         public:
             RenderTarget( Texture2D*, ID3D11RenderTargetView* );
 
+            bool operator == (const RenderTarget&);
+
         private:
             Texture2D* m_tex2D;
             ID3D11RenderTargetView* m_rtView;

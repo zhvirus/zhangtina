@@ -23,5 +23,11 @@ namespace ZH{
             return true;
         }
 
+        bool VertexBuffer::operator== ( const VertexBuffer& v)
+        {
+            // TODO
+            return (*(v.m_name) == *m_name);
+        }
+
     }
 }

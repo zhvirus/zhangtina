@@ -20,7 +20,7 @@ namespace ZH{
             Cache();
             ~Cache();
             void destroyCache();
-            T* acquire(T*);
+            T* acquire( const T&);
             T* findByName(const std::string&);
         private:
             std::vector<T*>* m_pCache;
@@ -54,18 +54,19 @@ namespace ZH{
         }
 
         template<class T>
-        T* Cache<T>::acquire( T* v )
+        T* Cache<T>::acquire( const T& v )
         {
             std::vector<T*>::iterator it = m_pCache->begin();
             for( ;it != m_pCache->end();++it ){
-                if ( (*it) == v ){
+                if ( *(*it) == v ){
                     return *it;
                 }
             }
 
-            m_pCache->push_back( v );
+            T* newV = new T(v);
+            m_pCache->push_back( newV );
 
-            return v;
+            return newV;
         }
 
         template<class T>
@@ -90,8 +91,8 @@ namespace ZH{
         ZH_GRAPHICS_EXTERN template class ZH_GRAPHICS_DLL Cache<EffectInstance>;
         ZH_GRAPHICS_EXTERN template class ZH_GRAPHICS_DLL Cache<RenderTarget>;
         ZH_GRAPHICS_EXTERN template class ZH_GRAPHICS_DLL Cache<RenderFragment>;
-        ZH_GRAPHICS_EXTERN template class ZH_GRAPHICS_DLL Cache<Camera>;
-
+        ZH_GRAPHICS_EXTERN template class ZH_GRAPHICS_DLL Cache<CameraOrtho>;
+        ZH_GRAPHICS_EXTERN template class ZH_GRAPHICS_DLL Cache<CameraPersp>;
 
         class ZH_GRAPHICS_DLL ResourceCaches
         {
@@ -104,7 +105,8 @@ namespace ZH{
             Cache<EffectInstance>& EffectInstances() { return m_effectInstanceCache; }
             Cache<RenderTarget>&   RenderTargets()   { return m_renderTargetCache; }
             Cache<RenderFragment>& RenderFragments() { return m_renderFragmentCache; }
-            Cache<Camera>&         Cameras()         { return m_cameraCache; }
+            Cache<CameraOrtho>&    CameraOrthos()    { return m_cameraOrthoCache; }
+            Cache<CameraPersp>&    CameraPersps()    { return m_cameraPerspCache; }
 
         private:
             Cache<Texture2D>        m_texture2DCache;
@@ -113,7 +115,8 @@ namespace ZH{
             Cache<EffectInstance>   m_effectInstanceCache;
             Cache<RenderTarget>     m_renderTargetCache;
             Cache<RenderFragment>   m_renderFragmentCache;
-            Cache<Camera>           m_cameraCache;
+            Cache<CameraOrtho>      m_cameraOrthoCache;
+            Cache<CameraPersp>      m_cameraPerspCache;
 
             // Put at last line
             CLASS_COMMON_PROTECTED_DECLEARATION(ResourceCaches)

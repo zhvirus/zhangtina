@@ -120,6 +120,21 @@ namespace ZH{
             m_projMatDirtyFlag = false;
         }
 
+        bool CameraOrtho::operator==(const Camera& v)
+        {
+            const CameraOrtho& rh = dynamic_cast<const CameraOrtho&>(v);
+            return
+                ( *m_name == *rh.m_name ) &&
+                ( m_pos == rh.m_pos) &&
+                ( m_lookDir == rh.m_lookDir) &&
+                ( m_upDir == rh.m_upDir) &&
+                (ZH::Math::VALUE_EQUAL<float>(m_width, rh.m_width))&&
+                (ZH::Math::VALUE_EQUAL<float>(m_height, rh.m_height))&&
+                (ZH::Math::VALUE_EQUAL<float>(m_nearZ, rh.m_nearZ))&&
+                (ZH::Math::VALUE_EQUAL<float>(m_farZ, rh.m_farZ))
+                ;
+        }
+
 //------------------------------------------------
 //
 //        CameraPersp
@@ -164,6 +179,24 @@ namespace ZH{
 
             m_projMatDirtyFlag = false;
         }
+
+        bool CameraPersp::operator==(const Camera& v)
+        {
+            const CameraPersp& rh = dynamic_cast<const CameraPersp&>(v);
+
+            return
+                ( *m_name == *rh.m_name ) &&
+                ( m_pos == rh.m_pos) &&
+                ( m_lookDir == rh.m_lookDir) &&
+                ( m_upDir == rh.m_upDir) &&
+                (ZH::Math::VALUE_EQUAL<float>(m_fovy, rh.m_fovy))&&
+                (ZH::Math::VALUE_EQUAL<float>(m_aspect, rh.m_aspect))&&
+                (ZH::Math::VALUE_EQUAL<float>(m_nearZ, rh.m_nearZ))&&
+                (ZH::Math::VALUE_EQUAL<float>(m_farZ, rh.m_farZ))
+                ;
+        }
+
+
     }
 
 }

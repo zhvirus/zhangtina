@@ -14,6 +14,8 @@ namespace ZH{
             virtual ~VertexBuffer();
 
             virtual bool isValid();
+
+            bool operator == ( const VertexBuffer& );
         private:
 
             // Put at last line

@@ -10,6 +10,7 @@
 #include "Widget/Window.h"
 #include "Graphics/DeviceDX11.h"
 #include "Graphics/Caches.h"
+#include "Math/MathCommon.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -150,22 +151,24 @@ int CChildView::startDevice(void)
 int CChildView::createDefaultRenderFragment(void)
 {
     // Default camera
-    Math::float3 pos(0.0f,0.0f, -10.0f);
-    Math::float3 look(0.0f,0.0f,1.0f);
-    Math::float3 up(0.0f,1.0f,0.0f);
-    float fovy = Math::PI/3.0f;
+    ZH::Math::float3 pos(0.0f,0.0f, -10.0f);
+    ZH::Math::float3 look(0.0f,0.0f,1.0f);
+    ZH::Math::float3 up(0.0f,1.0f,0.0f);
+    float fovy = ZH::Math::PI/3.0f;
     RECT rct;
     this->GetClientRect(&rct);
-    float aspect = (rct.right - rct.left)/(rct.bottom-rct.top);
-    ZH::Graphics::CameraPersp defaultCam( pos, look, up, fovy, aspect, 0.1f, 5000.0f );
-    defaultCam.name("DefaultCamera");
+    float aspect = static_cast<float>((rct.right - rct.left)/(rct.bottom-rct.top));
+    ZH::Graphics::CameraPersp tmpCam( pos, look, up, fovy, aspect, 0.1f, 5000.0f );
+    tmpCam.name("DefaultCamera");
+
+    ZH::Graphics::CameraPersp* defaultCamera = ZH::Graphics::ResourceCaches::Instance().CameraPersps().acquire( tmpCam );
 
     // Default world
-    ZH::Graphics::
+    //ZH::Graphics::
 
-    ZH::Graphics::RenderFragment 
+    //ZH::Graphics::RenderFragment 
 
-    ZH::Graphics::Cache<ZH::Graphics::RenderFragment>& rf_caches = ZH::Graphics::ResourceCaches::Instance().RenderFragments();
+    //ZH::Graphics::Cache<ZH::Graphics::RenderFragment>& rf_caches = ZH::Graphics::ResourceCaches::Instance().RenderFragments();
 
 
 

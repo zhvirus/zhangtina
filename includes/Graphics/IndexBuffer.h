@@ -14,6 +14,8 @@ namespace ZH{
             virtual ~IndexBuffer();
             virtual bool isValid();
 
+            bool operator==(const IndexBuffer&);
+
         private:
             // Put at last line
             CLASS_TYPE_NAME_DECLEARATION

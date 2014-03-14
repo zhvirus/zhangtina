@@ -14,7 +14,7 @@ namespace ZH{
             const std::string& name()const;
             void name( const std::string& n );
 
-        private:
+        protected:
             std::string* m_name;
         };
     } // namespace Graphics

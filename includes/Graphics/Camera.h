@@ -17,6 +17,8 @@ namespace ZH{
             Camera( Math::float3 pos, Math::float3 look, Math::float3 up );
             virtual ~Camera();
 
+            virtual bool operator==(const Camera&) = 0;
+
             Math::matrix4x4_f projMatrix();
             Math::matrix4x4_f viewMatrix();
 
@@ -54,6 +56,8 @@ namespace ZH{
             CameraOrtho();
             CameraOrtho( Math::float3 pos, Math::float3 look, Math::float3 up, float w, float h, float nz, float fz);
 
+            virtual bool operator==(const Camera&);
+
             inline float width()const { return m_width; }
             inline void width( float w ) { m_width = w; m_projMatDirtyFlag=true; }
 
@@ -84,6 +88,8 @@ namespace ZH{
         public:
             CameraPersp();
             CameraPersp( Math::float3 pos, Math::float3 look, Math::float3 up, float fovy, float aspect, float nz, float fz);
+
+            virtual bool operator==(const Camera&);
 
             inline float fovy()const { return m_fovy; }
             inline void fovy( float f ) { m_fovy = f; m_projMatDirtyFlag=true; }

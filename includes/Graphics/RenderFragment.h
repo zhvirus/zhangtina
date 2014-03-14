@@ -20,6 +20,8 @@ namespace ZH{
             RenderFragment( Camera*, World*, std::vector<RenderTarget*>* );
             ~RenderFragment();
 
+            bool operator ==(const RenderFragment&);
+
             Camera* camera() { return m_cameraPtr; }
             void camera( Camera* cam ){ m_cameraPtr = cam; }
 

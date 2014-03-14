@@ -25,6 +25,8 @@ namespace ZH{
             EffectInstance();
             virtual ~EffectInstance();
 
+            bool operator==(const EffectInstance&);
+
         private:
             Effect* m_pEffect;
 

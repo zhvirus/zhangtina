@@ -63,6 +63,11 @@ namespace ZH{
 
         }
 
+        bool RenderFragment::operator== ( const RenderFragment& v)
+        {
+            // TODO
+            return (*(v.m_name) == *m_name);
+        }
 
     }
 }

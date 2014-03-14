@@ -22,5 +22,11 @@ namespace ZH{
         {
             return true;
         }
+
+        bool IndexBuffer::operator== ( const IndexBuffer& v)
+        {
+            // TODO
+            return (*(v.m_name) == *m_name);
+        }
     }
 }

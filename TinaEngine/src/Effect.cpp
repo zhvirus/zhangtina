@@ -38,6 +38,14 @@ namespace ZH{
         EffectInstance::~EffectInstance()
         {
         }
+
+        bool EffectInstance::operator== ( const EffectInstance& v)
+        {
+            // TODO
+            return (*(v.m_name) == *m_name);
+        }
+
+
     }
 }
 

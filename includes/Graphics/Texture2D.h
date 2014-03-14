@@ -21,6 +21,8 @@ namespace ZH{
             // The valid range is between zero and one less
             // than the level returned by
             // ID3D10Device::CheckMultisampleQualityLevels.
+
+            bool operator == ( const TEX2D_SAMPLE_DESC& );
         };
 
         class ZH_GRAPHICS_DLL TEX2D_DESC
@@ -36,6 +38,8 @@ namespace ZH{
                 BindFlags(BIND_SHADER_RESOURCE),
                 CPUAccessFlags(0),
                 MiscFlags(0){}
+
+            bool operator == ( const TEX2D_DESC& );
 
             unsigned int        Width;
             unsigned int        Height;
@@ -58,6 +62,8 @@ namespace ZH{
             virtual bool isValid();
 
             ID3D11Texture2D* getTex() { return m_tex2D; }
+
+            bool operator == ( const Texture2D& );
 
         private:
 
