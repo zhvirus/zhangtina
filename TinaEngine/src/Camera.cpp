@@ -41,6 +41,17 @@ namespace ZH{
             m_projMat.identityIt();
         }
 
+        Camera::Camera( const Camera& v ):
+            m_pos(v.m_pos),
+            m_lookDir(v.m_lookDir),
+            m_upDir(v.m_upDir),
+            m_viewMatDirtyFlag(v.m_viewMatDirtyFlag),
+            m_projMatDirtyFlag(v.m_projMatDirtyFlag),
+            m_viewMat(v.m_viewMat),
+            m_projMat(v.m_projMat)
+        {
+        }
+
         Camera::~Camera()
         {
         }
@@ -101,6 +112,15 @@ namespace ZH{
         {
         }
 
+        CameraOrtho::CameraOrtho( const CameraOrtho& v ):
+            Camera(v),
+            m_width( v.m_width ),
+            m_height( v.m_height ),
+            m_nearZ( v.m_nearZ ),
+            m_farZ( v.m_farZ )
+        {
+        }
+
         void CameraOrtho::updateProjMat()
         {
             if ( !m_projMatDirtyFlag )
@@ -156,6 +176,15 @@ namespace ZH{
             m_aspect( aspect ),
             m_nearZ( nz ),
             m_farZ( fz )
+        {
+        }
+
+        CameraPersp::CameraPersp( const CameraPersp& v):
+            Camera(v),
+            m_fovy(v.m_fovy),
+            m_aspect(v.m_aspect),
+            m_nearZ(v.m_nearZ),
+            m_farZ(v.m_farZ)
         {
         }
 

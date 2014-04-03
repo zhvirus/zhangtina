@@ -15,6 +15,7 @@ namespace ZH{
         public:
             Camera();
             Camera( Math::float3 pos, Math::float3 look, Math::float3 up );
+            Camera( const Camera& );
             virtual ~Camera();
 
             virtual bool operator==(const Camera&) = 0;
@@ -55,6 +56,7 @@ namespace ZH{
         public:
             CameraOrtho();
             CameraOrtho( Math::float3 pos, Math::float3 look, Math::float3 up, float w, float h, float nz, float fz);
+            CameraOrtho( const CameraOrtho& );
 
             virtual bool operator==(const Camera&);
 
@@ -88,6 +90,7 @@ namespace ZH{
         public:
             CameraPersp();
             CameraPersp( Math::float3 pos, Math::float3 look, Math::float3 up, float fovy, float aspect, float nz, float fz);
+            CameraPersp( const CameraPersp& );
 
             virtual bool operator==(const Camera&);
 
