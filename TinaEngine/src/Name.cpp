@@ -8,7 +8,7 @@
 namespace ZH{
     namespace Graphics{
         Name::Name():m_name(NULL){
-            m_name = new std::string();
+            m_name = new std::string("");
         }
         Name::~Name(){
             delete m_name;

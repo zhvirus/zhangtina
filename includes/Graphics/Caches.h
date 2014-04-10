@@ -22,6 +22,7 @@ namespace ZH{
             void destroyCache();
             T* acquire( const T&);
             T* findByName(const std::string&);
+            void insert( T* );
         private:
             std::vector<T*>* m_pCache;
         };
@@ -80,6 +81,21 @@ namespace ZH{
             }
 
             return NULL;
+        }
+
+        template<class T>
+        void Cache<T>::insert( T* v )
+        {
+            // Make sure there is same item in cache already
+            std::vector<T*>::const_iterator cIt = m_pCache->begin();
+            for( ;cIt != m_pCache->end();++cIt ){
+                T* item = *cIt;
+                if ( (void*)item == (void*)v ){
+                    return;
+                }
+            }
+
+            m_pCache->push_back(v);
         }
 
         //******************************************
