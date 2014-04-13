@@ -10,11 +10,12 @@ namespace ZH{
         {
         public:
             Name();
+            Name( const Name& );
             virtual ~Name();
-            const std::string& name()const;
-            void name( const std::string& n );
+            const std::string& name()const { return *m_name; }
 
         protected:
+            void constructName( const std::string& type, const std::string& key );
             std::string* m_name;
         };
     } // namespace Graphics

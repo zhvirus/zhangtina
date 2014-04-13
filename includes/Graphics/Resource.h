@@ -10,6 +10,7 @@ namespace ZH {
         {
         public:
             Resource();
+            Resource( const Resource& );
             virtual ~Resource();
             virtual bool isValid() { return false; };
         protected:

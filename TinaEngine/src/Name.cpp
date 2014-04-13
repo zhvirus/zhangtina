@@ -7,21 +7,29 @@
 
 namespace ZH{
     namespace Graphics{
-        Name::Name():m_name(NULL){
-            m_name = new std::string("");
+
+        Name::Name():m_name( NULL ){
+            m_name = new std::string( "" );
         }
+
+        Name::Name( const Name& v ){
+            m_name = new std::string( *v.m_name );
+        }
+
         Name::~Name(){
             delete m_name;
         }
 
-        const std::string& Name::name()const
+        void Name::constructName( const std::string& type, const std::string& key )
         {
-            return *m_name;
-        }
+            *m_name = type;
+            *m_name += "_";
+            *m_name += key;
+            *m_name += "_";
 
-        void Name::name( const std::string& n )
-        {
-            *m_name = n;
+            char uniqueTrail[50];
+            sprintf_s(uniqueTrail,"%llx", this);
+            *m_name += uniqueTrail;
         }
 
     }

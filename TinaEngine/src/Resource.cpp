@@ -13,5 +13,10 @@ namespace ZH{
         Resource::~Resource()
         {
         }
+
+        Resource::Resource( const Resource& v):
+            Name(v)
+        {
+        }
     }
 }

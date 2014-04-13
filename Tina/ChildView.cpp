@@ -92,10 +92,9 @@ void CChildView::OnSize(UINT nType, int cx, int cy)
 {
     CWnd::OnSize(nType, cx, cy);
 
-    if( !m_pDevice->isRunning() ){
+    if( !m_pDevice || !m_pDevice->isRunning() ){
         // Try to start device if it is not started yet
         startDevice();
-        createDefaultRenderFragment();
     }else{
         // Deal with resizing
     }
@@ -129,6 +128,8 @@ int CChildView::startDevice(void)
             // Start device
             m_pDevice->start( &winInfo );
 
+            createDefaultRenderFragment();
+
             //// Create a render target view
             //ID3D11Texture2D* pBackBuffer = NULL;
             //HRESULT hr = gDXSwapChain->GetBuffer( 0, __uuidof( ID3D11Texture2D ), ( LPVOID* )&pBackBuffer );
@@ -158,18 +159,17 @@ int CChildView::createDefaultRenderFragment(void)
     RECT rct;
     this->GetClientRect(&rct);
     float aspect = static_cast<float>((rct.right - rct.left)/(rct.bottom-rct.top));
-    ZH::Graphics::CameraPersp tmpCam( pos, look, up, fovy, aspect, 0.1f, 5000.0f );
-    tmpCam.name("DefaultCamera");
-
+    ZH::Graphics::CameraPersp tmpCam( pos, look, up, fovy, aspect, 0.1f, 5000.0f, "DefaultPersp" );
     ZH::Graphics::CameraPersp* defaultCamera = ZH::Graphics::ResourceCaches::Instance().CameraPersps().acquire( tmpCam );
 
     // Default world
-    //ZH::Graphics::
+    ZH::Graphics::World* defaultWorld = ZH::Graphics::World::instance();
 
-    //ZH::Graphics::RenderFragment 
+    // Render target
+    std::vector<ZH::Graphics::RenderTarget*>* renderTargets = 
+        new std::vector<ZH::Graphics::RenderTarget*>();
 
-    //ZH::Graphics::Cache<ZH::Graphics::RenderFragment>& rf_caches = ZH::Graphics::ResourceCaches::Instance().RenderFragments();
-
+    ZH::Graphics::RenderFragment defaultRenderFragment( defaultCamera, defaultWorld, renderTargets);
 
 
 

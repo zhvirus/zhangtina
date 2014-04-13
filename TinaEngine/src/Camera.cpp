@@ -7,9 +7,9 @@
 
 namespace ZH{
     namespace Graphics{
-        CLASS_TYPE_NAME_DEFINITION( Camera, "Camera" )
-        CLASS_TYPE_NAME_DEFINITION( CameraOrtho, "CameraOrtho" )
-        CLASS_TYPE_NAME_DEFINITION( CameraPersp, "CameraPersp" )
+        CLASS_TYPE_NAME_DEFINITION( Camera, Camera )
+        CLASS_TYPE_NAME_DEFINITION( CameraOrtho, CameraOrtho )
+        CLASS_TYPE_NAME_DEFINITION( CameraPersp, CameraPersp )
 
 
 //------------------------------------------------
@@ -42,6 +42,7 @@ namespace ZH{
         }
 
         Camera::Camera( const Camera& v ):
+            Resource(v),
             m_pos(v.m_pos),
             m_lookDir(v.m_lookDir),
             m_upDir(v.m_upDir),
@@ -103,13 +104,14 @@ namespace ZH{
         {
         }
 
-        CameraOrtho::CameraOrtho( Math::float3 pos, Math::float3 look, Math::float3 up, float w, float h, float nz, float fz):
+        CameraOrtho::CameraOrtho( Math::float3 pos, Math::float3 look, Math::float3 up, float w, float h, float nz, float fz, const std::string& name ):
             Camera(pos,look,up),
             m_width( w ),
             m_height( h ),
             m_nearZ( nz ),
             m_farZ( fz )
         {
+            Name::constructName( CameraOrtho::m_cClassName, name );
         }
 
         CameraOrtho::CameraOrtho( const CameraOrtho& v ):
@@ -170,13 +172,14 @@ namespace ZH{
         {
         }
 
-        CameraPersp::CameraPersp( Math::float3 pos, Math::float3 look, Math::float3 up, float fovy, float aspect, float nz, float fz):
+        CameraPersp::CameraPersp( Math::float3 pos, Math::float3 look, Math::float3 up, float fovy, float aspect, float nz, float fz, const std::string& name ):
             Camera(pos,look,up),
             m_fovy( fovy ),
             m_aspect( aspect ),
             m_nearZ( nz ),
             m_farZ( fz )
         {
+            Name::constructName( CameraPersp::m_cClassName, name );
         }
 
         CameraPersp::CameraPersp( const CameraPersp& v):
