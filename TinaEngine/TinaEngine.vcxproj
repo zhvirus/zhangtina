@@ -32,6 +32,7 @@
     <ClInclude Include="..\includes\Graphics\RenderNode.h" />
     <ClInclude Include="..\includes\Graphics\RenderTarget.h" />
     <ClInclude Include="..\includes\Graphics\Resource.h" />
+    <ClInclude Include="..\includes\Graphics\ResourceManager.h" />
     <ClInclude Include="..\includes\Graphics\Texture2D.h" />
     <ClInclude Include="..\includes\Graphics\VertexBuffer.h" />
     <ClInclude Include="..\includes\Graphics\World.h" />
@@ -51,6 +52,7 @@
     <ClCompile Include="src\RenderFragment.cpp" />
     <ClCompile Include="src\RenderNode.cpp" />
     <ClCompile Include="src\RenderTarget.cpp" />
+    <ClCompile Include="src\ResouceManager.cpp" />
     <ClCompile Include="src\Resource.cpp" />
     <ClCompile Include="src\Texture2D.cpp" />
     <ClCompile Include="src\VertexBuffer.cpp" />

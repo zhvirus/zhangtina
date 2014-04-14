@@ -14,6 +14,9 @@ namespace ZH{
 namespace ZH{
     namespace Graphics{
 
+        class Texture2D;
+        class RenderTarget;
+
         enum DEVICE_STATUS{
             DEVICE_STATUS_RUNNING,
             DEVICE_STATUS_PAUSED,
@@ -28,6 +31,8 @@ namespace ZH{
             virtual bool isShutdown()const{ return m_status == DEVICE_STATUS_SHUTDOWN; }
             virtual bool start( ZH::Widgets::WindowsInfo* ) = 0;
             virtual bool shutdown() = 0;
+
+            virtual bool createRenderTarget( Texture2D*, RenderTarget**, const std::string& ) = 0;
 
         protected:
             Device();

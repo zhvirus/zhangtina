@@ -6,7 +6,7 @@
 
 namespace ZH{
     namespace Graphics{
-        CLASS_TYPE_NAME_DEFINITION( IndexBuffer, "IndexBuffer" )
+        CLASS_TYPE_NAME_DEFINITION( IndexBuffer )
 
         IndexBuffer::IndexBuffer()
         {

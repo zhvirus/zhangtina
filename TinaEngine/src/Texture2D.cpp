@@ -6,7 +6,7 @@
 
 namespace ZH{
     namespace Graphics{
-        CLASS_TYPE_NAME_DEFINITION( Texture2D, "Texture2D" )
+        CLASS_TYPE_NAME_DEFINITION( Texture2D )
 
 
         bool TEX2D_SAMPLE_DESC::operator==(const TEX2D_SAMPLE_DESC& v)

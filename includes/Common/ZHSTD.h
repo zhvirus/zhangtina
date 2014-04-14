@@ -46,8 +46,8 @@
 
 // Definition Macro
 
-#define CLASS_TYPE_NAME_DEFINITION(CLASS,NAME) \
-    char CLASS::m_cClassName[] = #NAME;
+#define CLASS_TYPE_NAME_DEFINITION(CLASS) \
+    char CLASS::m_cClassName[] = #CLASS;
 
 #define CLASS_COMMON_PROTECTED_DEFINITION(CLASS) \
     CLASS::CLASS(){} \

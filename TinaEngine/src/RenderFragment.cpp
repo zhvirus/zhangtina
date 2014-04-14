@@ -9,7 +9,7 @@
 
 namespace ZH{
     namespace Graphics{
-        CLASS_TYPE_NAME_DEFINITION( RenderFragment, "RenderFragment" )
+        CLASS_TYPE_NAME_DEFINITION( RenderFragment )
 
         RenderFragment::RenderFragment():
         m_cameraPtr(NULL),

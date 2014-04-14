@@ -9,7 +9,7 @@
 
 #include "Widget/Window.h"
 #include "Graphics/DeviceDX11.h"
-#include "Graphics/Caches.h"
+#include "Graphics/ResourceManager.h"
 #include "Math/MathCommon.h"
 
 #ifdef _DEBUG
@@ -160,16 +160,17 @@ int CChildView::createDefaultRenderFragment(void)
     this->GetClientRect(&rct);
     float aspect = static_cast<float>((rct.right - rct.left)/(rct.bottom-rct.top));
     ZH::Graphics::CameraPersp tmpCam( pos, look, up, fovy, aspect, 0.1f, 5000.0f, "DefaultPersp" );
-    ZH::Graphics::CameraPersp* defaultCamera = ZH::Graphics::ResourceCaches::Instance().CameraPersps().acquire( tmpCam );
+    ZH::Graphics::CameraPersp* defaultCamera =
+        ZH::Graphics::ResourceManager::instance().CameraPersps().acquire( tmpCam );
 
     // Default world
-    ZH::Graphics::World* defaultWorld = ZH::Graphics::World::instance();
+    ZH::Graphics::World& defaultWorld = ZH::Graphics::World::instance();
 
     // Render target
     std::vector<ZH::Graphics::RenderTarget*>* renderTargets = 
         new std::vector<ZH::Graphics::RenderTarget*>();
 
-    ZH::Graphics::RenderFragment defaultRenderFragment( defaultCamera, defaultWorld, renderTargets);
+    ZH::Graphics::RenderFragment defaultRenderFragment( defaultCamera, &defaultWorld, renderTargets);
 
 
 

@@ -7,17 +7,6 @@
 namespace ZH{
     namespace Graphics{
 
-        // Caches
-        ResourceCaches::ResourceCaches()
-        {
-
-        }
-
-        ResourceCaches::~ResourceCaches()
-        {
-
-        }
-
 
     }
 }

@@ -9,7 +9,7 @@ namespace ZH {
         class ZH_GRAPHICS_DLL World
         {
         public:
-            static World* instance(){static World w; return &w;}
+            static World& instance(){static World w; return w;}
         public:
             unsigned int numOfNodes()const;
         private:

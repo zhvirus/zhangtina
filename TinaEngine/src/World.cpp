@@ -9,7 +9,7 @@
 namespace ZH{
     namespace Graphics{
 
-        CLASS_TYPE_NAME_DEFINITION( World, "World" )
+        CLASS_TYPE_NAME_DEFINITION( World )
 
         World::World():
             m_pImp(NULL)

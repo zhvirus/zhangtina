@@ -12,16 +12,22 @@ namespace ZH{
 
         class ZH_GRAPHICS_DLL RenderTarget : public Resource {
         public:
-            RenderTarget( Texture2D*, ID3D11RenderTargetView* );
+            virtual ~RenderTarget();
+            virtual bool isValid();
 
             bool operator == (const RenderTarget&);
 
+
         private:
+            RenderTarget( Texture2D*, ID3D11RenderTargetView*, const std::string& );
+
             Texture2D* m_tex2D;
             ID3D11RenderTargetView* m_rtView;
 
             // Put at last line
             CLASS_TYPE_NAME_DECLEARATION
+
+            friend class DeviceDX11;
         };
 
 

@@ -9,7 +9,7 @@
 
 namespace ZH{
     namespace Graphics{
-        CLASS_TYPE_NAME_DEFINITION( RenderNode, "RenderNode" )
+        CLASS_TYPE_NAME_DEFINITION( RenderNode )
 
         RenderNode::RenderNode():
             m_pIndexBuffer(NULL),

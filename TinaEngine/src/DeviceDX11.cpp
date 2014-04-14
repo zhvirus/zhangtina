@@ -5,13 +5,14 @@
 #include "Internal/Graphics/DeviceDX11Imp.h"
 #include "Graphics/Texture2D.h"
 #include "Graphics/RenderTarget.h"
+#include "Graphics/ResourceManager.h"
 
 #define IMP_PTR ((ZH::Graphics::DeviceDX11Imp*)m_pImp)
 
 namespace ZH{
     namespace Graphics{
 
-        CLASS_TYPE_NAME_DEFINITION(DeviceDX11,"DeviceDX11")
+        CLASS_TYPE_NAME_DEFINITION( DeviceDX11 )
 
         DeviceDX11::DeviceDX11():
             Device(),
@@ -57,15 +58,24 @@ namespace ZH{
             return true;
         }
 
-        bool DeviceDX11::createRenderTarget( Texture2D* tex2d, RenderTarget** rt )
+        bool DeviceDX11::createRenderTarget( Texture2D* tex2d, RenderTarget** rt, const std::string& name )
         {
-            if( !tex2d ){
+            // Check device
+            if ( !isRunning() ){
+                std::cerr<<"ERROR: Device is not ready, can't create render target!"<<std::endl;
+                return false;
+            }
+
+            // Check texture
+            if ( !tex2d || !tex2d->isValid() ){
+                std::cerr<<"ERROR: tex is not valid, can't create render target!"<<std::endl;
                 return false;
             }
 
             ID3D11Texture2D* tex2d_d3d = NULL;
             tex2d_d3d = tex2d->getTex();
             if( !tex2d_d3d ){
+                std::cerr<<"ERROR: d3d tex is not valid, can't create render target!"<<std::endl;
                 return false;
             }
 
@@ -73,6 +83,7 @@ namespace ZH{
 
             ID3D11Device* device_d3d = IMP_PTR->m_pDevice;
             if( !device_d3d ){
+                std::cerr<<"ERROR: d3d device is not valid, can't create render target!"<<std::endl;
                 return false;
             }
 
@@ -80,10 +91,11 @@ namespace ZH{
             hr = device_d3d->CreateRenderTargetView( tex2d_d3d, NULL, &rtv_d3d );
 
             if ( FAILED(hr) ){
+                std::cerr<<"ERROR: d3d create render target view failed!"<<std::endl;
                 return false;
             }
 
-            *rt = new RenderTarget( tex2d, rtv_d3d );
+            *rt = new RenderTarget( tex2d, rtv_d3d, name );
 
             return true;
         }
