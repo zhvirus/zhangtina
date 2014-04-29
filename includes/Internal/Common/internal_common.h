@@ -25,7 +25,8 @@ inline void SAFE_RELEASE(T p){if(p){p->Release();}}
 #define ZH_OUT(msg) std::cout<<(msg)<<std::endl
 
 // Error
-#define ZH_ERR(msg) std::cout<<"[Error]: "<<(msg)<<std::endl
+#define ZH_ERR(msg) std::cerr<<"[Error]: "<<(msg)<<std::endl
+
 
 #endif
 

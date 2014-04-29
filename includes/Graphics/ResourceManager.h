@@ -24,7 +24,8 @@ namespace ZH {
             Cache<CameraOrtho>&    CameraOrthos()    { return m_cameraOrthoCache; }
             Cache<CameraPersp>&    CameraPersps()    { return m_cameraPerspCache; }
 
-            RenderTarget* createRenderTarget( Device*, Texture2D*, const std::string&);
+            RenderTarget* acquireRenderTarget( Device*, Texture2D*, const char* const);
+            Texture2D*    acquireBackBuffer( Device* );
 
         private:
             Cache<Texture2D>        m_texture2DCache;

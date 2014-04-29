@@ -23,6 +23,7 @@ namespace ZH{
             DXGI_ADAPTER_DESC    m_sAdapterDesc;
         private:
             friend class DeviceDX11;
+            friend class ResourceManager;
             CLASS_COMMON_PROTECTED_DECLEARATION(DeviceDX11Imp)
         };
 

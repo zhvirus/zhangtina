@@ -2,11 +2,14 @@
 #define _ZH_GRAPHICS_DLL_
 #endif
 #include "Graphics/Texture2D.h"
+#include "Internal/Graphics/Texture2DImp.h"
 
 
 namespace ZH{
     namespace Graphics{
         CLASS_TYPE_NAME_DEFINITION( Texture2D )
+
+        const char Texture2D::m_sBackBufferName[] = "BackBuffer";
 
 
         bool TEX2D_SAMPLE_DESC::operator==(const TEX2D_SAMPLE_DESC& v)
@@ -32,19 +35,20 @@ namespace ZH{
                 ;
         }
 
-        Texture2D::Texture2D()
+        Texture2D::Texture2D( Texture2DImp* pTex2dImp, const char* const name ):
+            m_pTex2DImp(pTex2dImp)
         {
-
+            Name::constructName( Texture2D::m_cClassName, name );
         }
 
         Texture2D::~Texture2D()
         {
-
+            delete m_pTex2DImp;
         }
 
         bool Texture2D::isValid()
         {
-            return true;
+            return m_pTex2DImp && m_pTex2DImp->isValid();
         }
 
         bool Texture2D::operator == ( const Texture2D& v )

@@ -9,6 +9,9 @@
 namespace ZH{
     namespace Graphics{
 
+        // forwards
+        class Texture2DImp;
+
         // Describes multi-sampling parameters for a resource
         class ZH_GRAPHICS_DLL TEX2D_SAMPLE_DESC {
         public:
@@ -56,26 +59,30 @@ namespace ZH{
         class ZH_GRAPHICS_DLL Texture2D : public Resource
         {
         public:
-            Texture2D();
             virtual ~Texture2D();
 
             virtual bool isValid();
 
-            ID3D11Texture2D* getTex() { return m_tex2D; }
-
             bool operator == ( const Texture2D& );
 
+
+        public:
+            static const char m_sBackBufferName[30];
+
         private:
+            Texture2D( Texture2DImp*, const char* const );
 
 
 
 
         private:
             TEX2D_DESC m_sDesc;
-            ID3D11Texture2D* m_tex2D;
+            Texture2DImp* m_pTex2DImp;
 
             // Put at last line
             CLASS_TYPE_NAME_DECLEARATION
+
+            friend class DeviceDX11;
         };
     }
 

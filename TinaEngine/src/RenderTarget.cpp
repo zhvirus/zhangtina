@@ -2,6 +2,7 @@
 #define _ZH_GRAPHICS_DLL_
 #endif
 #include "Graphics/RenderTarget.h"
+#include "Internal/Graphics/RenderTargetImp.h"
 #include "Graphics/Texture2D.h"
 
 
@@ -9,15 +10,16 @@ namespace ZH{
     namespace Graphics{
         CLASS_TYPE_NAME_DEFINITION( RenderTarget )
 
-        RenderTarget::RenderTarget( Texture2D* tex, ID3D11RenderTargetView* view, const std::string& name ):
-            m_tex2D( tex ),
-            m_rtView(view)
+        RenderTarget::RenderTarget( Texture2D* tex, RenderTargetImp* imp, const char* const name ):
+            m_pTex2D( tex ),
+            m_pRtImp( imp )
         {
             Name::constructName( RenderTarget::m_cClassName, name );
         }
 
         RenderTarget::~RenderTarget()
         {
+            delete m_pRtImp;
         }
 
         bool RenderTarget::operator == ( const RenderTarget& v )
@@ -28,7 +30,7 @@ namespace ZH{
 
         bool RenderTarget::isValid()
         {
-            return m_tex2D && m_tex2D->isValid() && m_rtView;
+            return m_pTex2D && m_pTex2D->isValid() && m_pRtImp;
         }
     }
 }

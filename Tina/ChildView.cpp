@@ -170,6 +170,15 @@ int CChildView::createDefaultRenderFragment(void)
     std::vector<ZH::Graphics::RenderTarget*>* renderTargets = 
         new std::vector<ZH::Graphics::RenderTarget*>();
 
+    ZH::Graphics::Texture2D* backBuffer =
+        ZH::Graphics::ResourceManager::instance().acquireBackBuffer(m_pDevice);
+
+    ZH::Graphics::RenderTarget* renderTarget =
+        ZH::Graphics::ResourceManager::instance().acquireRenderTarget( m_pDevice, backBuffer, "defaultRenderTarget");
+
+    renderTargets->push_back(renderTarget);
+
+
     ZH::Graphics::RenderFragment defaultRenderFragment( defaultCamera, &defaultWorld, renderTargets);
 
 

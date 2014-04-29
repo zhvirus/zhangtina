@@ -17,7 +17,10 @@ namespace ZH{
         public:
             virtual bool start( ZH::Widgets::WindowsInfo* );
             virtual bool shutdown();
-            virtual bool createRenderTarget( Texture2D*, RenderTarget**, const std::string& );
+
+        private:
+            virtual bool createRenderTarget( Texture2D*, RenderTarget*&, const char* const );
+            virtual bool getBackBuffer( Texture2D*& );
         private:
             void* m_pImp;
         private:

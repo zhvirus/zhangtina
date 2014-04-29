@@ -32,11 +32,14 @@ namespace ZH{
             virtual bool start( ZH::Widgets::WindowsInfo* ) = 0;
             virtual bool shutdown() = 0;
 
-            virtual bool createRenderTarget( Texture2D*, RenderTarget**, const std::string& ) = 0;
+        private:
+            virtual bool createRenderTarget( Texture2D*, RenderTarget*&, const char* const ) = 0;
+            virtual bool getBackBuffer( Texture2D*& ) = 0;
 
         protected:
             Device();
             DEVICE_STATUS m_status;
+            friend class ResourceManager;
         };
 
     }

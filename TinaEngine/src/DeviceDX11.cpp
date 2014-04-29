@@ -4,7 +4,9 @@
 #include "Graphics/DeviceDX11.h"
 #include "Internal/Graphics/DeviceDX11Imp.h"
 #include "Graphics/Texture2D.h"
+#include "Internal/Graphics/Texture2DImp.h"
 #include "Graphics/RenderTarget.h"
+#include "Internal/Graphics/RenderTargetImp.h"
 #include "Graphics/ResourceManager.h"
 
 #define IMP_PTR ((ZH::Graphics::DeviceDX11Imp*)m_pImp)
@@ -58,7 +60,7 @@ namespace ZH{
             return true;
         }
 
-        bool DeviceDX11::createRenderTarget( Texture2D* tex2d, RenderTarget** rt, const std::string& name )
+        bool DeviceDX11::createRenderTarget( Texture2D* pTex2d, RenderTarget*& pRt, const char* const name )
         {
             // Check device
             if ( !isRunning() ){
@@ -67,41 +69,74 @@ namespace ZH{
             }
 
             // Check texture
-            if ( !tex2d || !tex2d->isValid() ){
+            if ( !pTex2d || !pTex2d->isValid() ){
                 std::cerr<<"ERROR: tex is not valid, can't create render target!"<<std::endl;
                 return false;
             }
 
-            ID3D11Texture2D* tex2d_d3d = NULL;
-            tex2d_d3d = tex2d->getTex();
-            if( !tex2d_d3d ){
+            ID3D11Texture2D* pTex2d_d3d =
+                pTex2d->m_pTex2DImp?pTex2d->m_pTex2DImp->getTex2D_d3d():NULL;
+            if( !pTex2d_d3d ){
                 std::cerr<<"ERROR: d3d tex is not valid, can't create render target!"<<std::endl;
                 return false;
             }
 
-            ID3D11RenderTargetView* rtv_d3d = NULL;
+            ID3D11RenderTargetView* pRtv_d3d = NULL;
 
-            ID3D11Device* device_d3d = IMP_PTR->m_pDevice;
-            if( !device_d3d ){
+            ID3D11Device* pDevice_d3d = IMP_PTR->m_pDevice;
+            if( !pDevice_d3d ){
                 std::cerr<<"ERROR: d3d device is not valid, can't create render target!"<<std::endl;
                 return false;
             }
 
             HRESULT hr = S_OK;
-            hr = device_d3d->CreateRenderTargetView( tex2d_d3d, NULL, &rtv_d3d );
+            hr = pDevice_d3d->CreateRenderTargetView( pTex2d_d3d, NULL, &pRtv_d3d );
 
             if ( FAILED(hr) ){
                 std::cerr<<"ERROR: d3d create render target view failed!"<<std::endl;
                 return false;
             }
 
-            *rt = new RenderTarget( tex2d, rtv_d3d, name );
+            RenderTargetImp* pRTImp = new RenderTargetImp( pRtv_d3d );
+
+            pRt = new RenderTarget( pTex2d, pRTImp, name );
 
             return true;
         }
 
 
+        bool DeviceDX11::getBackBuffer( Texture2D*& pBf_ret )
+        {
+            // Check device
+            if ( !isRunning() ){
+                std::cerr<<"ERROR: Device is not ready, can't get back buffer!"<<std::endl;
+                return false;
+            }
 
+            // Initialize it to NULL at the beginning
+            pBf_ret = NULL;
+
+            // Check swapchain
+            IDXGISwapChain* pSwapchain = IMP_PTR->m_pSwapChain;
+            if ( !pSwapchain ){
+                std::cerr<<"ERROR: Swap chain is not ready, can't get back buffer from it!!"<<std::endl;
+                return false;
+            }
+
+            // Get back buffer from swapchain
+            ID3D11Texture2D *pBackBuffer = NULL;
+            if( FAILED( pSwapchain->GetBuffer( 0, __uuidof( ID3D11Texture2D ), (LPVOID*)&pBackBuffer ) ) ){
+                std::cerr<<"ERROR: Get back buffer from swap chain failed!"<<std::endl;
+                return false;
+            }
+
+            // Create a Texture2D object to hold the back buffer
+            Texture2DImp* pTex2DImp = new Texture2DImp( pBackBuffer );
+            pBf_ret = new Texture2D( pTex2DImp, Texture2D::m_sBackBufferName );
+
+            return true;
+
+        }
 
 
 

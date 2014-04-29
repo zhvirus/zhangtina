@@ -9,6 +9,7 @@ namespace ZH{
     namespace Graphics{
 
         class Texture2D;
+        class RenderTargetImp;
 
         class ZH_GRAPHICS_DLL RenderTarget : public Resource {
         public:
@@ -19,10 +20,10 @@ namespace ZH{
 
 
         private:
-            RenderTarget( Texture2D*, ID3D11RenderTargetView*, const std::string& );
+            RenderTarget( Texture2D*, RenderTargetImp*, const char* const );
 
-            Texture2D* m_tex2D;
-            ID3D11RenderTargetView* m_rtView;
+            Texture2D*       m_pTex2D;
+            RenderTargetImp* m_pRtImp;
 
             // Put at last line
             CLASS_TYPE_NAME_DECLEARATION
