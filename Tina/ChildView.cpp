@@ -92,6 +92,9 @@ void CChildView::OnSize(UINT nType, int cx, int cy)
 {
     CWnd::OnSize(nType, cx, cy);
 
+    std::cout<<"OnSize("<<nType<<","<<cx<<","<<cy<<")"<<std::endl;
+
+
     if( !m_pDevice || !m_pDevice->isRunning() ){
         // Try to start device if it is not started yet
         startDevice();

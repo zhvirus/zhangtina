@@ -42,6 +42,30 @@ CTinaApp::CTinaApp()
 
 	// TODO: add construction code here,
 	// Place all significant initialization in InitInstance
+
+
+    // Show console window
+    ::AllocConsole();
+    HWND conWin = GetConsoleWindow();
+    SetConsoleTitle(L"Tina-cmd");
+
+    HANDLE conBuffer = CreateFile(
+        L"CONOUT$",
+        GENERIC_WRITE,
+        0,
+        NULL,
+        CREATE_NEW,
+        FILE_ATTRIBUTE_NORMAL,
+        NULL
+        );
+
+    COORD con_buffer_size= {120,30000};
+    SetConsoleScreenBufferSize( conBuffer, con_buffer_size);
+    SMALL_RECT s_rect={0,0,100,200};
+    SetConsoleWindowInfo( conBuffer, true, &s_rect);
+    FILE* stream;
+    freopen_s(&stream, "CONOUT$", "w+t", stdout);
+    ShowWindowAsync(conWin, SW_SHOWNORMAL);
 }
 
 // The one and only CTinaApp object
