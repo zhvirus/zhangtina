@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\Double2.cpp">
+      <Filter>CPP</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Double3.cpp">
+      <Filter>CPP</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Double4.cpp">
+      <Filter>CPP</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Float2.cpp">
+      <Filter>CPP</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Float3.cpp">
+      <Filter>CPP</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Float4.cpp">
+      <Filter>CPP</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Int2.cpp">
+      <Filter>CPP</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Int3.cpp">
+      <Filter>CPP</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Int4.cpp">
+      <Filter>CPP</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MathCommon.cpp">
+      <Filter>CPP</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Matrix.cpp">
+      <Filter>CPP</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Matrix4x4_d.cpp">
+      <Filter>CPP</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Matrix4x4_f.cpp">
+      <Filter>CPP</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\includes\Math\Double2.h">
+      <Filter>H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\Math\Double3.h">
+      <Filter>H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\Math\Double4.h">
+      <Filter>H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\Math\Float2.h">
+      <Filter>H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\Math\Float3.h">
+      <Filter>H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\Math\Float4.h">
+      <Filter>H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\Math\Int2.h">
+      <Filter>H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\Math\Int3.h">
+      <Filter>H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\Math\Int4.h">
+      <Filter>H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\Math\MathCommon.h">
+      <Filter>H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\Math\Matrix.h">
+      <Filter>H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\Math\Matrix4x4_d.h">
+      <Filter>H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\Math\Matrix4x4_f.h">
+      <Filter>H</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="H">
+      <UniqueIdentifier>{c60acfe2-3af2-4ee5-ac64-1b8273198d69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CPP">
+      <UniqueIdentifier>{e3c14c6d-5871-4a45-81ce-890749b99250}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

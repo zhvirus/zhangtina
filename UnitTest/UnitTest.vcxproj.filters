@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="BaseTestor.cpp">
+      <Filter>CPP</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>CPP</Filter>
+    </ClCompile>
+    <ClCompile Include="MatrixTestor.cpp">
+      <Filter>CPP</Filter>
+    </ClCompile>
+    <ClCompile Include="VectorTestor.cpp">
+      <Filter>CPP</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BaseTestor.h">
+      <Filter>H</Filter>
+    </ClInclude>
+    <ClInclude Include="MatrixTestor.h">
+      <Filter>H</Filter>
+    </ClInclude>
+    <ClInclude Include="VectorTestor.h">
+      <Filter>H</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="H">
+      <UniqueIdentifier>{e08681f2-f3df-45b9-8a75-fb45f0764e85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CPP">
+      <UniqueIdentifier>{95a0a28d-020e-45ea-a1e3-65c23a6ec0aa}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
