@@ -51,7 +51,7 @@ CTinaApp::CTinaApp()
 
     HANDLE conBuffer = CreateFile(
         L"CONOUT$",
-        GENERIC_WRITE,
+        GENERIC_WRITE|GENERIC_READ,
         0,
         NULL,
         CREATE_NEW,
@@ -59,12 +59,16 @@ CTinaApp::CTinaApp()
         NULL
         );
 
-    COORD con_buffer_size= {120,30000};
-    SetConsoleScreenBufferSize( conBuffer, con_buffer_size);
-    SMALL_RECT s_rect={0,0,100,200};
-    SetConsoleWindowInfo( conBuffer, true, &s_rect);
-    FILE* stream;
+
+    COORD con_buffer_size= {100,32766};
+    BOOL result = SetConsoleScreenBufferSize( conBuffer, con_buffer_size);
+
+    SMALL_RECT s_rect={0,0,99,50};
+    result = SetConsoleWindowInfo( conBuffer, true, &s_rect);
+
+    FILE* stream, *stream2;
     freopen_s(&stream, "CONOUT$", "w+t", stdout);
+    freopen_s(&stream2, "CONOUT$", "w+t", stderr);
     ShowWindowAsync(conWin, SW_SHOWNORMAL);
 }
 
