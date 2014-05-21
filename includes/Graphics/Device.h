@@ -12,10 +12,14 @@ namespace ZH{
 }
 
 namespace ZH{
+    namespace Math{
+        class float4;
+    }
     namespace Graphics{
 
         class Texture2D;
         class RenderTarget;
+
 
         enum DEVICE_STATUS{
             DEVICE_STATUS_RUNNING,
@@ -32,9 +36,14 @@ namespace ZH{
             virtual bool start( ZH::Widgets::WindowsInfo* ) = 0;
             virtual bool shutdown() = 0;
 
+            virtual bool setRenderTarget( RenderTarget* ) = 0;
+            virtual bool clearRenderTargetView( RenderTarget*, const ZH::Math::float4& ) = 0;
+            virtual bool present() = 0;
+
         private:
             virtual bool createRenderTarget( Texture2D*, RenderTarget*&, const char* const ) = 0;
             virtual bool getBackBuffer( Texture2D*& ) = 0;
+
 
         protected:
             Device();

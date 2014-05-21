@@ -29,6 +29,7 @@ namespace ZH{
             CLASS_TYPE_NAME_DECLEARATION
 
             friend class DeviceDX11;
+            friend class DeviceDX11Imp;
         };
 
 

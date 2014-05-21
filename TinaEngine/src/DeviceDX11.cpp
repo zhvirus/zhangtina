@@ -138,9 +138,30 @@ namespace ZH{
 
         }
 
+        bool DeviceDX11::setRenderTarget( RenderTarget* rt )
+        {
+            if ( IMP_PTR ){
+                return IMP_PTR->setRenderTarget( rt );
+            }
+            return false;
+        }
 
 
+        bool DeviceDX11::clearRenderTargetView( RenderTarget* rt, const ZH::Math::float4& col )
+        {
+            if ( IMP_PTR ){
+                return IMP_PTR->clearRenderTargetView( rt, col );
+            }
+            return false;
+        }
 
+        bool DeviceDX11::present()
+        {
+            if ( IMP_PTR ){
+                return IMP_PTR->present();
+            }
+            return false;
+        }
 
 
 

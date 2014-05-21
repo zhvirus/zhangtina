@@ -1,5 +1,8 @@
 #include "Internal/Graphics/DeviceDX11Imp.h"
 #include "Widget/Window.h"
+#include "Graphics/RenderTarget.h"
+#include "Internal/Graphics/RenderTargetImp.h"
+#include "Math/float4.h"
 
 namespace ZH{
     namespace Graphics{
@@ -203,6 +206,67 @@ namespace ZH{
                 m_pDevice = NULL;
             }
         }
+
+
+        bool DeviceDX11Imp::setRenderTarget( RenderTarget* rt )
+        {
+            if ( !good() || !rt ){
+                return false;
+            }
+
+            RenderTargetImp* rtImp = rt->m_pRtImp;
+            if ( !rtImp ){
+                return false;
+            }
+
+            ID3D11RenderTargetView* rtView = rtImp->getRenderTargetView_d3d();
+            if( !rtView ){
+                return false;
+            }
+
+            m_pContext->OMGetRenderTargets( 1, &rtView, NULL );
+
+            return true;
+        }
+
+        bool DeviceDX11Imp::clearRenderTargetView( ZH::Graphics::RenderTarget* rt, const ZH::Math::float4& col )
+        {
+            if ( !good() || !rt ){
+                return false;
+            }
+
+            RenderTargetImp* rtImp = rt->m_pRtImp;
+            if ( !rtImp ){
+                return false;
+            }
+
+            ID3D11RenderTargetView* rtView = rtImp->getRenderTargetView_d3d();
+            if( !rtView ){
+                return false;
+            }
+
+            float ClearColor[4] = { col[0], col[1], col[2], col[3] };
+            m_pContext->ClearRenderTargetView( rtView, ClearColor );
+
+            return true;
+
+        }
+
+        bool DeviceDX11Imp::present()
+        {
+            if ( !good() ){
+                return false;
+            }
+
+            m_pSwapChain->Present( 0, 0 );
+
+            return true;
+        }
+
+
+
+
+
 
     } // Graphics
 } // ZH

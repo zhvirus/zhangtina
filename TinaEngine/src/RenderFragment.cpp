@@ -6,25 +6,27 @@
 #include "Graphics/Camera.h"
 #include "Graphics/World.h"
 #include "Graphics/RenderTarget.h"
+#include "Graphics/DeviceDX11.h"
+#include "Math/float4.h"
 
 namespace ZH{
     namespace Graphics{
         CLASS_TYPE_NAME_DEFINITION( RenderFragment )
 
         RenderFragment::RenderFragment():
-        m_cameraPtr(NULL),
-        m_worldPtr(NULL),
-        m_renderTargetsPtr(NULL)
+            m_devicePtr(NULL),
+            m_cameraPtr(NULL),
+            m_worldPtr(NULL),
+            m_renderTargetsPtr(NULL)
         {
-            m_renderTargetsPtr = new std::vector<RenderTarget*>;
         }
 
-        RenderFragment::RenderFragment( Camera* cam, World* wld, std::vector<RenderTarget*>* rts):
-        m_cameraPtr(cam),
-        m_worldPtr(wld),
-        m_renderTargetsPtr(rts)
+        RenderFragment::RenderFragment( Device* device, Camera* cam, World* wld, std::vector<RenderTarget*>* rts):
+            m_devicePtr( device ),
+            m_cameraPtr(cam),
+            m_worldPtr(wld),
+            m_renderTargetsPtr(rts)
         {
-            m_renderTargetsPtr = new std::vector<RenderTarget*>;
         }
 
         RenderFragment::~RenderFragment()
@@ -60,6 +62,13 @@ namespace ZH{
 
         void RenderFragment::render()
         {
+            if ( !m_renderTargetsPtr || NULL == (*m_renderTargetsPtr)[0] ){
+                return;
+            }
+
+            m_devicePtr->setRenderTarget((*m_renderTargetsPtr)[0]);
+            m_devicePtr->clearRenderTargetView((*m_renderTargetsPtr)[0],ZH::Math::float4(0.1f,0.1f,0.1f,1.0f));
+            m_devicePtr->present();
 
         }
 

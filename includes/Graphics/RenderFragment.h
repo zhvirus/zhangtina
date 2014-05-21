@@ -10,6 +10,7 @@ namespace ZH{
     namespace Graphics{
 
         // forwards
+        class Device;
         class Camera;
         class World;
         class RenderTarget;
@@ -17,7 +18,7 @@ namespace ZH{
         class ZH_GRAPHICS_DLL RenderFragment : public Resource {
         public:
             RenderFragment();
-            RenderFragment( Camera*, World*, std::vector<RenderTarget*>* );
+            RenderFragment( Device*, Camera*, World*, std::vector<RenderTarget*>* );
             ~RenderFragment();
 
             bool operator ==(const RenderFragment&);
@@ -35,6 +36,7 @@ namespace ZH{
             void render();
 
         protected:
+            Device* m_devicePtr;
             Camera* m_cameraPtr;
             World*  m_worldPtr;
             std::vector<RenderTarget*>* m_renderTargetsPtr;

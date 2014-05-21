@@ -116,7 +116,7 @@ ZH::Graphics::RenderFragment* Global::createDefaultRenderFragment( ZH::Widgets::
     renderTargets->push_back(renderTarget);
 
 
-    m_pRenderFragment = new ZH::Graphics::RenderFragment( defaultCamera, &defaultWorld, renderTargets);
+    m_pRenderFragment = new ZH::Graphics::RenderFragment( m_pDevice, defaultCamera, &defaultWorld, renderTargets);
 
     return m_pRenderFragment;
 }

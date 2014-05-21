@@ -4,9 +4,16 @@
 #include "Common/ZHSTD.h"
 #include "Internal/Common/internal_common.h"
 
+
 namespace ZH{
     namespace Widgets{
         class WindowsInfo;
+    }
+    namespace Graphics{
+        class RenderTarget;
+    }
+    namespace Math{
+        class float4;
     }
 
     namespace Graphics{
@@ -15,6 +22,9 @@ namespace ZH{
             bool startDevice( ZH::Widgets::WindowsInfo* winInfo = NULL );
             void shutdownDevice();
             bool good()const;
+            bool setRenderTarget( ZH::Graphics::RenderTarget* );
+            bool clearRenderTargetView( ZH::Graphics::RenderTarget*, const ZH::Math::float4& );
+            bool present();
         private:
             ID3D11Device        *m_pDevice;
             ID3D11DeviceContext *m_pContext;
