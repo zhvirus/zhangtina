@@ -50,7 +50,10 @@ BOOL CChildView::PreCreateWindow(CREATESTRUCT& cs)
 	return TRUE;
 }
 
+//void CChildView::OnDraw(CDC *)
+//{
 
+//}
 
 void CChildView::OnPaint() 
 {
@@ -101,6 +104,16 @@ void CChildView::OnSize(UINT nType, int cx, int cy)
     }else{
         // Deal with resizing
     }
+}
+
+
+void CChildView::OnInitialUpdate()
+{
+    //CView::OnInitialUpdate();
+
+
+
+
 }
 
 

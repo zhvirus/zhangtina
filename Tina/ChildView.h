@@ -29,7 +29,7 @@ public:
 // Overrides
 	protected:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
-
+    virtual void OnInitialUpdate();
 // Implementation
 public:
 	virtual ~CChildView();
@@ -37,6 +37,7 @@ public:
 	// Generated message map functions
 protected:
 	afx_msg void OnPaint();
+    //virtual void OnDraw(CDC *);
 	DECLARE_MESSAGE_MAP()
 public:
     afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);

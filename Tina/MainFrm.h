@@ -3,7 +3,7 @@
 //
 
 #pragma once
-#include "ChildView.h"
+#include "TinaView.h"
 #include "FileView.h"
 #include "ClassView.h"
 #include "OutputWnd.h"
@@ -22,6 +22,8 @@ public:
 
 // Operations
 public:
+    void output(const char* const){}
+    void output_err(const char* const){}
 
 // Overrides
 public:
@@ -46,7 +48,7 @@ protected:  // control bar embedded members
 	CClassView        m_wndClassView;
 	COutputWnd        m_wndOutput;
 	CPropertiesWnd    m_wndProperties;
-	CChildView    m_wndView;
+	CTinaView         m_wndView;
 
 // Generated message map functions
 protected:

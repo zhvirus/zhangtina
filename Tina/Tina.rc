@@ -437,9 +437,8 @@ BEGIN
     IDS_CLASS_VIEW          "Class View"
     IDS_EXPLORER            "Explorer"
     IDS_OUTPUT_WND          "Output"
-    IDS_BUILD_TAB           "Build"
-    IDS_DEBUG_TAB           "Debug"
-    IDS_FIND_TAB            "Find"
+    IDS_OUTPUT_TAB          "Normal"
+    IDS_OUTPUT_DEBUG_TAB    "Debug"
     IDS_PROPERTIES_WND      "Properties"
     IDS_EDIT_MENU           "Edit"
 END

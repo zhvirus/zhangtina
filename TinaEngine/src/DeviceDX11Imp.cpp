@@ -77,6 +77,16 @@ namespace ZH{
             if ( good() )
                 return true;
 
+            // Check win info
+            if ( winInfo ){
+                if ( (winInfo->fHeight <= 0) ||
+                     (winInfo->fWidth <=0) ||
+                     (!winInfo->fWndHandle)){
+                         ZH_ERR("DeviceDX11Imp::startDevice()--WindosInfo is invalid!");
+                         return false;
+                }
+            }
+
             // Device creating flag
             UINT createDeviceFlags = 0;
 #ifdef _DEBUG

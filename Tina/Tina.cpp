@@ -60,11 +60,13 @@ CTinaApp::CTinaApp()
         );
 
 
-    COORD con_buffer_size= {100,32766};
+    COORD con_buffer_size= {110,32766};
     BOOL result = SetConsoleScreenBufferSize( conBuffer, con_buffer_size);
 
-    SMALL_RECT s_rect={0,0,99,50};
+    SMALL_RECT s_rect={0,0,109,50};
     result = SetConsoleWindowInfo( conBuffer, true, &s_rect);
+
+    result = SetConsoleTextAttribute( conBuffer, FOREGROUND_BLUE | FOREGROUND_GREEN );
 
     FILE* stream, *stream2;
     freopen_s(&stream, "CONOUT$", "w+t", stdout);
