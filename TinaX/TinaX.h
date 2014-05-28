@@ -35,6 +35,9 @@ public:
 
 	afx_msg void OnAppAbout();
 	DECLARE_MESSAGE_MAP()
+
+private:
+    void prepareConsole();
 };
 
 extern CTinaXApp theApp;

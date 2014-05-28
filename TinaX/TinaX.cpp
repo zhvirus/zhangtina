@@ -43,12 +43,17 @@ CTinaXApp::CTinaXApp()
 
 	// TODO: replace application ID string below with unique ID string; recommended
 	// format for string is CompanyName.ProductName.SubProduct.VersionInformation
-	SetAppID(_T("TinaX.AppID.NoVersion"));
+	SetAppID(_T("JackZhang.TinaX.VersionBlaBla"));
 
 	// TODO: add construction code here,
 	// Place all significant initialization in InitInstance
 
     // Show console window
+    prepareConsole();
+}
+
+void CTinaXApp::prepareConsole()
+{
     ::AllocConsole();
     HWND conWin = GetConsoleWindow();
     SetConsoleTitle("TinaX-cmd");
@@ -62,7 +67,6 @@ CTinaXApp::CTinaXApp()
         FILE_ATTRIBUTE_NORMAL,
         NULL
         );
-
 
     COORD con_buffer_size= {110,32766};
     BOOL result = SetConsoleScreenBufferSize( conBuffer, con_buffer_size);
@@ -121,7 +125,7 @@ BOOL CTinaXApp::InitInstance()
 	// Change the registry key under which our settings are stored
 	// TODO: You should modify this string to be something appropriate
 	// such as the name of your company or organization
-	SetRegistryKey(_T("Local AppWizard-Generated Applications"));
+	SetRegistryKey(_T("Jack-Zhang.TinaX"));
 	LoadStdProfileSettings(4);  // Load standard INI file options (including MRU)
 
 
