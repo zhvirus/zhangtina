@@ -17,6 +17,7 @@
 #include "Graphics/DeviceDX11.h"
 #include "Graphics/ResourceManager.h"
 #include "Math/MathCommon.h"
+#include "TinaX_UI_ColorChooser.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -30,6 +31,7 @@ IMPLEMENT_DYNCREATE(CTinaXView, CView)
 BEGIN_MESSAGE_MAP(CTinaXView, CView)
 	ON_WM_CONTEXTMENU()
 	ON_WM_RBUTTONUP()
+    ON_COMMAND(ID_MENUITEM_OPTION_CLEAR_COLOR, &CTinaXView::OnOptionClearColor)
 END_MESSAGE_MAP()
 
 // CTinaXView construction/destruction
@@ -52,6 +54,22 @@ BOOL CTinaXView::PreCreateWindow(CREATESTRUCT& cs)
 	return CView::PreCreateWindow(cs);
 }
 
+void CTinaXView::applyPrefToRender( ZH::Graphics::RenderFragment* rf )
+{
+    if ( !rf ){
+        return;
+    }
+
+    TinaX_Preference& g_pref = Global::instance().pref();
+
+    // set clear color
+    rf->clearColor( g_pref.clearColor() );
+
+
+
+}
+
+
 // CTinaXView drawing
 
 void CTinaXView::OnDraw(CDC* /*pDC*/)
@@ -63,6 +81,7 @@ void CTinaXView::OnDraw(CDC* /*pDC*/)
 
     ZH::Graphics::RenderFragment* rf = Global::instance().defaultRenderFragment();
     if ( rf ){
+        applyPrefToRender( rf );
         rf->render();
     }
 }
@@ -134,6 +153,16 @@ CTinaXDoc* CTinaXView::GetDocument() const // non-debug version is inline
 	return (CTinaXDoc*)m_pDocument;
 }
 #endif //_DEBUG
+
+void CTinaXView::OnOptionClearColor()
+{
+    TinaX_UI_ColorChooser cc(m_hWnd);
+    ZH::Math::float4 clearColor;
+    if ( cc.pickColor( clearColor ) ){
+        Global::instance().pref().clearColor( clearColor );
+        OnDraw(0);
+    }
+}
 
 
 // CTinaXView message handlers

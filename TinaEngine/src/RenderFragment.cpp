@@ -17,7 +17,8 @@ namespace ZH{
             m_devicePtr(NULL),
             m_cameraPtr(NULL),
             m_worldPtr(NULL),
-            m_renderTargetsPtr(NULL)
+            m_renderTargetsPtr(NULL),
+            m_clearCol(0.0f,0.0f,0.0f,1.0f)
         {
         }
 
@@ -25,7 +26,8 @@ namespace ZH{
             m_devicePtr( device ),
             m_cameraPtr(cam),
             m_worldPtr(wld),
-            m_renderTargetsPtr(rts)
+            m_renderTargetsPtr(rts),
+            m_clearCol(0.0f,0.0f,0.0f,1.0f)
         {
         }
 
@@ -39,7 +41,7 @@ namespace ZH{
 
         void RenderFragment::setRenderTarget( RenderTarget* rt, unsigned int idx )
         {
-            if ( m_renderTargetsPtr->size() >idx ){
+            if ( m_renderTargetsPtr->size() > idx ){
                 (*m_renderTargetsPtr)[idx] = rt;
             }
         }
@@ -66,10 +68,15 @@ namespace ZH{
                 return;
             }
 
+            // Set render target
             m_devicePtr->setRenderTarget((*m_renderTargetsPtr)[0]);
-            m_devicePtr->clearRenderTargetView((*m_renderTargetsPtr)[0],ZH::Math::float4(0.1f,0.1f,0.1f,1.0f));
-            m_devicePtr->present();
 
+            // Clear colors
+            m_devicePtr->clearRenderTargetView((*m_renderTargetsPtr)[0], m_clearCol);
+
+
+            // Present
+            m_devicePtr->present();
         }
 
         bool RenderFragment::operator== ( const RenderFragment& v)

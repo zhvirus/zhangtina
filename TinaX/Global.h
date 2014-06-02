@@ -1,4 +1,5 @@
 #pragma once
+#include "TinaX_Preference.h"
 
 // Forwards
 namespace ZH{
@@ -20,13 +21,17 @@ public:
     static void error( const char* const, ...);
 
 public:
+    TinaX_Preference& pref() { return m_preference; }
+
     bool startDevice( ZH::Widgets::WindowsInfo& );
     ZH::Graphics::RenderFragment* defaultRenderFragment(){ return m_pRenderFragment; };
     ZH::Graphics::RenderFragment* createDefaultRenderFragment( ZH::Widgets::WindowsInfo& );
+
 private:
 
 
 private:
+    TinaX_Preference m_preference;
     ZH::Graphics::Device* m_pDevice;
     ZH::Graphics::RenderFragment* m_pRenderFragment;
 

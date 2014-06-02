@@ -221,6 +221,8 @@
     <ClInclude Include="TinaX.h" />
     <ClInclude Include="TinaXDoc.h" />
     <ClInclude Include="TinaXView.h" />
+    <ClInclude Include="TinaX_Preference.h" />
+    <ClInclude Include="TinaX_UI_ColorChooser.h" />
     <ClInclude Include="ViewTree.h" />
   </ItemGroup>
   <ItemGroup>
@@ -240,6 +242,8 @@
     <ClCompile Include="TinaX.cpp" />
     <ClCompile Include="TinaXDoc.cpp" />
     <ClCompile Include="TinaXView.cpp" />
+    <ClCompile Include="TinaX_Preference.cpp" />
+    <ClCompile Include="TinaX_UI_ColorChooser.cpp" />
     <ClCompile Include="ViewTree.cpp" />
   </ItemGroup>
   <ItemGroup>

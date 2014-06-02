@@ -118,6 +118,9 @@ ZH::Graphics::RenderFragment* Global::createDefaultRenderFragment( ZH::Widgets::
 
     m_pRenderFragment = new ZH::Graphics::RenderFragment( m_pDevice, defaultCamera, &defaultWorld, renderTargets);
 
+    // clear color
+    m_pRenderFragment->clearColor( 0.25f, 0.5f, 0.5f );
+
     return m_pRenderFragment;
 }
 

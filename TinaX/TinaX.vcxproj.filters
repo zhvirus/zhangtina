@@ -60,6 +60,12 @@
     <ClInclude Include="Global.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TinaX_UI_ColorChooser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TinaX_Preference.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TinaX.cpp">
@@ -96,6 +102,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Global.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TinaX_UI_ColorChooser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TinaX_Preference.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

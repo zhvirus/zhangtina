@@ -176,6 +176,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	lstBasicCommands.AddTail(ID_FILE_OPEN);
 	lstBasicCommands.AddTail(ID_FILE_SAVE);
 	lstBasicCommands.AddTail(ID_FILE_PRINT);
+	lstBasicCommands.AddTail(ID_MENUITEM_OPTION_CLEAR_COLOR);
 	lstBasicCommands.AddTail(ID_APP_EXIT);
 	lstBasicCommands.AddTail(ID_EDIT_CUT);
 	lstBasicCommands.AddTail(ID_EDIT_PASTE);

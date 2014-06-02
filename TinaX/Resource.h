@@ -104,6 +104,7 @@
 #define IDS_FIND_TAB				302
 #define IDS_EXPLORER				305
 #define IDS_EDIT_MENU				306
+#define ID_MENUITEM_OPTION_CLEAR_COLOR     307
 
 // Next default values for new objects
 //

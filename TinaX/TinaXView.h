@@ -4,6 +4,12 @@
 
 #pragma once
 
+namespace ZH{
+    namespace Graphics{
+        class RenderFragment;
+    }
+}
+
 
 class CTinaXView : public CView
 {
@@ -34,12 +40,14 @@ public:
 #endif
 
 protected:
+    void applyPrefToRender( ZH::Graphics::RenderFragment* );
 
 // Generated message map functions
 protected:
 	afx_msg void OnFilePrintPreview();
 	afx_msg void OnRButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
+    afx_msg void OnOptionClearColor();
 	DECLARE_MESSAGE_MAP()
 };
 

@@ -70,7 +70,7 @@ END
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
 LANGUAGE 9, 1
 IDR_MAINFRAME           ICON         "res\\TinaX.ico"
-IDR_TinaXTYPE         ICON         "res\\TinaXDoc.ico"
+IDR_TinaXTYPE           ICON         "res\\TinaXDoc.ico"
 #endif
 IDI_FILE_VIEW           ICON         "res\\file_view.ico"
 IDI_FILE_VIEW_HC        ICON         "res\\file_view_hc.ico"
@@ -193,6 +193,10 @@ BEGIN
         MENUITEM "Recent File",                 ID_FILE_MRU_FILE1,GRAYED
         MENUITEM SEPARATOR
         MENUITEM "E&xit",                       ID_APP_EXIT
+    END
+    POPUP "&Options"
+    BEGIN
+        MENUITEM "Clear Color",                  ID_MENUITEM_OPTION_CLEAR_COLOR
     END
     POPUP "&Edit"
     BEGIN
@@ -468,6 +472,8 @@ BEGIN
     ID_EDIT_REDO            "Redo the previously undone action\nRedo"
     ID_VIEW_STATUS_BAR      "Show or hide the status bar\nToggle Status Bar"
     ID_VIEW_CAPTION_BAR     "Show or hide the caption bar\nToggle Caption Bar"
+
+    ID_MENUITEM_OPTION_CLEAR_COLOR "Set the background clear color"
 END
 
 STRINGTABLE
