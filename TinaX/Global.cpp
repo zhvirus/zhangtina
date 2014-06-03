@@ -9,7 +9,6 @@
 #include "Graphics/ResourceManager.h"
 #include "Math/MathCommon.h"
 
-#define MAX_PRINT_BUF_SIZE 0x1000
 
 Global::Global():
     m_pDevice( NULL ),
@@ -21,29 +20,6 @@ Global::Global():
 Global::~Global()
 {
 }
-
-void Global::print( const char* const fmt, ...)
-{
-    va_list args;
-    va_start(args, fmt);
-    char buffer[MAX_PRINT_BUF_SIZE];
-    int ret = vsnprintf_s(buffer, MAX_PRINT_BUF_SIZE, _TRUNCATE, fmt, args);
-    va_end(args);
-    assert(ret != -1);
-    std::cout<<"[Tina]: "<<buffer;
-}
-
-void Global::error( const char* const fmt, ...)
-{
-    va_list args;
-    va_start(args, fmt);
-    char buffer[MAX_PRINT_BUF_SIZE];
-    int ret = vsnprintf_s(buffer, MAX_PRINT_BUF_SIZE, _TRUNCATE, fmt, args);
-    va_end(args);
-    assert(ret != -1);
-    std::cerr<<"[Tina]: ERROR"<<buffer;
-}
-
 
 bool Global::startDevice( ZH::Widgets::WindowsInfo& winInfo )
 {
@@ -122,6 +98,14 @@ ZH::Graphics::RenderFragment* Global::createDefaultRenderFragment( ZH::Widgets::
     m_pRenderFragment->clearColor( 0.25f, 0.5f, 0.5f );
 
     return m_pRenderFragment;
+}
+
+void Global::applyPrefToRender()
+{
+    if ( m_pRenderFragment ){
+        // Flush clear color
+        m_pRenderFragment->clearColor( m_preference.clearColor() );
+    }
 }
 
 

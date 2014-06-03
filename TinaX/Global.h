@@ -17,8 +17,6 @@ class Global
 {
 public:
     static Global& instance(){ static Global g; return g; }
-    static void print( const char* const, ...);
-    static void error( const char* const, ...);
 
 public:
     TinaX_Preference& pref() { return m_preference; }
@@ -26,6 +24,8 @@ public:
     bool startDevice( ZH::Widgets::WindowsInfo& );
     ZH::Graphics::RenderFragment* defaultRenderFragment(){ return m_pRenderFragment; };
     ZH::Graphics::RenderFragment* createDefaultRenderFragment( ZH::Widgets::WindowsInfo& );
+
+    void applyPrefToRender();
 
 private:
 

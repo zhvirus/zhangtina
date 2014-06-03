@@ -61,9 +61,9 @@ void CTinaXApp::prepareConsole()
     HANDLE conBuffer = CreateFile(
         "CONOUT$",
         GENERIC_WRITE|GENERIC_READ,
-        0,
+        FILE_SHARE_WRITE ,
         NULL,
-        CREATE_NEW,
+        OPEN_ALWAYS,
         FILE_ATTRIBUTE_NORMAL,
         NULL
         );
@@ -80,6 +80,7 @@ void CTinaXApp::prepareConsole()
     freopen_s(&stream, "CONOUT$", "w+t", stdout);
     freopen_s(&stream2, "CONOUT$", "w+t", stderr);
     ShowWindowAsync(conWin, SW_SHOWNORMAL);
+
 }
 
 // The one and only CTinaXApp object

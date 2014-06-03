@@ -1,9 +1,7 @@
 
-// TinaXView.h : interface of the CTinaXView class
-//
-
 #pragma once
 
+// Forwards
 namespace ZH{
     namespace Graphics{
         class RenderFragment;
@@ -14,45 +12,32 @@ namespace ZH{
 class CTinaXView : public CView
 {
 protected: // create from serialization only
-	CTinaXView();
-	DECLARE_DYNCREATE(CTinaXView)
+    CTinaXView();
+    DECLARE_DYNCREATE(CTinaXView)
 
-// Attributes
-public:
-	CTinaXDoc* GetDocument() const;
-
-// Operations
+    // Operations
 public:
 
-// Overrides
+    // Overrides
 public:
-	virtual void OnDraw(CDC* pDC);  // overridden to draw this view
+    virtual void OnDraw(CDC* pDC);
     virtual void OnInitialUpdate();
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+    virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 protected:
 
-// Implementation
+    // Implementation
 public:
-	virtual ~CTinaXView();
-#ifdef _DEBUG
-	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
-#endif
+    virtual ~CTinaXView();
 
 protected:
-    void applyPrefToRender( ZH::Graphics::RenderFragment* );
 
-// Generated message map functions
+
+    // Generated message map functions
 protected:
-	afx_msg void OnFilePrintPreview();
-	afx_msg void OnRButtonUp(UINT nFlags, CPoint point);
-	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
+    afx_msg void OnRButtonUp(UINT nFlags, CPoint point);
+    afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
     afx_msg void OnOptionClearColor();
-	DECLARE_MESSAGE_MAP()
+    DECLARE_MESSAGE_MAP()
 };
 
-#ifndef _DEBUG  // debug version in TinaXView.cpp
-inline CTinaXDoc* CTinaXView::GetDocument() const
-   { return reinterpret_cast<CTinaXDoc*>(m_pDocument); }
-#endif
 

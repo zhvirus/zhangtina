@@ -108,9 +108,6 @@
     <ClInclude Include="..\includes\Graphics\World.h">
       <Filter>H</Filter>
     </ClInclude>
-    <ClInclude Include="..\includes\Common\ZHSTD.h">
-      <Filter>H</Filter>
-    </ClInclude>
     <ClInclude Include="..\includes\Internal\Common\internal_common.h">
       <Filter>H_Internal</Filter>
     </ClInclude>
@@ -126,6 +123,9 @@
     <ClInclude Include="..\includes\Internal\Graphics\WorldImp.h">
       <Filter>H_Internal</Filter>
     </ClInclude>
+    <ClInclude Include="..\includes\Common\ZHSTD.h">
+      <Filter>H\common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="H">
@@ -136,6 +136,9 @@
     </Filter>
     <Filter Include="CPP">
       <UniqueIdentifier>{e355c065-28fe-4471-a9bf-598a9354ac81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="H\common">
+      <UniqueIdentifier>{eaca558c-6312-48a6-a245-30e206d618e2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

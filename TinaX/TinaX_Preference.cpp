@@ -2,7 +2,7 @@
 #include "TinaX_Preference.h"
 #include "TinaX.h"
 #include "Global.h"
-
+#include "Util/Print.h"
 
 extern CTinaXApp theApp;
 
@@ -34,6 +34,6 @@ void TinaX_Preference::clearColor( const ZH::Math::float4& col )
 {
     m_clearColor = col;
     theApp.WriteBinary( clear_color_key, (LPBYTE)(&m_clearColor.val), sizeof(float)*4);
-    Global::print("ClearColor set to (%.2f, %.2f, %.2f)\n", col.r, col.g, col.b);
+    ZH::Util::INF("ClearColor set to (%.2f, %.2f, %.2f)\n", col.r, col.g, col.b);
 }
 

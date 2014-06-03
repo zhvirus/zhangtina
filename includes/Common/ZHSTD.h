@@ -25,6 +25,14 @@
 #define ZH_WIDGET_EXTERN extern
 #endif
 
+#ifdef _ZH_UTIL_DLL_
+#define ZH_UTIL_DLL _declspec(dllexport)
+#define ZH_UTIL_EXTERN
+#else
+#define ZH_UTIL_DLL _declspec(dllimport)
+#define ZH_UTIL_EXTERN extern
+#endif
+
 
 
 #ifndef NULL
