@@ -48,46 +48,10 @@ CTinaXApp::CTinaXApp()
 
 	// TODO: add construction code here,
 	// Place all significant initialization in InitInstance
+
+    ZH::Util::TNX_INF("TinaX started!\n");
 }
 
-void CTinaXApp::setupConsole()
-{
-    ::AllocConsole();
-    HWND conWin = GetConsoleWindow();
-    SetConsoleTitle("TinaX-cmd");
-
-    HANDLE conBuffer = CreateFile(
-        "CONOUT$",
-        GENERIC_WRITE|GENERIC_READ,
-        FILE_SHARE_WRITE ,
-        NULL,
-        OPEN_ALWAYS,
-        FILE_ATTRIBUTE_NORMAL,
-        NULL
-        );
-
-    COORD con_buffer_size= {110,32766};
-    BOOL result = SetConsoleScreenBufferSize( conBuffer, con_buffer_size);
-
-    SMALL_RECT s_rect={0,0,109,50};
-    result = SetConsoleWindowInfo( conBuffer, true, &s_rect);
-
-    result = SetConsoleTextAttribute( conBuffer, FOREGROUND_BLUE | FOREGROUND_GREEN );
-
-    FILE* stream, *stream2;
-    freopen_s(&stream, "CONOUT$", "w+t", stdout);
-    freopen_s(&stream2, "CONOUT$", "w+t", stderr);
-    ShowWindowAsync(conWin, SW_SHOWNORMAL);
-
-    if ( result ){
-        ZH::Util::TNX_INF("Console window setup successfully!\n");
-    }
-}
-
-void CTinaXApp::freeConsole()
-{
-    ::FreeConsole();
-}
 
 // The one and only CTinaXApp object
 
@@ -109,9 +73,6 @@ BOOL CTinaXApp::InitInstance()
 	InitCommonControlsEx(&InitCtrls);
 
 	CWinAppEx::InitInstance();
-
-    // set up console window
-    setupConsole();
 
 	// Initialize OLE libraries
 	if (!AfxOleInit())
@@ -181,9 +142,6 @@ int CTinaXApp::ExitInstance()
 {
 	//TODO: handle additional resources you may have added
 	AfxOleTerm(FALSE);
-
-    // Free console
-    freeConsole();
 
 	return CWinAppEx::ExitInstance();
 }

@@ -135,9 +135,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\includes\Common\ZHSTD.h" />
+    <ClInclude Include="..\includes\Util\Console.h" />
     <ClInclude Include="..\includes\Util\Print.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Console.cpp" />
     <ClCompile Include="src\Print.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
