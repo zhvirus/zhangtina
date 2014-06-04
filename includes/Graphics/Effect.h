@@ -10,7 +10,7 @@ namespace ZH{
         class ZH_GRAPHICS_DLL Effect: public Resource
         {
         public:
-            Effect();
+            Effect( const char* const );
             virtual ~Effect();
             virtual bool isValid();
         private:
@@ -22,7 +22,7 @@ namespace ZH{
         class ZH_GRAPHICS_DLL EffectInstance: public Resource
         {
         public:
-            EffectInstance();
+            EffectInstance( const char* const );
             virtual ~EffectInstance();
 
             bool operator==(const EffectInstance&);

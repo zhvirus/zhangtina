@@ -70,10 +70,7 @@ namespace ZH{
             static const char m_sBackBufferName[30];
 
         private:
-            Texture2D( Texture2DImp*, const char* const );
-
-
-
+            Texture2D( const char* const, Texture2DImp* );
 
         private:
             TEX2D_DESC m_sDesc;

@@ -24,8 +24,12 @@ void TinaX_Preference::recover()
     // Recover clear color
     LPBYTE pData;
     UINT size;
-    theApp.GetBinary( clear_color_key, &pData, &size);
-    memcpy( (void*)(&m_clearColor.val), (void*)pData, size );
+
+    // Clear color
+    if (theApp.GetBinary( clear_color_key, &pData, &size)){
+        memcpy( (void*)(&m_clearColor.val), (void*)pData, size );
+        ZH::Util::TNX_INF("ClearColor restored to (%.2f, %.2f, %.2f)\n", m_clearColor.r, m_clearColor.g, m_clearColor.b);
+    }
 
 
 }
@@ -34,6 +38,6 @@ void TinaX_Preference::clearColor( const ZH::Math::float4& col )
 {
     m_clearColor = col;
     theApp.WriteBinary( clear_color_key, (LPBYTE)(&m_clearColor.val), sizeof(float)*4);
-    ZH::Util::INF("ClearColor set to (%.2f, %.2f, %.2f)\n", col.r, col.g, col.b);
+    ZH::Util::TNX_INF("ClearColor set to (%.2f, %.2f, %.2f)\n", col.r, col.g, col.b);
 }
 

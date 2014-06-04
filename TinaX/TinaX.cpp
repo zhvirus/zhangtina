@@ -80,7 +80,7 @@ void CTinaXApp::setupConsole()
     ShowWindowAsync(conWin, SW_SHOWNORMAL);
 
     if ( result ){
-        ZH::Util::INF("Console window setup successfully!\n");
+        ZH::Util::TNX_INF("Console window setup successfully!\n");
     }
 }
 

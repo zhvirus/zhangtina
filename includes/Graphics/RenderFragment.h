@@ -18,9 +18,9 @@ namespace ZH{
 
         class ZH_GRAPHICS_DLL RenderFragment : public Resource {
         public:
-            RenderFragment();
-            RenderFragment( Device*, Camera*, World*, std::vector<RenderTarget*>* );
-            ~RenderFragment();
+            RenderFragment( const char* const );
+            RenderFragment( const char* const, Device*, Camera*, World*, std::vector<RenderTarget*>* );
+            virtual ~RenderFragment();
 
             bool operator ==(const RenderFragment&);
 

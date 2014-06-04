@@ -27,7 +27,7 @@ namespace ZH{
             DEVICE_STATUS_SHUTDOWN
         };
 
-        class ZH_GRAPHICS_DLL Device : public Name
+        class ZH_GRAPHICS_DLL Device
         {
         public:
             virtual bool isRunning()const{return m_status == DEVICE_STATUS_RUNNING;};

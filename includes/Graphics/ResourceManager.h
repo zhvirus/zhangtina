@@ -15,17 +15,35 @@ namespace ZH {
         public:
             static ResourceManager& instance() { static ResourceManager rm; return rm; }
 
-            Cache<Texture2D>&      Texture2Ds()      { return m_texture2DCache; }
-            Cache<VertexBuffer>&   VertexBuffers()   { return m_vertexBufferCache; }
-            Cache<IndexBuffer>&    IndexBuffers()    { return m_indexBufferCache; }
-            Cache<EffectInstance>& EffectInstances() { return m_effectInstanceCache; }
-            Cache<RenderTarget>&   RenderTargets()   { return m_renderTargetCache; }
-            Cache<RenderFragment>& RenderFragments() { return m_renderFragmentCache; }
-            Cache<CameraOrtho>&    CameraOrthos()    { return m_cameraOrthoCache; }
-            Cache<CameraPersp>&    CameraPersps()    { return m_cameraPerspCache; }
+            // Render target
+            RenderTarget* findRenderTargetByName( const char* const );
+            RenderTarget* acquireRenderTarget( const char* const, Device*, Texture2D* );
 
-            RenderTarget* acquireRenderTarget( Device*, Texture2D*, const char* const);
+            // Back buffer
             Texture2D*    acquireBackBuffer( Device* );
+
+            // Camera
+            CameraPersp* findCameraPerspByName( const char* const name );
+            CameraPersp* acquireDefaultCameraPersp();
+            CameraPersp* acquireCameraPersp(
+                const char* const name,
+                const ZH::Math::float3& pos,
+                const ZH::Math::float3& lookDir,
+                const ZH::Math::float3& upDir,
+                float fovy,
+                float aspect,
+                float nearZ,
+                float farZ);
+
+            // Render fragment
+            RenderFragment* findRenderFragmentByName( const char* const name );
+            RenderFragment* acquireRenderFragment(
+                  const char* const name,
+                  Device* device,
+                  Camera* camera,
+                  World* world,
+                  std::vector<RenderTarget*>* renderTargets
+                 );
 
         private:
             Cache<Texture2D>        m_texture2DCache;

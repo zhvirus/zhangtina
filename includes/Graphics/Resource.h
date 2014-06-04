@@ -9,8 +9,7 @@ namespace ZH {
         class ZH_GRAPHICS_DLL Resource : public Name
         {
         public:
-            Resource();
-            Resource( const Resource& );
+            Resource( const char* const );
             virtual ~Resource();
             virtual bool isValid() { return false; };
         protected:

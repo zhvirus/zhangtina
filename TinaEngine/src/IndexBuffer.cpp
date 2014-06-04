@@ -8,7 +8,8 @@ namespace ZH{
     namespace Graphics{
         CLASS_TYPE_NAME_DEFINITION( IndexBuffer )
 
-        IndexBuffer::IndexBuffer()
+        IndexBuffer::IndexBuffer( const char* const name ):
+            Resource( name )
         {
 
         }

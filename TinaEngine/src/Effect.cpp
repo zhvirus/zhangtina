@@ -11,7 +11,8 @@ namespace ZH{
         //-----------------------------------
         // Effect
         //-----------------------------------
-        Effect::Effect()
+        Effect::Effect( const char* const name):
+            Resource(name)
         {
 
         }
@@ -29,7 +30,8 @@ namespace ZH{
         //-----------------------------------
         // EffectInstance
         //-----------------------------------
-        EffectInstance::EffectInstance():
+        EffectInstance::EffectInstance( const char* const name ):
+            Resource( name ),
             m_pEffect( NULL )
         {
 

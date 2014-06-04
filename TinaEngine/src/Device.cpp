@@ -6,7 +6,8 @@
 namespace ZH{
     namespace Graphics{
 
-        Device::Device():m_status(DEVICE_STATUS_SHUTDOWN)
+        Device::Device():
+            m_status(DEVICE_STATUS_SHUTDOWN)
         {
         }
 

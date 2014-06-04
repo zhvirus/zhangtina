@@ -20,7 +20,7 @@ namespace ZH{
 
 
         private:
-            RenderTarget( Texture2D*, RenderTargetImp*, const char* const );
+            RenderTarget(  const char* const, Texture2D*, RenderTargetImp* );
 
             Texture2D*       m_pTex2D;
             RenderTargetImp* m_pRtImp;

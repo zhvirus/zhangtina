@@ -6,16 +6,12 @@
 
 namespace ZH{
     namespace Graphics{
-        Resource::Resource()
+        Resource::Resource( const char* const name ):
+            Name( name )
         {
         }
 
         Resource::~Resource()
-        {
-        }
-
-        Resource::Resource( const Resource& v):
-            Name(v)
         {
         }
     }

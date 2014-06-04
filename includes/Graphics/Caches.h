@@ -20,7 +20,7 @@ namespace ZH{
             Cache();
             ~Cache();
             void destroyCache();
-            T* acquire( const T&);
+            //T* acquire( const T&);
             T* findByName(const std::string&);
             T* insert( T* );
         private:
@@ -54,21 +54,21 @@ namespace ZH{
             m_pCache = NULL;
         }
 
-        template<class T>
-        T* Cache<T>::acquire( const T& v )
-        {
-            std::vector<T*>::iterator it = m_pCache->begin();
-            for( ;it != m_pCache->end();++it ){
-                if ( *(*it) == v ){
-                    return *it;
-                }
-            }
+        //template<class T>
+        //T* Cache<T>::acquire( const T& v )
+        //{
+        //    std::vector<T*>::iterator it = m_pCache->begin();
+        //    for( ;it != m_pCache->end();++it ){
+        //        if ( *(*it) == v ){
+        //            return *it;
+        //        }
+        //    }
 
-            T* newV = new T(v);
-            m_pCache->push_back( newV );
+        //    T* newV = new T(v);
+        //    m_pCache->push_back( newV );
 
-            return newV;
-        }
+        //    return newV;
+        //}
 
         template<class T>
         T* Cache<T>::findByName( const std::string& name )

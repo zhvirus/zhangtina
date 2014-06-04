@@ -11,7 +11,8 @@ namespace ZH{
     namespace Graphics{
         CLASS_TYPE_NAME_DEFINITION( RenderNode )
 
-        RenderNode::RenderNode():
+        RenderNode::RenderNode( const char* const name ):
+            Resource(name),
             m_pIndexBuffer(NULL),
             m_pVertexBuffer(NULL),
             m_pEffectInst(NULL)

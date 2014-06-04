@@ -10,7 +10,7 @@ namespace ZH{
         class ZH_GRAPHICS_DLL IndexBuffer: public Resource
         {
         public:
-            IndexBuffer();
+            IndexBuffer( const char* const );
             virtual ~IndexBuffer();
             virtual bool isValid();
 

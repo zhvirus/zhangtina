@@ -9,14 +9,13 @@ namespace ZH{
         class ZH_GRAPHICS_DLL Name
         {
         public:
-            Name();
-            Name( const Name& );
+            Name( const char* const );
             virtual ~Name();
-            const std::string& name()const { return *m_name; }
+            const char* const name()const { return m_name; }
 
         protected:
-            void constructName( const std::string& type, const std::string& key );
-            std::string* m_name;
+            void makeDefaultName( const std::string& type, const std::string& key );
+            char m_name[200];
         };
     } // namespace Graphics
 } // nameapce ZH

@@ -10,7 +10,7 @@ namespace ZH{
         class ZH_GRAPHICS_DLL VertexBuffer: public Resource
         {
         public:
-            VertexBuffer();
+            VertexBuffer( const char* const );
             virtual ~VertexBuffer();
 
             virtual bool isValid();

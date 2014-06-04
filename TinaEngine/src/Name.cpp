@@ -4,33 +4,33 @@
 
 #include "Graphics/Name.h"
 #include <string>
+#include <assert.h>
 
 namespace ZH{
     namespace Graphics{
 
-        Name::Name():m_name( NULL ){
-            m_name = new std::string( "" );
-        }
-
-        Name::Name( const Name& v ){
-            m_name = new std::string( *v.m_name );
+        Name::Name( const char* const name ){
+            assert( name );
+            if ( name ){
+                strcpy_s( m_name, name);
+            }
         }
 
         Name::~Name(){
-            delete m_name;
         }
 
-        void Name::constructName( const std::string& type, const std::string& key )
+        void Name::makeDefaultName( const std::string& type, const std::string& key )
         {
-            *m_name = type;
-            *m_name += "_";
-            *m_name += key;
-            *m_name += "_";
+            std::string temp_name = type;
+            temp_name += "_";
+            temp_name += key;
+            temp_name += "_";
 
             char uniqueTrail[50];
             sprintf_s(uniqueTrail,"%llx", this);
-            *m_name += uniqueTrail;
-        }
+            temp_name += uniqueTrail;
 
+            strcpy_s( m_name, temp_name.c_str() );
+        }
     }
 }

@@ -14,7 +14,7 @@ namespace ZH{
         class ZH_GRAPHICS_DLL RenderNode : public Resource
         {
         public:
-            RenderNode();
+            RenderNode( const char* const );
             virtual ~RenderNode();
 
             virtual bool isValid();

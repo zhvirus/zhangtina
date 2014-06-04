@@ -35,10 +35,10 @@ namespace ZH{
                 ;
         }
 
-        Texture2D::Texture2D( Texture2DImp* pTex2dImp, const char* const name ):
+        Texture2D::Texture2D( const char* const name , Texture2DImp* pTex2dImp ):
+            Resource( name ),
             m_pTex2DImp(pTex2dImp)
         {
-            Name::constructName( Texture2D::m_cClassName, name );
         }
 
         Texture2D::~Texture2D()

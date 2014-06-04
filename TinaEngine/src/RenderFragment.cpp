@@ -13,7 +13,8 @@ namespace ZH{
     namespace Graphics{
         CLASS_TYPE_NAME_DEFINITION( RenderFragment )
 
-        RenderFragment::RenderFragment():
+        RenderFragment::RenderFragment( const char* const name ):
+            Resource( name ),
             m_devicePtr(NULL),
             m_cameraPtr(NULL),
             m_worldPtr(NULL),
@@ -22,7 +23,8 @@ namespace ZH{
         {
         }
 
-        RenderFragment::RenderFragment( Device* device, Camera* cam, World* wld, std::vector<RenderTarget*>* rts):
+        RenderFragment::RenderFragment(  const char* const name, Device* device, Camera* cam, World* wld, std::vector<RenderTarget*>* rts):
+            Resource( name ),
             m_devicePtr( device ),
             m_cameraPtr(cam),
             m_worldPtr(wld),
@@ -33,10 +35,10 @@ namespace ZH{
 
         RenderFragment::~RenderFragment()
         {
-            if( m_renderTargetsPtr ){
-                delete m_renderTargetsPtr;
-                m_renderTargetsPtr = NULL;
-            }
+            //if( m_renderTargetsPtr ){
+            //    delete []m_renderTargetsPtr;
+            //    m_renderTargetsPtr = NULL;
+            //}
         }
 
         void RenderFragment::setRenderTarget( RenderTarget* rt, unsigned int idx )

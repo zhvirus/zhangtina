@@ -99,7 +99,7 @@ namespace ZH{
 
             RenderTargetImp* pRTImp = new RenderTargetImp( pRtv_d3d );
 
-            pRt = new RenderTarget( pTex2d, pRTImp, name );
+            pRt = new RenderTarget( name, pTex2d, pRTImp );
 
             return true;
         }
@@ -132,7 +132,7 @@ namespace ZH{
 
             // Create a Texture2D object to hold the back buffer
             Texture2DImp* pTex2DImp = new Texture2DImp( pBackBuffer );
-            pBf_ret = new Texture2D( pTex2DImp, Texture2D::m_sBackBufferName );
+            pBf_ret = new Texture2D( Texture2D::m_sBackBufferName, pTex2DImp );
 
             return true;
 

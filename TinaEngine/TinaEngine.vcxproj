@@ -39,6 +39,7 @@
     <ClInclude Include="..\includes\Internal\Common\internal_common.h" />
     <ClInclude Include="..\includes\Internal\Graphics\DeviceDX11Imp.h" />
     <ClInclude Include="..\includes\Internal\Graphics\RenderTargetImp.h" />
+    <ClInclude Include="..\includes\Internal\Graphics\ResourceFactory.h" />
     <ClInclude Include="..\includes\Internal\Graphics\Texture2DImp.h" />
     <ClInclude Include="..\includes\Internal\Graphics\WorldImp.h" />
   </ItemGroup>
@@ -57,6 +58,7 @@
     <ClCompile Include="src\RenderTargetImp.cpp" />
     <ClCompile Include="src\ResouceManager.cpp" />
     <ClCompile Include="src\Resource.cpp" />
+    <ClCompile Include="src\ResourceFactory.cpp" />
     <ClCompile Include="src\Texture2D.cpp" />
     <ClCompile Include="src\Texture2DImp.cpp" />
     <ClCompile Include="src\VertexBuffer.cpp" />

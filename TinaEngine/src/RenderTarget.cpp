@@ -10,11 +10,11 @@ namespace ZH{
     namespace Graphics{
         CLASS_TYPE_NAME_DEFINITION( RenderTarget )
 
-        RenderTarget::RenderTarget( Texture2D* tex, RenderTargetImp* imp, const char* const name ):
+        RenderTarget::RenderTarget( const char* const name, Texture2D* tex, RenderTargetImp* imp ):
+            Resource( name ),
             m_pTex2D( tex ),
             m_pRtImp( imp )
         {
-            Name::constructName( RenderTarget::m_cClassName, name );
         }
 
         RenderTarget::~RenderTarget()

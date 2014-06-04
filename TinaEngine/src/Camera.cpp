@@ -19,7 +19,8 @@ namespace ZH{
 //------------------------------------------------
 
 
-        Camera::Camera():
+        Camera::Camera( const char* const name ):
+            Resource( name ),
             m_pos(0.0f,0.0f,-10.0f),
             m_lookDir(0.0f,0.0f,1.0f),
             m_upDir(0.0f,1.0f,0.0f),
@@ -30,7 +31,8 @@ namespace ZH{
             m_projMat.identityIt();
         }
 
-        Camera::Camera( Math::float3 pos, Math::float3 look, Math::float3 up ):
+        Camera::Camera(  const char* const name, Math::float3 pos, Math::float3 look, Math::float3 up ):
+            Resource( name ),
             m_pos(pos),
             m_lookDir(look),
             m_upDir(up),
@@ -42,7 +44,7 @@ namespace ZH{
         }
 
         Camera::Camera( const Camera& v ):
-            Resource(v),
+            Resource(v.name()),
             m_pos(v.m_pos),
             m_lookDir(v.m_lookDir),
             m_upDir(v.m_upDir),
@@ -94,9 +96,10 @@ namespace ZH{
 //        CameraOrtho
 //
 //------------------------------------------------
+        const char CameraOrtho::m_sDefaultName[] = "DefaultCameraOrtho";
 
-        CameraOrtho::CameraOrtho():
-            Camera(),
+        CameraOrtho::CameraOrtho( const char* const name ):
+            Camera(name),
             m_width( 640 ),
             m_height( 480 ),
             m_nearZ( 0.1f ),
@@ -104,18 +107,17 @@ namespace ZH{
         {
         }
 
-        CameraOrtho::CameraOrtho( Math::float3 pos, Math::float3 look, Math::float3 up, float w, float h, float nz, float fz, const std::string& name ):
-            Camera(pos,look,up),
+        CameraOrtho::CameraOrtho( const char* const name, Math::float3 pos, Math::float3 look, Math::float3 up, float w, float h, float nz, float fz ):
+            Camera( name, pos,look,up),
             m_width( w ),
             m_height( h ),
             m_nearZ( nz ),
             m_farZ( fz )
         {
-            Name::constructName( CameraOrtho::m_cClassName, name );
         }
 
         CameraOrtho::CameraOrtho( const CameraOrtho& v ):
-            Camera(v),
+            Camera( v.name() ),
             m_width( v.m_width ),
             m_height( v.m_height ),
             m_nearZ( v.m_nearZ ),
@@ -163,8 +165,10 @@ namespace ZH{
 //
 //------------------------------------------------
 
-        CameraPersp::CameraPersp():
-            Camera(),
+        const char CameraPersp::m_sDefaultName[] = "DefaultCameraPersp";
+
+        CameraPersp::CameraPersp( const char* const name ):
+            Camera( name ),
             m_fovy( Math::PI/3.0f ),
             m_aspect( 1.0f ),
             m_nearZ( 0.1f ),
@@ -172,18 +176,17 @@ namespace ZH{
         {
         }
 
-        CameraPersp::CameraPersp( Math::float3 pos, Math::float3 look, Math::float3 up, float fovy, float aspect, float nz, float fz, const std::string& name ):
-            Camera(pos,look,up),
+        CameraPersp::CameraPersp( const char* const name, Math::float3 pos, Math::float3 look, Math::float3 up, float fovy, float aspect, float nz, float fz ):
+            Camera( name, pos,look,up ),
             m_fovy( fovy ),
             m_aspect( aspect ),
             m_nearZ( nz ),
             m_farZ( fz )
         {
-            Name::constructName( CameraPersp::m_cClassName, name );
         }
 
         CameraPersp::CameraPersp( const CameraPersp& v):
-            Camera(v),
+            Camera(v.name()),
             m_fovy(v.m_fovy),
             m_aspect(v.m_aspect),
             m_nearZ(v.m_nearZ),

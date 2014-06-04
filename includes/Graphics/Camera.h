@@ -13,8 +13,8 @@ namespace ZH{
         class ZH_GRAPHICS_DLL Camera : public Resource
         {
         public:
-            Camera();
-            Camera( Math::float3 pos, Math::float3 look, Math::float3 up );
+            Camera( const char* const );
+            Camera( const char* const, Math::float3 pos, Math::float3 look, Math::float3 up );
             Camera( const Camera& );
             virtual ~Camera();
 
@@ -54,8 +54,8 @@ namespace ZH{
         class ZH_GRAPHICS_DLL CameraOrtho : public Camera
         {
         public:
-            CameraOrtho();
-            CameraOrtho( Math::float3 pos, Math::float3 look, Math::float3 up, float w, float h, float nz, float fz, const std::string& name=std::string() );
+            CameraOrtho( const char* const );
+            CameraOrtho( const char* const, Math::float3 pos, Math::float3 look, Math::float3 up, float w, float h, float nz, float fz );
             CameraOrtho( const CameraOrtho& );
 
             virtual bool operator==(const Camera&);
@@ -72,6 +72,7 @@ namespace ZH{
             inline float farZ()const { return m_farZ; }
             inline void farZ( float z ) { m_farZ = z; m_projMatDirtyFlag=true; }
 
+            static const char m_sDefaultName[100];
         protected:
             virtual void updateProjMat();
         private:
@@ -88,10 +89,6 @@ namespace ZH{
         class ZH_GRAPHICS_DLL CameraPersp : public Camera
         {
         public:
-            CameraPersp();
-            CameraPersp( Math::float3 pos, Math::float3 look, Math::float3 up, float fovy, float aspect, float nz, float fz, const std::string& name=std::string() );
-            CameraPersp( const CameraPersp& );
-
             virtual bool operator==(const Camera&);
 
             inline float fovy()const { return m_fovy; }
@@ -106,14 +103,22 @@ namespace ZH{
             inline float farZ()const { return m_farZ; }
             inline void farZ( float z ) { m_farZ = z; m_projMatDirtyFlag=true; }
 
+            static const char m_sDefaultName[100];
         protected:
             virtual void updateProjMat();
         private:
+            CameraPersp( const char* const );
+            CameraPersp( const char* const, Math::float3 pos, Math::float3 look, Math::float3 up, float fovy, float aspect, float nz, float fz );
+            CameraPersp( const CameraPersp& );
+
             // projection related
             float m_fovy;
             float m_aspect; // width/height
             float m_nearZ;
             float m_farZ;
+
+            // friend
+            friend class ResourceFactory;
 
             // Put at last line
             CLASS_TYPE_NAME_DECLEARATION

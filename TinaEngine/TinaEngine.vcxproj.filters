@@ -58,6 +58,9 @@
     <ClCompile Include="src\WorldImp.cpp">
       <Filter>CPP</Filter>
     </ClCompile>
+    <ClCompile Include="src\ResourceFactory.cpp">
+      <Filter>CPP</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\includes\Graphics\Caches.h">
@@ -125,6 +128,9 @@
     </ClInclude>
     <ClInclude Include="..\includes\Common\ZHSTD.h">
       <Filter>H\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\Internal\Graphics\ResourceFactory.h">
+      <Filter>H</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
