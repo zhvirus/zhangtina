@@ -37,7 +37,8 @@ public:
 	DECLARE_MESSAGE_MAP()
 
 private:
-    void prepareConsole();
+    void setupConsole();
+    void freeConsole();
 };
 
 extern CTinaXApp theApp;

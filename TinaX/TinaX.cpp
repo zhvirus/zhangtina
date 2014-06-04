@@ -10,6 +10,7 @@
 
 #include "TinaXDoc.h"
 #include "TinaXView.h"
+#include "Util/Print.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -47,12 +48,9 @@ CTinaXApp::CTinaXApp()
 
 	// TODO: add construction code here,
 	// Place all significant initialization in InitInstance
-
-    // Show console window
-    prepareConsole();
 }
 
-void CTinaXApp::prepareConsole()
+void CTinaXApp::setupConsole()
 {
     ::AllocConsole();
     HWND conWin = GetConsoleWindow();
@@ -81,6 +79,14 @@ void CTinaXApp::prepareConsole()
     freopen_s(&stream2, "CONOUT$", "w+t", stderr);
     ShowWindowAsync(conWin, SW_SHOWNORMAL);
 
+    if ( result ){
+        ZH::Util::INF("Console window setup successfully!\n");
+    }
+}
+
+void CTinaXApp::freeConsole()
+{
+    ::FreeConsole();
 }
 
 // The one and only CTinaXApp object
@@ -104,6 +110,8 @@ BOOL CTinaXApp::InitInstance()
 
 	CWinAppEx::InitInstance();
 
+    // set up console window
+    setupConsole();
 
 	// Initialize OLE libraries
 	if (!AfxOleInit())
@@ -158,8 +166,6 @@ BOOL CTinaXApp::InitInstance()
 	CCommandLineInfo cmdInfo;
 	ParseCommandLine(cmdInfo);
 
-
-
 	// Dispatch commands specified on the command line.  Will return FALSE if
 	// app was launched with /RegServer, /Register, /Unregserver or /Unregister.
 	if (!ProcessShellCommand(cmdInfo))
@@ -175,6 +181,9 @@ int CTinaXApp::ExitInstance()
 {
 	//TODO: handle additional resources you may have added
 	AfxOleTerm(FALSE);
+
+    // Free console
+    freeConsole();
 
 	return CWinAppEx::ExitInstance();
 }

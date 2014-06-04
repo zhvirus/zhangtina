@@ -20,7 +20,7 @@ namespace ZH{
             int ret = vsnprintf_s(buffer, MAX_PRINT_BUF_SIZE, _TRUNCATE, fmt, args);
             va_end(args);
             assert(ret != -1);
-            std::cout<<"[Tina][INF]: "<<buffer;
+            std::cout<<"[INF]: "<<buffer;
         }
 
         void ERR( const char* const fmt, ... )
@@ -31,7 +31,7 @@ namespace ZH{
             int ret = vsnprintf_s(buffer, MAX_PRINT_BUF_SIZE, _TRUNCATE, fmt, args);
             va_end(args);
             assert(ret != -1);
-            std::cerr<<"[Tina][ERROR]: "<<buffer;
+            std::cerr<<"[ERROR]: "<<buffer;
         }
 
     }
