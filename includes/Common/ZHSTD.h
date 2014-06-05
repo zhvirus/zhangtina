@@ -33,7 +33,13 @@
 #define ZH_UTIL_EXTERN extern
 #endif
 
-
+#ifdef _ZH_BRIDGE_DLL_
+#define ZH_BRIDGE_DLL _declspec(dllexport)
+#define ZH_BRIDGE_EXTERN
+#else
+#define ZH_BRIDGE_DLL _declspec(dllimport)
+#define ZH_BRIDGE_EXTERN extern
+#endif
 
 #ifndef NULL
 #define NULL 0

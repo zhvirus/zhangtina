@@ -18,7 +18,7 @@ namespace ZH{
 
             bool operator == (const RenderTarget&);
 
-
+            static const char m_sDefaultRenderTargetName[30];
         private:
             RenderTarget(  const char* const, Texture2D*, RenderTargetImp* );
 

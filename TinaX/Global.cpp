@@ -58,7 +58,7 @@ ZH::Graphics::RenderFragment* Global::createDefaultRenderFragment( ZH::Widgets::
     // Default world
     ZH::Graphics::World& defaultWorld = ZH::Graphics::World::instance();
 
-    // Render target
+    // Default render target
     std::vector<ZH::Graphics::RenderTarget*>* renderTargets = 
         new std::vector<ZH::Graphics::RenderTarget*>();
 
@@ -66,15 +66,14 @@ ZH::Graphics::RenderFragment* Global::createDefaultRenderFragment( ZH::Widgets::
         ZH::Graphics::ResourceManager::instance().acquireBackBuffer(m_pDevice);
 
     ZH::Graphics::RenderTarget* renderTarget =
-        ZH::Graphics::ResourceManager::instance().acquireRenderTarget( "DefaultRenderTarget", m_pDevice, backBuffer );
+        ZH::Graphics::ResourceManager::instance().acquireRenderTarget(
+        ZH::Graphics::RenderTarget::m_sDefaultRenderTargetName, m_pDevice, backBuffer );
 
     renderTargets->push_back(renderTarget);
 
+    // Default render fragment
     m_pRenderFragment = ZH::Graphics::ResourceManager::instance().acquireRenderFragment(
-        "DefaultRenderFragment", m_pDevice, pDefaultCamera, &defaultWorld, renderTargets);
-
-    // clear color
-    m_pRenderFragment->clearColor( 0.25f, 0.5f, 0.5f );
+        ZH::Graphics::RenderFragment::m_sDefaultRenderFragmentName, m_pDevice, pDefaultCamera, &defaultWorld, renderTargets);
 
     return m_pRenderFragment;
 }

@@ -17,7 +17,6 @@ namespace ZH
         {
             ::AllocConsole();
 
-            HWND conWin = GetConsoleWindow();
             SetConsoleTitle("TinaX-cmd");
 
             HANDLE conBuffer = CreateFile(

@@ -19,8 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{728AC6FB-AE2D-4F52-A568-013A198DC37E}</ProjectGuid>
-    <RootNamespace>TinaUtil</RootNamespace>
+    <ProjectGuid>{1AA929A2-05EC-4AA2-A864-D86F438283D0}</ProjectGuid>
+    <RootNamespace>TinaBridge</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -69,6 +69,10 @@
     <OutDir>$(SolutionDir)\x86-debug\</OutDir>
     <IntDir>x86-debug\</IntDir>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)\x64-debug\</OutDir>
+    <IntDir>x64-debug\</IntDir>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)\x86-release\</OutDir>
     <IntDir>x86-release\</IntDir>
@@ -77,32 +81,30 @@
     <OutDir>$(SolutionDir)\x64-release\</OutDir>
     <IntDir>x64-release\</IntDir>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)\x64-debug\</OutDir>
-    <IntDir>x64-debug\</IntDir>
-  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)includes</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <AdditionalIncludeDirectories>$(SolutionDir)includes</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>TinaEngine.lib;TinaWidget.lib;TinaMath.lib;TinaUtil.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(LibraryPath);$(DXSDK_DIR)Lib/x86;$(SolutionDir)\x86-debug</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)includes</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <AdditionalIncludeDirectories>$(SolutionDir)includes</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>TinaEngine.lib;TinaWidget.lib;TinaMath.lib;TinaUtil.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(LibraryPath);$(DXSDK_DIR)Lib/x64;$(SolutionDir)\x64-debug</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -111,14 +113,15 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)includes</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <AdditionalIncludeDirectories>$(SolutionDir)includes</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>TinaEngine.lib;TinaWidget.lib;TinaMath.lib;TinaUtil.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(LibraryPath);$(DXSDK_DIR)Lib/x86;$(SolutionDir)\x86-release</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -127,24 +130,22 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)includes</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <AdditionalIncludeDirectories>$(SolutionDir)includes</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>TinaEngine.lib;TinaWidget.lib;TinaMath.lib;TinaUtil.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(LibraryPath);$(DXSDK_DIR)Lib/x64;$(SolutionDir)\x64-release</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\includes\Common\ZHSTD.h" />
-    <ClInclude Include="..\includes\Util\Console.h" />
-    <ClInclude Include="..\includes\Util\Print.h" />
+    <ClCompile Include="src\Renderer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Console.cpp" />
-    <ClCompile Include="src\Print.cpp" />
+    <ClInclude Include="..\includes\Bridge\Renderer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -43,13 +43,13 @@ namespace ZH{
 
             void render();
 
+            static const char m_sDefaultRenderFragmentName[30];
         protected:
             Device* m_devicePtr;
             Camera* m_cameraPtr;
             World*  m_worldPtr;
             std::vector<RenderTarget*>* m_renderTargetsPtr;
             ZH::Math::float4 m_clearCol;
-
 
 
             // Put at last line

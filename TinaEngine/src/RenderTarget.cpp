@@ -10,6 +10,8 @@ namespace ZH{
     namespace Graphics{
         CLASS_TYPE_NAME_DEFINITION( RenderTarget )
 
+        const char RenderTarget::m_sDefaultRenderTargetName[] = "DefaultRenderTarget";
+
         RenderTarget::RenderTarget( const char* const name, Texture2D* tex, RenderTargetImp* imp ):
             Resource( name ),
             m_pTex2D( tex ),
