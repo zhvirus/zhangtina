@@ -4,6 +4,7 @@
 #include "Common/ZHSTD.h"
 #include "Graphics/Resource.h"
 #include "Internal/Common/internal_common.h"
+#include "Util/Array.h"
 
 namespace ZH{
     namespace Graphics{
@@ -32,7 +33,8 @@ namespace ZH{
             friend class DeviceDX11Imp;
         };
 
-
+        ZH_GRAPHICS_EXTERN template class ZH_GRAPHICS_DLL ZH::UTIL::Array<RenderTarget*>;
+        typedef ZH::UTIL::Array<RenderTarget*> RenderTargetPtrArray;
 
     } // end namespace Graphics
 } // end namespace ZH

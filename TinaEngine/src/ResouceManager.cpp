@@ -208,7 +208,7 @@ namespace ZH{
                   Device* device,
                   Camera* camera,
                   World* world,
-                  std::vector<RenderTarget*>* renderTargets)
+                  const ZH::Graphics::RenderTargetPtrArray& rts)
         {
             // Find in cache first
             RenderFragment* pObj = findRenderFragmentByName( name );
@@ -218,7 +218,7 @@ namespace ZH{
 
             // Create a new render fragment
             pObj = ResourceFactory::createRenderFragment(
-                name, device, camera, world, renderTargets);
+                name, device, camera, world, rts);
 
             if ( pObj ){
                 ZH::Util::ENG_DBG("RenderFragment (\"%s\") created.\n", name);

@@ -13,11 +13,13 @@
 #include "TinaXView.h"
 
 #include "Global.h"
+#include "TinaX_Preference.h"
 #include "Widget/Window.h"
 #include "Graphics/DeviceDX11.h"
 #include "Graphics/ResourceManager.h"
 #include "Math/MathCommon.h"
 #include "Util/Print.h"
+#include "Bridge/Renderer.h"
 #include "TinaX_UI_ColorChooser.h"
 
 
@@ -54,13 +56,8 @@ IMPLEMENT_DYNCREATE(CTinaXView, CView)
     void CTinaXView::OnDraw(CDC* /*pDC*/)
     {
         // Apply setting from preference to the renderer
-        Global::instance().applyPrefToRender();
-
-        // Get render fragment
-        ZH::Graphics::RenderFragment* rf = Global::instance().defaultRenderFragment();
-        if ( rf ){
-            rf->render();
-        }
+        TinaX_Preference::instance().applyToRenderer();
+        ZH::Bridge::Renderer::instance().doRender();
     }
 
     void CTinaXView::OnRButtonUp(UINT /* nFlags */, CPoint point)
@@ -94,14 +91,14 @@ IMPLEMENT_DYNCREATE(CTinaXView, CView)
             winInfo.fWndHandle = this->GetSafeHwnd();
 
             // Start device
-            if( Global::instance().startDevice( winInfo ) ){
+            if( ZH::Bridge::Renderer::instance().startDevice( winInfo ) ){
                 ZH::Util::TNX_INF("Device created with win_size(%d,%d)\n",winInfo.fWidth, winInfo.fHeight);
             }else{
                 ZH::Util::TNX_ERR("Device create failed with win_size(%d,%d)\n",winInfo.fWidth, winInfo.fHeight);
             }
 
             // Create default render fragment
-            if( Global::instance().createDefaultRenderFragment( winInfo ) ){
+            if( ZH::Bridge::Renderer::instance().createDefaultRenderFragment( winInfo ) ){
                 ZH::Util::TNX_INF("Default render fragment created with win_size(%d,%d)\n",winInfo.fWidth, winInfo.fHeight);
             }else{
                 ZH::Util::TNX_ERR("Default render fragment created with win_size(%d,%d)\n",winInfo.fWidth, winInfo.fHeight);
@@ -114,7 +111,7 @@ IMPLEMENT_DYNCREATE(CTinaXView, CView)
         TinaX_UI_ColorChooser cc(m_hWnd);
         ZH::Math::float4 clearColor;
         if ( cc.pickColor( clearColor ) ){
-            Global::instance().pref().clearColor( clearColor );
+            TinaX_Preference::instance().clearColor( clearColor );
             OnDraw(0);
         }
     }

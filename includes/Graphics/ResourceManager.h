@@ -42,7 +42,7 @@ namespace ZH {
                   Device* device,
                   Camera* camera,
                   World* world,
-                  std::vector<RenderTarget*>* renderTargets
+                  const ZH::Graphics::RenderTargetPtrArray& rts
                  );
 
         private:

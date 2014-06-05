@@ -4,7 +4,9 @@
 #include <vector>
 #include "Common/ZHSTD.h"
 #include "Graphics/Resource.h"
+#include "Graphics/RenderTarget.h"
 #include "Math/float4.h"
+#include "Util/Array.h"
 
 
 namespace ZH{
@@ -14,12 +16,11 @@ namespace ZH{
         class Device;
         class Camera;
         class World;
-        class RenderTarget;
 
         class ZH_GRAPHICS_DLL RenderFragment : public Resource {
         public:
             RenderFragment( const char* const );
-            RenderFragment( const char* const, Device*, Camera*, World*, std::vector<RenderTarget*>* );
+            RenderFragment( const char* const, Device*, Camera*, World*, const ZH::Graphics::RenderTargetPtrArray& );
             virtual ~RenderFragment();
 
             bool operator ==(const RenderFragment&);
@@ -33,7 +34,6 @@ namespace ZH{
             void world( World* wld ){ m_worldPtr = wld; }
 
             // Render targets
-            void setRenderTarget( RenderTarget*, unsigned int );
             RenderTarget* getRenderTarget( unsigned int );
             void pushRenderTarget( RenderTarget* );
 
@@ -48,7 +48,7 @@ namespace ZH{
             Device* m_devicePtr;
             Camera* m_cameraPtr;
             World*  m_worldPtr;
-            std::vector<RenderTarget*>* m_renderTargetsPtr;
+            ZH::Graphics::RenderTargetPtrArray m_renderTargetArray;
             ZH::Math::float4 m_clearCol;
 
 
@@ -56,7 +56,8 @@ namespace ZH{
             CLASS_TYPE_NAME_DECLEARATION
         };
 
-
+        ZH_GRAPHICS_EXTERN template class ZH_GRAPHICS_DLL ZH::UTIL::Array<RenderFragment*>;
+        typedef ZH::UTIL::Array<RenderFragment*> RenderFragmentPtrArray;
 
     } // end namespace Graphics
 } // end namespace ZH

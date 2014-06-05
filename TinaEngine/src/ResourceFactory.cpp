@@ -33,7 +33,7 @@ namespace ZH{
                   Device* device,
                   Camera* camera,
                   World* world,
-                  std::vector<RenderTarget*>* renderTargets)
+                  const ZH::Graphics::RenderTargetPtrArray& rts)
         {
             // Check name
             assert( name );
@@ -60,13 +60,12 @@ namespace ZH{
             }
 
             // Check render targets
-            assert( renderTargets );
-            if ( !renderTargets || (renderTargets->size() == 0) ){
+            if ( rts.size() == 0 ){
                 return NULL;
             }
 
             RenderFragment* pObj = new ZH::Graphics::RenderFragment(
-                name, device, camera, world, renderTargets);
+                name, device, camera, world, rts);
 
             return pObj;
         }

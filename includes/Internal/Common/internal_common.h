@@ -6,6 +6,7 @@
 #include <dxgi.h>
 #include <iostream>
 #include <string>
+#include <assert.h>
 
 
 

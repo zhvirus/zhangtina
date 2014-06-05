@@ -3,6 +3,7 @@
 #include "TinaX.h"
 #include "Global.h"
 #include "Util/Print.h"
+#include "Bridge/Renderer.h"
 
 extern CTinaXApp theApp;
 
@@ -39,5 +40,16 @@ void TinaX_Preference::clearColor( const ZH::Math::float4& col )
     m_clearColor = col;
     theApp.WriteBinary( clear_color_key, (LPBYTE)(&m_clearColor.val), sizeof(float)*4);
     ZH::Util::TNX_INF("ClearColor set to (%.2f, %.2f, %.2f)\n", col.r, col.g, col.b);
+}
+
+void TinaX_Preference::applyToRenderer()
+{
+    ZH::Graphics::RenderFragment* pDefaultRenderFrag = 
+        ZH::Bridge::Renderer::instance().defaultRenderFragment();
+
+    if ( pDefaultRenderFrag ){
+        // Flush clear color
+        pDefaultRenderFrag->clearColor( m_clearColor );
+    }
 }
 

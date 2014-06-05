@@ -58,3 +58,5 @@ Thumbs.db
 *.lib
 *.lib
 *.lib
+x64-debug/TinaUtil.lib
+x64-debug/TinaUtil.lib

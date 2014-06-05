@@ -1,7 +1,7 @@
 #ifndef RESOURCE_FACTORY_H
 #define RESOURCE_FACTORY_H
 
-#include <vector>
+#include "Graphics/RenderTarget.h"
 
 namespace ZH{
     namespace Math{
@@ -39,7 +39,7 @@ namespace ZH{
                   Device* device,
                   Camera* camera,
                   World* world,
-                  std::vector<RenderTarget*>* renderTargets
+                  const ZH::Graphics::RenderTargetPtrArray&
                 );
 
 
