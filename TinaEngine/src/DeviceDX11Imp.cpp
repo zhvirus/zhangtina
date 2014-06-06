@@ -93,7 +93,7 @@ namespace ZH{
             // Device creating flag
             UINT createDeviceFlags = 0;
 #ifdef _DEBUG
-            createDeviceFlags |= D3D11_CREATE_DEVICE_DEBUG;
+//            createDeviceFlags |= D3D11_CREATE_DEVICE_DEBUG;
 #endif
 
             // Driver types

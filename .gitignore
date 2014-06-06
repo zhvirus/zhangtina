@@ -19,10 +19,12 @@
 *.pch
 *~
 *.swp
-TinaWidget.lib
-TinaMath.lib
-TinaEngine.lib
-Tina.res
+*TinaBeidge.lib
+*TinaEngine.lib
+*TinaWidget.lib
+*TinaMath.lib
+*TinaUtil.lib
+
 
 # Packages #
 ############
@@ -52,11 +54,21 @@ Tina.res
 .Trashes
 ehthumbs.db
 Thumbs.db
-*.suo
 *.unsuccessfulbuild
 *.ipch
-*.lib
-*.lib
-*.lib
+
+
+x86-release/TinaBridge.lib
+x86-debug/TinaBridge.lib
+x64-release/TinaBridge.lib
+x64-debug/TinaBridge.lib
+
+x86-release/TinaUtil.lib
+x86-debug/TinaUtil.lib
+x64-release/TinaUtil.lib
 x64-debug/TinaUtil.lib
-x64-debug/TinaUtil.lib
+
+TinaX/x64-release/TinaX.res
+TinaX/x86-release/TinaX.res
+TinaX/x64-debug/TinaX.res
+TinaX/x86-debug/TinaX.res
