@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="src\Caches.cpp">
-      <Filter>CPP</Filter>
-    </ClCompile>
     <ClCompile Include="src\Camera.cpp">
       <Filter>CPP</Filter>
     </ClCompile>
@@ -55,17 +52,11 @@
     <ClCompile Include="src\World.cpp">
       <Filter>CPP</Filter>
     </ClCompile>
-    <ClCompile Include="src\WorldImp.cpp">
-      <Filter>CPP</Filter>
-    </ClCompile>
     <ClCompile Include="src\ResourceFactory.cpp">
       <Filter>CPP</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\includes\Graphics\Caches.h">
-      <Filter>H</Filter>
-    </ClInclude>
     <ClInclude Include="..\includes\Graphics\Camera.h">
       <Filter>H</Filter>
     </ClInclude>
@@ -121,9 +112,6 @@
       <Filter>H_Internal</Filter>
     </ClInclude>
     <ClInclude Include="..\includes\Internal\Graphics\Texture2DImp.h">
-      <Filter>H_Internal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\includes\Internal\Graphics\WorldImp.h">
       <Filter>H_Internal</Filter>
     </ClInclude>
     <ClInclude Include="..\includes\Common\ZHSTD.h">

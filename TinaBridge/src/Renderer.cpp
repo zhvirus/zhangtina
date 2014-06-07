@@ -73,7 +73,7 @@ namespace ZH
             }
 
             // Default world
-            ZH::Graphics::World& defaultWorld = ZH::Graphics::World::instance();
+            ZH::Graphics::World* defaultWorld = ZH::Graphics::ResourceManager::instance().acquireWorld("defaultWorld");
 
             // Default render target
             ZH::Graphics::RenderTargetPtrArray renderTargets;
@@ -89,7 +89,7 @@ namespace ZH
 
             // Default render fragment
             pDefaultRenderFragment = ZH::Graphics::ResourceManager::instance().acquireRenderFragment(
-                ZH::Graphics::RenderFragment::m_sDefaultRenderFragmentName, m_pDevice, pDefaultCamera, &defaultWorld, renderTargets);
+                ZH::Graphics::RenderFragment::m_sDefaultRenderFragmentName, m_pDevice, pDefaultCamera, defaultWorld, renderTargets);
 
             // Save it in the array
             m_renderFragArray.push_back( pDefaultRenderFragment );

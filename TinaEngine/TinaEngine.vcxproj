@@ -20,7 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\includes\Common\ZHSTD.h" />
-    <ClInclude Include="..\includes\Graphics\Caches.h" />
     <ClInclude Include="..\includes\Graphics\Camera.h" />
     <ClInclude Include="..\includes\Graphics\Device.h" />
     <ClInclude Include="..\includes\Graphics\DeviceDX11.h" />
@@ -41,10 +40,8 @@
     <ClInclude Include="..\includes\Internal\Graphics\RenderTargetImp.h" />
     <ClInclude Include="..\includes\Internal\Graphics\ResourceFactory.h" />
     <ClInclude Include="..\includes\Internal\Graphics\Texture2DImp.h" />
-    <ClInclude Include="..\includes\Internal\Graphics\WorldImp.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Caches.cpp" />
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\Device.cpp" />
     <ClCompile Include="src\DeviceDX11.cpp" />
@@ -63,7 +60,6 @@
     <ClCompile Include="src\Texture2DImp.cpp" />
     <ClCompile Include="src\VertexBuffer.cpp" />
     <ClCompile Include="src\World.cpp" />
-    <ClCompile Include="src\WorldImp.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{A1B41617-7F2A-46B5-A7E9-5C76B7074051}</ProjectGuid>

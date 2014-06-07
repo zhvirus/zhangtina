@@ -4,7 +4,7 @@
 #include "Common/ZHSTD.h"
 #include "Graphics/Resource.h"
 #include "Graphics/Enums.h"
-#include "Internal/Common/internal_common.h"
+#include "Util/Cache.h"
 
 namespace ZH{
     namespace Graphics{
@@ -76,11 +76,16 @@ namespace ZH{
             TEX2D_DESC m_sDesc;
             Texture2DImp* m_pTex2DImp;
 
+            friend class DeviceDX11;
+
             // Put at last line
             CLASS_TYPE_NAME_DECLEARATION
-
-            friend class DeviceDX11;
         };
+
+        ZH_GRAPHICS_EXTERN template class ZH_GRAPHICS_DLL ZH::UTIL::Cache<Texture2D>;
+        typedef ZH::UTIL::Cache<Texture2D> Texture2DCache;
+
+
     }
 
 }

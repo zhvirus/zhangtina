@@ -7,6 +7,7 @@
 #include "Graphics/RenderTarget.h"
 #include "Math/float4.h"
 #include "Util/Array.h"
+#include "Util/Cache.h"
 
 
 namespace ZH{
@@ -58,6 +59,10 @@ namespace ZH{
 
         ZH_GRAPHICS_EXTERN template class ZH_GRAPHICS_DLL ZH::UTIL::Array<RenderFragment*>;
         typedef ZH::UTIL::Array<RenderFragment*> RenderFragmentPtrArray;
+
+        ZH_GRAPHICS_EXTERN template class ZH_GRAPHICS_DLL ZH::UTIL::Cache<RenderFragment>;
+        typedef ZH::UTIL::Cache<RenderFragment> RenderFragmentCache;
+
 
     } // end namespace Graphics
 } // end namespace ZH

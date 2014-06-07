@@ -3,8 +3,8 @@
 
 #include "Common/ZHSTD.h"
 #include "Graphics/Resource.h"
-#include "Internal/Common/internal_common.h"
 #include "Util/Array.h"
+#include "Util/Cache.h"
 
 namespace ZH{
     namespace Graphics{
@@ -35,6 +35,9 @@ namespace ZH{
 
         ZH_GRAPHICS_EXTERN template class ZH_GRAPHICS_DLL ZH::UTIL::Array<RenderTarget*>;
         typedef ZH::UTIL::Array<RenderTarget*> RenderTargetPtrArray;
+
+        ZH_GRAPHICS_EXTERN template class ZH_GRAPHICS_DLL ZH::UTIL::Cache<RenderTarget>;
+        typedef ZH::UTIL::Cache<RenderTarget> RenderTargetCache;
 
     } // end namespace Graphics
 } // end namespace ZH

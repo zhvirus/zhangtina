@@ -3,6 +3,7 @@
 
 #include "Common/ZHSTD.h"
 #include "Graphics/Resource.h"
+#include "Util/Array.h"
 
 namespace ZH{
     namespace Graphics{
@@ -37,6 +38,8 @@ namespace ZH{
             CLASS_TYPE_NAME_DECLEARATION
         };
 
+        ZH_GRAPHICS_EXTERN template class ZH_GRAPHICS_DLL ZH::UTIL::Array<RenderNode*>;
+        typedef ZH::UTIL::Array<RenderNode*> RenderNodePtrArray;
 
     } // namespace Graphics
 } // namespace ZH

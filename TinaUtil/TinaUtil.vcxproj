@@ -140,6 +140,7 @@
   <ItemGroup>
     <ClInclude Include="..\includes\Common\ZHSTD.h" />
     <ClInclude Include="..\includes\Util\Array.h" />
+    <ClInclude Include="..\includes\Util\Cache.h" />
     <ClInclude Include="..\includes\Util\Console.h" />
     <ClInclude Include="..\includes\Util\Print.h" />
   </ItemGroup>

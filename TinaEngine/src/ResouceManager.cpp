@@ -21,6 +21,49 @@ namespace ZH{
         {
         }
 
+        //----------------------------------------------------------------
+        //
+        //  Render target
+        //
+        //----------------------------------------------------------------
+        World* ResourceManager::findWorldByName( const char* const name )
+        {
+            assert( name );
+
+            World* pWorld = NULL;
+            if ( name ){
+                pWorld = m_worldCache.findByName(name);
+            }
+
+            if ( pWorld ){
+                ZH::Util::ENG_DBG("World (\"%s\") found in cache.\n", name);
+            }else{
+                ZH::Util::ENG_DBG("World (\"%s\") *NOT* found in cache.\n", name);
+            }
+
+            return pWorld;
+        }
+
+        World* ResourceManager::acquireWorld( const char* const name )
+        {
+            // Find in cache first
+            World* pWorld = findWorldByName(name);
+            if ( pWorld ){
+                return pWorld;
+            }
+
+            World* newWorld = new World( name );
+
+            if ( newWorld ){
+                m_worldCache.insert( newWorld );
+                ZH::Util::ENG_DBG("World (\"%s\") created successfully!\n", name );
+            }else{
+                ZH::Util::ENG_ERR("World (\"%s\") created failed!!\n", name );
+            }
+
+            return newWorld;
+        }
+
 
         //----------------------------------------------------------------
         //

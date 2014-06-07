@@ -9,24 +9,23 @@
 #include <assert.h>
 
 #define MAX_PRINT_BUF_SIZE 0x1000
+static  char buffer[MAX_PRINT_BUF_SIZE];
 
-#define PRINT_IMP( STR ) \
+#define PRINT_IMP( TAG ) \
         va_list args; \
         va_start(args, fmt); \
-        char buffer[MAX_PRINT_BUF_SIZE]; \
-        int ret = vsnprintf_s(buffer, MAX_PRINT_BUF_SIZE, _TRUNCATE, fmt, args); \
+        int ret = vsnprintf_s(buffer, sizeof(buffer), _TRUNCATE, fmt, args); \
         va_end(args); \
         assert(ret != -1); \
-        Console::instance().cout(STR, buffer);
+        Console::instance().cout(TAG, buffer);
 
-#define PRINT_ERR_IMP( STR ) \
+#define PRINT_ERR_IMP( TAG ) \
         va_list args; \
         va_start(args, fmt); \
-        char buffer[MAX_PRINT_BUF_SIZE]; \
-        int ret = vsnprintf_s(buffer, MAX_PRINT_BUF_SIZE, _TRUNCATE, fmt, args); \
+        int ret = vsnprintf_s(buffer, sizeof(buffer), _TRUNCATE, fmt, args); \
         va_end(args); \
         assert(ret != -1); \
-        Console::instance().cerr(STR, buffer);
+        Console::instance().cerr(TAG, buffer);
 
 namespace ZH{
     namespace Util{

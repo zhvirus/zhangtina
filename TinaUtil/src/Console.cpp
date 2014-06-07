@@ -50,34 +50,42 @@ namespace ZH
             ::FreeConsole();
         }
 
-        void Console::cout(const char* const tag, const char* const fmt, ...)
+        void Console::cout(const char* const pre_tag, const char* const msg)
         {
-            va_list args;
-            va_start(args, fmt);
-
             char buffer[MAX_PRINT_BUF_SIZE] = {0};
-            const size_t tag_len = strlen(tag);
-            strcpy_s(buffer, tag_len+1, tag);
-
-            vsnprintf_s(buffer + tag_len, MAX_PRINT_BUF_SIZE-tag_len, _TRUNCATE, fmt, args);
+            sprintf_s(buffer, MAX_PRINT_BUF_SIZE, "%s%s", pre_tag, msg);
             WriteConsole(m_hConsoleOutput, buffer, (DWORD)strlen(buffer), NULL, NULL);
-
-            va_end(args);
         }
 
-        void Console::cerr(const char* const tag, const char* const fmt, ...)
+        void Console::cerr(const char* const pre_tag, const char* const msg)
         {
-            va_list args;
-            va_start(args, fmt);
-
             char buffer[MAX_PRINT_BUF_SIZE] = {0};
-            const size_t tag_len = strlen(tag);
-            strcpy_s(buffer, tag_len+1, tag);
-
-            vsnprintf_s(buffer + tag_len, MAX_PRINT_BUF_SIZE-tag_len, _TRUNCATE, fmt, args);
+            sprintf_s(buffer, MAX_PRINT_BUF_SIZE, "%s%s", pre_tag, msg);
             WriteConsole(m_hConsoleOutputErr, buffer, (DWORD)strlen(buffer), NULL, NULL);
+        }
 
-            va_end(args);
+        void Console::cout( const char* const str )
+        {
+            if ( str ){
+                WriteConsole(m_hConsoleOutput, str, (DWORD)strlen(str), NULL, NULL);
+            }
+        }
+
+        void Console::cerr( const char* const str )
+        {
+            if ( str ){
+                WriteConsole(m_hConsoleOutputErr, str, (DWORD)strlen(str), NULL, NULL);
+            }
+        }
+
+        void Console::cout( const std::string& str )
+        {
+            WriteConsole(m_hConsoleOutput, str.c_str(), (DWORD)str.length(), NULL, NULL);
+        }
+
+        void Console::cerr( const std::string& str )
+        {
+            WriteConsole(m_hConsoleOutputErr, str.c_str(), (DWORD)str.length(), NULL, NULL);
         }
 
 

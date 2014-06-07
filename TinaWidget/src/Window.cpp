@@ -258,7 +258,7 @@ namespace ZH{
 
             // Record window information
             if ( title ){
-                wcscpy_s( fWndInfo.fWndTitle, title );
+                strcpy_s( fWndInfo.fWndTitle, title );
             }else{
                 fWndInfo.fWndTitle[0] = 0;
             }

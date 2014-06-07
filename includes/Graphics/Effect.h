@@ -3,6 +3,7 @@
 
 #include "Common/ZHSTD.h"
 #include "Graphics/Resource.h"
+#include "Util/Cache.h"
 
 namespace ZH{
     namespace Graphics{
@@ -34,6 +35,11 @@ namespace ZH{
             CLASS_TYPE_NAME_DECLEARATION
         };
 
+        ZH_GRAPHICS_EXTERN template class ZH_GRAPHICS_DLL ZH::UTIL::Cache<Effect>;
+        typedef ZH::UTIL::Cache<Effect> EffectCache;
+
+        ZH_GRAPHICS_EXTERN template class ZH_GRAPHICS_DLL ZH::UTIL::Cache<EffectInstance>;
+        typedef ZH::UTIL::Cache<EffectInstance> EffectInstanceCache;
 
     } // namespace Graphics
 } // namespace ZH

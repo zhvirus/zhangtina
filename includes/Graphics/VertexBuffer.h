@@ -3,6 +3,7 @@
 
 #include "Common/ZHSTD.h"
 #include "Graphics/Resource.h"
+#include "Util/Cache.h"
 
 namespace ZH{
     namespace Graphics{
@@ -22,6 +23,8 @@ namespace ZH{
             CLASS_TYPE_NAME_DECLEARATION
         };
 
+        ZH_GRAPHICS_EXTERN template class ZH_GRAPHICS_DLL ZH::UTIL::Cache<VertexBuffer>;
+        typedef ZH::UTIL::Cache<VertexBuffer> VertexBufferCache;
 
     } // namespace Graphics
 } // namespace ZH

@@ -4,9 +4,9 @@
 #include "Graphics/Resource.h"
 #include "Math/Float3.h"
 #include "Math/Matrix4x4_f.h"
+#include "Util/Cache.h"
 
 namespace ZH{
-
 
     namespace Graphics{
 
@@ -124,6 +124,11 @@ namespace ZH{
             CLASS_TYPE_NAME_DECLEARATION
         };
 
+        ZH_GRAPHICS_EXTERN template class ZH_GRAPHICS_DLL ZH::UTIL::Cache<CameraPersp>;
+        typedef ZH::UTIL::Cache<CameraPersp> CameraPerspCache;
+
+        ZH_GRAPHICS_EXTERN template class ZH_GRAPHICS_DLL ZH::UTIL::Cache<CameraOrtho>;
+        typedef ZH::UTIL::Cache<CameraOrtho> CameraOrthoCache;
     }
 }
 
