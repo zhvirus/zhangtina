@@ -17,6 +17,8 @@ namespace ZH{
             void clear();
             const unsigned int size() const { return m_logicalSize; }
             void push_back(T t);
+            T remove(T t);
+
             T& operator [] ( unsigned int idx );
             void changeLogicalSizeTo( unsigned int size );
             void changePhysicalSizeTo( unsigned int size );
@@ -69,6 +71,32 @@ namespace ZH{
             }
 
             m_pArr[m_logicalSize-1] = t;
+        }
+
+        template<class T>
+        T Array<T>::remove(T t)
+        {
+            if ( m_logicalSize == 0 ){
+                return (T)NULL;
+            }
+
+            unsigned int i=0;
+            for ( ; i<m_logicalSize; ++i ){
+                if ( m_pArr[i] == t){
+                    break;
+                }
+            }
+
+            // Not removed as no found
+            if ( i == m_logicalSize ){
+                return (T)NULL;
+            }
+
+            for ( unsigned int j=i+1; j<m_logicalSize; ++j ){
+                m_pArr[j-1] = m_pArr[j];
+            }
+
+            return t;
         }
 
         template<class T>

@@ -4,48 +4,101 @@
 #include "Graphics/RenderNode.h"
 #include "Internal/Graphics/Internal_common_graphics.h"
 
-#include "Graphics/IndexBuffer.h"
-#include "Graphics/VertexBuffer.h"
-#include "Graphics/Effect.h"
 
 namespace ZH{
     namespace Graphics{
         CLASS_TYPE_NAME_DEFINITION( RenderNode )
 
         RenderNode::RenderNode( const char* const name ):
-            Resource(name),
-            m_pIndexBuffer(NULL),
-            m_pVertexBuffer(NULL),
-            m_pEffectInst(NULL)
+            Resource(name)
         {
 
         }
 
         RenderNode::~RenderNode()
         {
+            clear();
         }
 
         bool RenderNode::isValid()
         {
-            bool valid = m_pIndexBuffer && m_pVertexBuffer && m_pEffectInst &&
-                m_pIndexBuffer->isValid() && m_pVertexBuffer->isValid() &&
-                m_pEffectInst->isValid();
+            bool valid = true;
 
             return valid;
         }
 
-        void RenderNode::indexBuffer( IndexBuffer* ib )
+        void RenderNode::clear()
         {
-            m_pIndexBuffer = ib;
-        }
-        void RenderNode::vertexBuffer( VertexBuffer* vb )
-        {
-            m_pVertexBuffer = vb;
-        }
-        void RenderNode::effectInstance( EffectInstance* ef )
-        {
-            m_pEffectInst = ef;
+            RenderItem* renderItem = NULL;
+            const unsigned int size = m_renderItems.size();
+            for( unsigned int i = 0; i<size; ++i ){
+                renderItem = m_renderItems[i];
+                delete renderItem;
+            }
         }
 
+        bool RenderNode::removeRenderItem( const char* const name )
+        {
+            RenderItem* item =  findRenderItem( name );
+            if ( !item ){
+                return false;
+            }
+
+            if( m_renderItems.remove( item ) ){
+                delete item;
+                return true;
+            }
+
+            return false;
+        }
+
+        RenderItem* RenderNode::addRenderItem( const char* const name )
+        {
+            assert( name );
+            if ( !name ){
+                return NULL;
+            }
+
+            RenderItem* item = findRenderItem( name );
+            if ( item ){
+                ZH::Util::ENG_ERR("RenderNode::addRenderItem(), name '%s' already exists!\n", name);
+                return NULL;
+            }
+
+            item = new RenderItem( name );
+            m_renderItems.push_back( item );
+
+            return item;
+        }
+
+        RenderItem* RenderNode::findRenderItem( const char* const name )
+        {
+            assert( name );
+            if ( !name ){
+                return NULL;
+            }
+
+            RenderItem* renderItem = NULL;
+            const unsigned int size = m_renderItems.size();
+            for( unsigned int i = 0; i<size; ++i ){
+                renderItem = m_renderItems[i];
+                if ( !renderItem )
+                    continue;
+                if ( strcmp( renderItem->name(), name) == 0 )
+                    return renderItem;
+            }
+
+            return NULL;
+        }
+
+        void RenderNode::enableRenderItem( const char* const /*name*/ )
+        {
+
+        }
+
+        void RenderNode::disableRenderItem( const char* const /*name*/ )
+        {
+
+        }
     }
 }

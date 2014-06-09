@@ -3,37 +3,40 @@
 
 #include "Common/ZHSTD.h"
 #include "Graphics/Resource.h"
+#include "Graphics/RenderItem.h"
 #include "Util/Array.h"
+#include "Math/Matrix4x4_f.h"
 
 namespace ZH{
     namespace Graphics{
 
-        class IndexBuffer;
-        class VertexBuffer;
-        class EffectInstance;
-
         class ZH_GRAPHICS_DLL RenderNode : public Resource
         {
         public:
+            virtual bool isValid();
+
+            // World matrix
+            const ZH::Math::matrix4x4_f& worldMatrix() { return m_worldMatrix; }
+            void worldMatrix( const ZH::Math::matrix4x4_f& mat ) { m_worldMatrix = mat; }
+
+            bool        removeRenderItem( const char* const );
+            RenderItem* addRenderItem( const char* const );
+            RenderItem* findRenderItem( const char* const );
+
+            void enableRenderItem( const char* const );
+            void disableRenderItem( const char* const );
+
+            void clear();
+
+        private:
+            ZH::Math::matrix4x4_f m_worldMatrix;
+            RenderItemPtrArray    m_renderItems;
+
+        private:
             RenderNode( const char* const );
             virtual ~RenderNode();
 
-            virtual bool isValid();
-
-            void          indexBuffer( IndexBuffer* );
-            IndexBuffer*  indexBuffer()   { return m_pIndexBuffer; }
-
-            void          vertexBuffer( VertexBuffer* );
-            VertexBuffer* vertexBuffer() { return m_pVertexBuffer; }
-
-            void                effectInstance( EffectInstance* );
-            EffectInstance*     effectInstance(){ return m_pEffectInst; }
-
-        private:
-            IndexBuffer*        m_pIndexBuffer;
-            VertexBuffer*       m_pVertexBuffer;
-            EffectInstance*     m_pEffectInst;
-
+            friend class SimpleWorld;
             // Put at last line
             CLASS_TYPE_NAME_DECLEARATION
         };

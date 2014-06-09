@@ -3,7 +3,9 @@
 
 #include "Common/ZHSTD.h"
 #include "Graphics/Resource.h"
+#include "Graphics/Enums.h"
 #include "Util/Cache.h"
+#include "Util/Array.h"
 
 namespace ZH{
     namespace Graphics{
@@ -33,6 +35,9 @@ namespace ZH{
 
         ZH_GRAPHICS_EXTERN template class ZH_GRAPHICS_DLL ZH::UTIL::Cache<IndexBuffer>;
         typedef ZH::UTIL::Cache<IndexBuffer> IndexBufferCache;
+
+        ZH_GRAPHICS_EXTERN template class ZH_GRAPHICS_DLL ZH::UTIL::Array<IndexBuffer*>;
+        typedef ZH::UTIL::Array<IndexBuffer*> IndexBufferPtrArray;
 
     } // namespace Graphics
 } // namespace ZH

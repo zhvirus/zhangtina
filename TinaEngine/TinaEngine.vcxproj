@@ -25,9 +25,11 @@
     <ClInclude Include="..\includes\Graphics\DeviceDX11.h" />
     <ClInclude Include="..\includes\Graphics\Effect.h" />
     <ClInclude Include="..\includes\Graphics\Enums.h" />
+    <ClInclude Include="..\includes\Graphics\GeometryInstance.h" />
     <ClInclude Include="..\includes\Graphics\IndexBuffer.h" />
     <ClInclude Include="..\includes\Graphics\Name.h" />
     <ClInclude Include="..\includes\Graphics\RenderFragment.h" />
+    <ClInclude Include="..\includes\Graphics\RenderItem.h" />
     <ClInclude Include="..\includes\Graphics\RenderNode.h" />
     <ClInclude Include="..\includes\Graphics\RenderTarget.h" />
     <ClInclude Include="..\includes\Graphics\Resource.h" />
@@ -51,10 +53,12 @@
     <ClCompile Include="src\DeviceDX11.cpp" />
     <ClCompile Include="src\DeviceDX11Imp.cpp" />
     <ClCompile Include="src\Effect.cpp" />
+    <ClCompile Include="src\GeometryInstance.cpp" />
     <ClCompile Include="src\IndexBuffer.cpp" />
     <ClCompile Include="src\IndexBufferImp.cpp" />
     <ClCompile Include="src\Name.cpp" />
     <ClCompile Include="src\RenderFragment.cpp" />
+    <ClCompile Include="src\RenderItem.cpp" />
     <ClCompile Include="src\RenderNode.cpp" />
     <ClCompile Include="src\RenderTarget.cpp" />
     <ClCompile Include="src\RenderTargetImp.cpp" />
