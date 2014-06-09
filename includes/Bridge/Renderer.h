@@ -22,7 +22,9 @@ namespace ZH
         public:
             static Renderer& instance() { static Renderer r; return r;}
 
+            // Device
             bool startDevice( ZH::Widgets::WindowsInfo& );
+
             ZH::Graphics::RenderFragment* defaultRenderFragment();
             ZH::Graphics::RenderFragment* createDefaultRenderFragment( ZH::Widgets::WindowsInfo& );
 

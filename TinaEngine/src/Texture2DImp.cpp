@@ -1,5 +1,4 @@
 #include "Internal/Graphics/Texture2DImp.h"
-#include "Internal/Common/internal_common.h"
 
 namespace ZH{
     namespace Graphics{

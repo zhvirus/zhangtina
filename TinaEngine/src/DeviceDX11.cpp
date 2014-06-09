@@ -1,13 +1,18 @@
 #ifndef _ZH_GRAPHICS_DLL_
 #define _ZH_GRAPHICS_DLL_
 #endif
-#include "Graphics/DeviceDX11.h"
 #include "Internal/Graphics/DeviceDX11Imp.h"
-#include "Graphics/Texture2D.h"
+#include "Internal/Graphics/Internal_common_graphics.h"
+
 #include "Internal/Graphics/Texture2DImp.h"
-#include "Graphics/RenderTarget.h"
 #include "Internal/Graphics/RenderTargetImp.h"
+
+#include "Graphics/DeviceDX11.h"
+#include "Graphics/Texture2D.h"
+#include "Graphics/RenderTarget.h"
 #include "Graphics/ResourceManager.h"
+
+
 
 #define IMP_PTR ((ZH::Graphics::DeviceDX11Imp*)m_pImp)
 
@@ -41,10 +46,11 @@ namespace ZH{
             bool startResult = IMP_PTR->startDevice( winInfo );
             if ( startResult ){
                 m_status = DEVICE_STATUS_RUNNING;
-                ZH_OUT("Device started successfully.");
+                ZH::Util::ENG_DBG("Device started successfully.\n");
+
             }else{
                 m_status = DEVICE_STATUS_SHUTDOWN;
-                ZH_OUT("Device start failed.");
+                ZH::Util::ENG_ERR("Device start failed!\n");
             }
             return startResult;
         }
@@ -55,7 +61,9 @@ namespace ZH{
                 IMP_PTR->shutdownDevice();
             }
 
-            ZH_OUT("Device shutdown.");
+            m_status = DEVICE_STATUS_SHUTDOWN;
+
+            ZH::Util::ENG_DBG("Device shutdown.\n");
 
             return true;
         }
@@ -64,20 +72,20 @@ namespace ZH{
         {
             // Check device
             if ( !isRunning() ){
-                std::cerr<<"ERROR: Device is not ready, can't create render target!"<<std::endl;
+                ZH::Util::ENG_ERR("Device is not ready, can't create render target!\n");
                 return false;
             }
 
             // Check texture
             if ( !pTex2d || !pTex2d->isValid() ){
-                std::cerr<<"ERROR: tex is not valid, can't create render target!"<<std::endl;
+                ZH::Util::ENG_ERR("Texure2D is not valid, can't create render target!\n");
                 return false;
             }
 
             ID3D11Texture2D* pTex2d_d3d =
                 pTex2d->m_pTex2DImp?pTex2d->m_pTex2DImp->getTex2D_d3d():NULL;
             if( !pTex2d_d3d ){
-                std::cerr<<"ERROR: d3d tex is not valid, can't create render target!"<<std::endl;
+                ZH::Util::ENG_ERR("D3D texture2D is not valid, can't create render target!\n");
                 return false;
             }
 
@@ -85,7 +93,7 @@ namespace ZH{
 
             ID3D11Device* pDevice_d3d = IMP_PTR->m_pDevice;
             if( !pDevice_d3d ){
-                std::cerr<<"ERROR: d3d device is not valid, can't create render target!"<<std::endl;
+                ZH::Util::ENG_ERR("D3D device is not valid, can't create render target!\n");
                 return false;
             }
 
@@ -93,7 +101,7 @@ namespace ZH{
             hr = pDevice_d3d->CreateRenderTargetView( pTex2d_d3d, NULL, &pRtv_d3d );
 
             if ( FAILED(hr) ){
-                std::cerr<<"ERROR: d3d create render target view failed!"<<std::endl;
+                ZH::Util::ENG_ERR("D3D create render target view failed!\n");
                 return false;
             }
 
@@ -109,7 +117,7 @@ namespace ZH{
         {
             // Check device
             if ( !isRunning() ){
-                std::cerr<<"ERROR: Device is not ready, can't get back buffer!"<<std::endl;
+                ZH::Util::ENG_ERR("ERROR: Device is not ready, can't get back buffer!\n");
                 return false;
             }
 
@@ -119,14 +127,14 @@ namespace ZH{
             // Check swapchain
             IDXGISwapChain* pSwapchain = IMP_PTR->m_pSwapChain;
             if ( !pSwapchain ){
-                std::cerr<<"ERROR: Swap chain is not ready, can't get back buffer from it!!"<<std::endl;
+                ZH::Util::ENG_ERR("Swap chain is not ready, can't get back buffer from it!\n");
                 return false;
             }
 
             // Get back buffer from swapchain
             ID3D11Texture2D *pBackBuffer = NULL;
             if( FAILED( pSwapchain->GetBuffer( 0, __uuidof( ID3D11Texture2D ), (LPVOID*)&pBackBuffer ) ) ){
-                std::cerr<<"ERROR: Get back buffer from swap chain failed!"<<std::endl;
+                ZH::Util::ENG_ERR("Get back buffer from swap chain failed!\n");
                 return false;
             }
 

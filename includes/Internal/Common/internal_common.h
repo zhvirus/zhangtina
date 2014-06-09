@@ -8,7 +8,7 @@
 #include <string>
 #include <assert.h>
 
-
+#include "Util/Print.h"
 
 // Safe delete
 template<typename T>

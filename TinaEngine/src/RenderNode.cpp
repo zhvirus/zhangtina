@@ -2,7 +2,8 @@
 #define _ZH_GRAPHICS_DLL_
 #endif
 #include "Graphics/RenderNode.h"
-#include "Internal/Common/internal_common.h"
+#include "Internal/Graphics/Internal_common_graphics.h"
+
 #include "Graphics/IndexBuffer.h"
 #include "Graphics/VertexBuffer.h"
 #include "Graphics/Effect.h"

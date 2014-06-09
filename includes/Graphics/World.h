@@ -15,12 +15,28 @@ namespace ZH {
         public:
             virtual ~World();
         public:
-            unsigned int numOfNodes()const;
-        private:
+            virtual unsigned int numOfNodes()const;
+        protected:
             World( const char* const name );
 
             friend class ResourceManager;
 
+            // Put at last line
+            CLASS_TYPE_NAME_DECLEARATION
+        };
+
+        // Simple world
+        class ZH_GRAPHICS_DLL SimpleWorld : public World
+        {
+        public:
+            SimpleWorld( const char* const name );
+            virtual ~SimpleWorld();
+
+
+        private:
+        private:
+            friend class ResourceManager;
+            // Put at last line
             CLASS_TYPE_NAME_DECLEARATION
         };
 

@@ -1,8 +1,9 @@
 #include "Internal/Graphics/DeviceDX11Imp.h"
+#include "Internal/Graphics/RenderTargetImp.h"
 #include "Widget/Window.h"
 #include "Graphics/RenderTarget.h"
-#include "Internal/Graphics/RenderTargetImp.h"
 #include "Math/float4.h"
+#include "Util/Print.h"
 
 namespace ZH{
     namespace Graphics{
@@ -26,7 +27,6 @@ namespace ZH{
             {
                 DXGI_ADAPTER_DESC aDesc;
                 if ( pAdapter && ( S_OK == pAdapter->GetDesc( &aDesc ))){
-                    ZH_OUT(aDesc.Description);
                     if ( aDesc.DedicatedVideoMemory > lastVideoMemSize ){
                         lastVideoMemSize = aDesc.DedicatedVideoMemory;
                         oAdapter = pAdapter;
@@ -85,7 +85,7 @@ namespace ZH{
                 if ( (winInfo->fHeight <= 0) ||
                      (winInfo->fWidth <=0) ||
                      (!winInfo->fWndHandle)){
-                         ZH_ERR("DeviceDX11Imp::startDevice()--WindosInfo is invalid!");
+                         ZH::Util::ENG_ERR("DeviceDX11Imp::startDevice()--WindosInfo is invalid!\n");
                          return false;
                 }
             }
@@ -179,12 +179,12 @@ namespace ZH{
             }
 
             if( FAILED( hr ) || !m_pDevice || !m_pDevice || ( winInfo && !m_pSwapChain) ){
-                ZH_ERR("Device creating failed.");
+                ZH::Util::ENG_ERR("Device creating failed!\n");
                 shutdownDevice();
                 return false;
             }
 
-            ZH_OUT("Device created successfully.");
+            ZH::Util::ENG_DBG("Device created successfully.\n");
             return true;
         }
 

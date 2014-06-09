@@ -2,7 +2,8 @@
 #define _ZH_GRAPHICS_DLL_
 #endif
 #include "Graphics/RenderFragment.h"
-#include "Internal/Common/internal_common.h"
+#include "Internal/Graphics/Internal_common_graphics.h"
+
 #include "Graphics/Camera.h"
 #include "Graphics/World.h"
 #include "Graphics/RenderTarget.h"

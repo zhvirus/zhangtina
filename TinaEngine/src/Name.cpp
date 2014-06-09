@@ -3,6 +3,8 @@
 #endif
 
 #include "Graphics/Name.h"
+#include "Internal/Graphics/Internal_common_graphics.h"
+
 #include <string>
 #include <assert.h>
 

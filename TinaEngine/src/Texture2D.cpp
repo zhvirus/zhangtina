@@ -2,6 +2,8 @@
 #define _ZH_GRAPHICS_DLL_
 #endif
 #include "Graphics/Texture2D.h"
+#include "Internal/Graphics/Internal_common_graphics.h"
+
 #include "Internal/Graphics/Texture2DImp.h"
 
 

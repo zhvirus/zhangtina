@@ -2,7 +2,7 @@
 #define TEXTURE2D_IMP_H
 
 #include "Common/ZHSTD.h"
-#include "Internal/Common/internal_common.h"
+#include "Internal/Graphics/Internal_common_graphics.h"
 
 namespace ZH{
     namespace Graphics{

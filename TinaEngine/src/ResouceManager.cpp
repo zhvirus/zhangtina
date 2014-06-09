@@ -3,6 +3,8 @@
 #endif
 
 #include "Graphics/ResourceManager.h"
+#include "Internal/Graphics/Internal_common_graphics.h"
+
 #include "Graphics/DeviceDX11.h"
 #include "Internal/Graphics/DeviceDX11Imp.h"
 #include "Internal/Graphics/ResourceFactory.h"
@@ -56,9 +58,9 @@ namespace ZH{
 
             if ( newWorld ){
                 m_worldCache.insert( newWorld );
-                ZH::Util::ENG_DBG("World (\"%s\") created successfully!\n", name );
+                ZH::Util::ENG_DBG("World (\"%s\") created successfully.\n", name );
             }else{
-                ZH::Util::ENG_ERR("World (\"%s\") created failed!!\n", name );
+                ZH::Util::ENG_ERR("World (\"%s\") created failed!\n", name );
             }
 
             return newWorld;

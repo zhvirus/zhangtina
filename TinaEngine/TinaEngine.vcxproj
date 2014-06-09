@@ -35,8 +35,8 @@
     <ClInclude Include="..\includes\Graphics\Texture2D.h" />
     <ClInclude Include="..\includes\Graphics\VertexBuffer.h" />
     <ClInclude Include="..\includes\Graphics\World.h" />
-    <ClInclude Include="..\includes\Internal\Common\internal_common.h" />
     <ClInclude Include="..\includes\Internal\Graphics\DeviceDX11Imp.h" />
+    <ClInclude Include="..\includes\Internal\Graphics\Internal_common_graphics.h" />
     <ClInclude Include="..\includes\Internal\Graphics\RenderTargetImp.h" />
     <ClInclude Include="..\includes\Internal\Graphics\ResourceFactory.h" />
     <ClInclude Include="..\includes\Internal\Graphics\Texture2DImp.h" />

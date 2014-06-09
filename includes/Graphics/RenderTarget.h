@@ -26,11 +26,12 @@ namespace ZH{
             Texture2D*       m_pTex2D;
             RenderTargetImp* m_pRtImp;
 
-            // Put at last line
-            CLASS_TYPE_NAME_DECLEARATION
 
             friend class DeviceDX11;
             friend class DeviceDX11Imp;
+
+            // Put at last line
+            CLASS_TYPE_NAME_DECLEARATION
         };
 
         ZH_GRAPHICS_EXTERN template class ZH_GRAPHICS_DLL ZH::UTIL::Array<RenderTarget*>;

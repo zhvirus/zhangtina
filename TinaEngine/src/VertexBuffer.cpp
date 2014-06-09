@@ -2,7 +2,7 @@
 #define _ZH_GRAPHICS_DLL_
 #endif
 #include "Graphics/VertexBuffer.h"
-#include "Internal/Common/internal_common.h"
+#include "Internal/Graphics/Internal_common_graphics.h"
 
 namespace ZH{
     namespace Graphics{

@@ -27,6 +27,8 @@ namespace ZH{
             void* m_pImp;
         private:
             CLASS_COMMON_PROTECTED_DECLEARATION(DeviceDX11)
+
+            // Put at last line
             CLASS_TYPE_NAME_DECLEARATION
         };
 

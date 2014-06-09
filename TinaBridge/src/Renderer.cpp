@@ -21,6 +21,9 @@ namespace ZH
 
         Renderer::~Renderer()
         {
+            if ( m_pDevice ){
+                m_pDevice->shutdown();
+            }
         }
 
         bool Renderer::startDevice( ZH::Widgets::WindowsInfo& winInfo )

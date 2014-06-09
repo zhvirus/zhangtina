@@ -3,6 +3,7 @@
 #endif
 
 #include "Internal/Graphics/ResourceFactory.h"
+#include "Internal/Graphics/Internal_common_graphics.h"
 
 #include "Graphics/Camera.h"
 #include "Graphics/RenderFragment.h"
