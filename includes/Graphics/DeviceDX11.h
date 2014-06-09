@@ -21,7 +21,9 @@ namespace ZH{
             virtual bool clearRenderTargetView( RenderTarget*, const ZH::Math::float4& );
             virtual bool present();
         private:
-            virtual bool createRenderTarget( Texture2D*, RenderTarget*&, const char* const );
+            virtual RenderTarget* createRenderTarget( const char* const, Texture2D* );
+            virtual VertexBuffer* createVertexBuffer( const char* const, const BUFFER_DESC&, const SUBRESOURCE_DATA&);
+            virtual IndexBuffer*  createIndexBuffer ( const char* const, const BUFFER_DESC&, const SUBRESOURCE_DATA&);
             virtual bool getBackBuffer( Texture2D*& );
         private:
             void* m_pImp;

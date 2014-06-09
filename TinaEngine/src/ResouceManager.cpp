@@ -23,6 +23,17 @@ namespace ZH{
         {
         }
 
+        template<class S, class T>
+        S* findResourceByName( const char* name, const T& cache )
+        {
+            assert( name );
+            S* pRes = NULL;
+            if ( name ){
+                pRes = cache.findByName(name);
+            }
+            return pRes;
+        }
+
         //----------------------------------------------------------------
         //
         //  Render target
@@ -30,20 +41,7 @@ namespace ZH{
         //----------------------------------------------------------------
         World* ResourceManager::findWorldByName( const char* const name )
         {
-            assert( name );
-
-            World* pWorld = NULL;
-            if ( name ){
-                pWorld = m_worldCache.findByName(name);
-            }
-
-            if ( pWorld ){
-                ZH::Util::ENG_DBG("World (\"%s\") found in cache.\n", name);
-            }else{
-                ZH::Util::ENG_DBG("World (\"%s\") *NOT* found in cache.\n", name);
-            }
-
-            return pWorld;
+            return findResourceByName<World, WorldCache>( name, m_worldCache );
         }
 
         World* ResourceManager::acquireWorld( const char* const name )
@@ -76,20 +74,7 @@ namespace ZH{
         // Find render target by name
         RenderTarget* ResourceManager::findRenderTargetByName( const char* const name )
         {
-            assert( name );
-
-            RenderTarget* rt = NULL;
-            if ( name ){
-                rt = m_renderTargetCache.findByName(name);
-            }
-
-            if ( rt ){
-                ZH::Util::ENG_DBG("Render target (\"%s\") found in cache.\n", name);
-            }else{
-                ZH::Util::ENG_DBG("Render target (\"%s\") *NOT* found in cache.\n", name);
-            }
-
-            return rt;
+            return findResourceByName<RenderTarget, RenderTargetCache>( name, m_renderTargetCache );
         }
 
         // Acquire render target
@@ -106,11 +91,10 @@ namespace ZH{
             }
 
             // Create render target through device interface
-            if ( pDevice->createRenderTarget( tex2d, rt, name ) ){
-                if ( rt && m_renderTargetCache.insert( rt ) ){
-                    ZH::Util::ENG_DBG("Render target (\"%s\") created successfully!\n", rt->name() );
-                    return rt;
-                }
+            rt = pDevice->createRenderTarget( name, tex2d );
+            if ( rt ){
+                m_renderTargetCache.insert( rt );
+                return rt;
             }
 
             ZH::Util::ENG_ERR("Render target (\"%s\") created failed!\n", rt->name() );
@@ -161,28 +145,15 @@ namespace ZH{
 
         CameraPersp* ResourceManager::findCameraPerspByName( const char* const name )
         {
-            assert( name );
-
-            CameraPersp* pCam = NULL;
-            if ( name ){
-                pCam = m_cameraPerspCache.findByName(name);
-            }
-
-            if ( pCam ){
-                ZH::Util::ENG_DBG("CameraPersp (\"%s\") found in cache.\n", name);
-            }else{
-                ZH::Util::ENG_DBG("CameraPersp (\"%s\") *NOT* found in cache.\n", name);
-            }
-
-            return pCam;
+            return findResourceByName<CameraPersp, CameraPerspCache>( name, m_cameraPerspCache );
         }
 
         CameraPersp* ResourceManager::acquireDefaultCameraPersp()
         {
             // Find in cache first
-            CameraPersp* pObj = findCameraPerspByName( CameraPersp::m_sDefaultName );
-            if ( pObj ){
-                return pObj;
+            CameraPersp* pRes = findCameraPerspByName( CameraPersp::m_sDefaultName );
+            if ( pRes ){
+                return pRes;
             }
 
             // Default camera
@@ -232,20 +203,7 @@ namespace ZH{
 
         RenderFragment* ResourceManager::findRenderFragmentByName( const char* const name )
         {
-            assert( name );
-
-            RenderFragment* pObj = NULL;
-            if ( name ){
-                pObj = m_renderFragmentCache.findByName(name);
-            }
-
-            if ( pObj ){
-                ZH::Util::ENG_DBG("RenderFragment (\"%s\") found in cache.\n", name);
-            }else{
-                ZH::Util::ENG_DBG("RenderFragment (\"%s\") *NOT* found in cache.\n", name);
-            }
-
-            return pObj;
+            return findResourceByName<RenderFragment, RenderFragmentCache>( name, m_renderFragmentCache );
         }
 
         RenderFragment* ResourceManager::acquireRenderFragment(
@@ -256,23 +214,97 @@ namespace ZH{
                   const ZH::Graphics::RenderTargetPtrArray& rts)
         {
             // Find in cache first
-            RenderFragment* pObj = findRenderFragmentByName( name );
-            if ( pObj ){
-                return pObj;
+            RenderFragment* pRes = findRenderFragmentByName( name );
+            if ( pRes ){
+                return pRes;
             }
 
             // Create a new render fragment
-            pObj = ResourceFactory::createRenderFragment(
+            pRes = ResourceFactory::createRenderFragment(
                 name, device, camera, world, rts);
 
-            if ( pObj ){
+            if ( pRes ){
                 ZH::Util::ENG_DBG("RenderFragment (\"%s\") created.\n", name);
-                m_renderFragmentCache.insert( pObj );
+                m_renderFragmentCache.insert( pRes );
             }
 
-            return pObj;
+            return pRes;
         }
 
+        //----------------------------------------------------------------
+        //
+        //  Vertex buffer
+        //
+        //----------------------------------------------------------------
+        VertexBuffer* ResourceManager::findVertexBufferByName( const char* const name )
+        {
+            return findResourceByName<VertexBuffer, VertexBufferCache>( name, m_vertexBufferCache );
+        }
+
+        VertexBuffer* ResourceManager::acquireVertexBuffer(
+                const char* const name,
+                Device* device,
+                const BUFFER_DESC& desc,
+                const SUBRESOURCE_DATA& data )
+        {
+            // Find in cache first
+            VertexBuffer* pRes = findVertexBufferByName( name );
+            if ( pRes ){
+                return pRes;
+            }
+
+            // Create a new vertex buffer
+            if ( !device ){
+                assert( device );
+                ZH::Util::ENG_ERR("ResourceManager::acquireVertexBuffer(), device is NULL!\n");
+                return NULL;
+            }
+
+            VertexBuffer* vb = device->createVertexBuffer( name, desc, data );
+            if ( vb ){
+                m_vertexBufferCache.insert( vb );
+            }
+
+            return vb;
+        }
+
+
+        //----------------------------------------------------------------
+        //
+        //  Index buffer
+        //
+        //----------------------------------------------------------------
+        IndexBuffer* ResourceManager::findIndexBufferByName( const char* const name )
+        {
+            return findResourceByName<IndexBuffer, IndexBufferCache>( name, m_indexBufferCache );
+        }
+
+        IndexBuffer* ResourceManager::acquireIndexBuffer(
+                const char* const name,
+                Device* device,
+                const BUFFER_DESC& desc,
+                const SUBRESOURCE_DATA& data )
+        {
+            // Find in cache first
+            IndexBuffer* pRes = findIndexBufferByName( name );
+            if ( pRes ){
+                return pRes;
+            }
+
+            // Create a new vertex buffer
+            if ( !device ){
+                assert( device );
+                ZH::Util::ENG_ERR("ResourceManager::acquireIndexBuffer(), device is NULL!\n");
+                return NULL;
+            }
+
+            IndexBuffer* ib = device->createIndexBuffer( name, desc, data );
+            if ( ib ){
+                m_indexBufferCache.insert( ib );
+            }
+
+            return ib;
+        }
 
     }
 }

@@ -14,7 +14,7 @@ namespace ZH{
             ~Cache();
             void destroy();
 
-            T* findByName( const char* const );
+            T* findByName( const char* const ) const ;
             T* insert( T* );
             unsigned int size() const;
         private:
@@ -58,7 +58,7 @@ namespace ZH{
         }
 
         template<class T>
-        T* Cache<T>::findByName( const char* const name )
+        T* Cache<T>::findByName( const char* const name ) const
         {
             if ( !name ){
                 return NULL;

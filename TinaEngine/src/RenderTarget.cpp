@@ -14,10 +14,10 @@ namespace ZH{
 
         const char RenderTarget::m_sDefaultRenderTargetName[] = "DefaultRenderTarget";
 
-        RenderTarget::RenderTarget( const char* const name, Texture2D* tex, RenderTargetImp* imp ):
+        RenderTarget::RenderTarget( const char* const name, RenderTargetImp* imp , Texture2D* tex ):
             Resource( name ),
-            m_pTex2D( tex ),
-            m_pRtImp( imp )
+            m_pRtImp( imp ),
+            m_pTex2D( tex )
         {
         }
 

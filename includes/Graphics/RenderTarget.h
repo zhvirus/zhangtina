@@ -21,11 +21,9 @@ namespace ZH{
 
             static const char m_sDefaultRenderTargetName[30];
         private:
-            RenderTarget(  const char* const, Texture2D*, RenderTargetImp* );
-
-            Texture2D*       m_pTex2D;
+            RenderTarget(  const char* const, RenderTargetImp*, Texture2D* );
             RenderTargetImp* m_pRtImp;
-
+            Texture2D*       m_pTex2D;
 
             friend class DeviceDX11;
             friend class DeviceDX11Imp;

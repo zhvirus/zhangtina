@@ -3,25 +3,27 @@
 #endif
 #include "Graphics/VertexBuffer.h"
 #include "Internal/Graphics/Internal_common_graphics.h"
+#include "Internal/Graphics/VertexBufferImp.h"
 
 namespace ZH{
     namespace Graphics{
         CLASS_TYPE_NAME_DEFINITION( VertexBuffer )
 
-        VertexBuffer::VertexBuffer( const char* const name ):
-            Resource( name )
+        VertexBuffer::VertexBuffer( const char* const name, VertexBufferImp* imp, const BUFFER_DESC& desc ):
+            Resource( name ),
+            m_pImp( imp ),
+            m_desc(desc)
         {
-
         }
 
         VertexBuffer::~VertexBuffer()
         {
-
+            delete m_pImp;
         }
 
         bool VertexBuffer::isValid()
         {
-            return true;
+            return m_pImp && m_pImp->isValid();
         }
 
         bool VertexBuffer::operator== ( const VertexBuffer& v)

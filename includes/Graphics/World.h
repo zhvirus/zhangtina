@@ -29,12 +29,12 @@ namespace ZH {
         class ZH_GRAPHICS_DLL SimpleWorld : public World
         {
         public:
-            SimpleWorld( const char* const name );
             virtual ~SimpleWorld();
 
 
         private:
         private:
+            SimpleWorld( const char* const name );
             friend class ResourceManager;
             // Put at last line
             CLASS_TYPE_NAME_DECLEARATION

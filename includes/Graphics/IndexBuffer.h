@@ -8,16 +8,25 @@
 namespace ZH{
     namespace Graphics{
 
+        // Forwards
+        class IndexBufferImp;
+
         class ZH_GRAPHICS_DLL IndexBuffer: public Resource
         {
         public:
-            IndexBuffer( const char* const );
+
             virtual ~IndexBuffer();
             virtual bool isValid();
 
             bool operator==(const IndexBuffer&);
 
         private:
+            IndexBufferImp* m_pImp;
+            BUFFER_DESC     m_desc;
+
+            friend class DeviceDX11;
+            IndexBuffer( const char* const, IndexBufferImp*, const BUFFER_DESC& desc );
+
             // Put at last line
             CLASS_TYPE_NAME_DECLEARATION
         };

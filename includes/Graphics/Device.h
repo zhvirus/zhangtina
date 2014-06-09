@@ -19,6 +19,10 @@ namespace ZH{
 
         class Texture2D;
         class RenderTarget;
+        class VertexBuffer;
+        class IndexBuffer;
+        class BUFFER_DESC;
+        class SUBRESOURCE_DATA;
 
 
         enum DEVICE_STATUS{
@@ -41,7 +45,9 @@ namespace ZH{
             virtual bool present() = 0;
 
         private:
-            virtual bool createRenderTarget( Texture2D*, RenderTarget*&, const char* const ) = 0;
+            virtual RenderTarget* createRenderTarget( const char* const, Texture2D* ) = 0;
+            virtual VertexBuffer* createVertexBuffer( const char* const, const BUFFER_DESC&, const SUBRESOURCE_DATA&) = 0;
+            virtual IndexBuffer*  createIndexBuffer ( const char* const, const BUFFER_DESC&, const SUBRESOURCE_DATA&) = 0;
             virtual bool getBackBuffer( Texture2D*& ) = 0;
 
 

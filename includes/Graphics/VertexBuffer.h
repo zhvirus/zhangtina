@@ -4,20 +4,28 @@
 #include "Common/ZHSTD.h"
 #include "Graphics/Resource.h"
 #include "Util/Cache.h"
+#include "Graphics/Enums.h"
 
 namespace ZH{
     namespace Graphics{
 
+        // Forwards
+        class VertexBufferImp;
+
         class ZH_GRAPHICS_DLL VertexBuffer: public Resource
         {
         public:
-            VertexBuffer( const char* const );
             virtual ~VertexBuffer();
-
             virtual bool isValid();
 
             bool operator == ( const VertexBuffer& );
+
         private:
+            VertexBufferImp* m_pImp;
+            BUFFER_DESC      m_desc;
+
+            friend class DeviceDX11;
+            VertexBuffer( const char* const, VertexBufferImp*, const BUFFER_DESC& desc );
 
             // Put at last line
             CLASS_TYPE_NAME_DECLEARATION

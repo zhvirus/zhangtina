@@ -56,6 +56,25 @@ namespace ZH {
                   const ZH::Graphics::RenderTargetPtrArray& rts
                  );
 
+            // Vertex buffer
+            VertexBuffer* findVertexBufferByName( const char* const name );
+            VertexBuffer* acquireVertexBuffer(
+                const char* const name,
+                Device* device,
+                const BUFFER_DESC&,
+                const SUBRESOURCE_DATA&
+                );
+
+            // Index buffer
+            IndexBuffer* findIndexBufferByName( const char* const name );
+            IndexBuffer* acquireIndexBuffer(
+                const char* const name,
+                Device* device,
+                const BUFFER_DESC&,
+                const SUBRESOURCE_DATA&
+                );
+
+
         private:
             Texture2DCache        m_texture2DCache;
             VertexBufferCache     m_vertexBufferCache;

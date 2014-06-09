@@ -35,19 +35,24 @@
     <ClInclude Include="..\includes\Graphics\Texture2D.h" />
     <ClInclude Include="..\includes\Graphics\VertexBuffer.h" />
     <ClInclude Include="..\includes\Graphics\World.h" />
+    <ClInclude Include="..\includes\Internal\Graphics\DataToD3D.h" />
     <ClInclude Include="..\includes\Internal\Graphics\DeviceDX11Imp.h" />
+    <ClInclude Include="..\includes\Internal\Graphics\IndexBufferImp.h" />
     <ClInclude Include="..\includes\Internal\Graphics\Internal_common_graphics.h" />
     <ClInclude Include="..\includes\Internal\Graphics\RenderTargetImp.h" />
     <ClInclude Include="..\includes\Internal\Graphics\ResourceFactory.h" />
     <ClInclude Include="..\includes\Internal\Graphics\Texture2DImp.h" />
+    <ClInclude Include="..\includes\Internal\Graphics\VertexBufferImp.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\DataToD3D.cpp" />
     <ClCompile Include="src\Device.cpp" />
     <ClCompile Include="src\DeviceDX11.cpp" />
     <ClCompile Include="src\DeviceDX11Imp.cpp" />
     <ClCompile Include="src\Effect.cpp" />
     <ClCompile Include="src\IndexBuffer.cpp" />
+    <ClCompile Include="src\IndexBufferImp.cpp" />
     <ClCompile Include="src\Name.cpp" />
     <ClCompile Include="src\RenderFragment.cpp" />
     <ClCompile Include="src\RenderNode.cpp" />
@@ -59,6 +64,7 @@
     <ClCompile Include="src\Texture2D.cpp" />
     <ClCompile Include="src\Texture2DImp.cpp" />
     <ClCompile Include="src\VertexBuffer.cpp" />
+    <ClCompile Include="src\VertexBufferImp.cpp" />
     <ClCompile Include="src\World.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

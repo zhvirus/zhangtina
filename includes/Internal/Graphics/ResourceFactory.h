@@ -17,6 +17,7 @@ namespace ZH{
         class Camera;
         class World;
         class RenderTarget;
+        class VertexBuffer;
 
         class ResourceFactory
         {
@@ -41,8 +42,6 @@ namespace ZH{
                   World* world,
                   const ZH::Graphics::RenderTargetPtrArray&
                 );
-
-
 
 
             friend class ResourceManager;

@@ -55,6 +55,15 @@
     <ClCompile Include="src\ResourceFactory.cpp">
       <Filter>CPP</Filter>
     </ClCompile>
+    <ClCompile Include="src\VertexBufferImp.cpp">
+      <Filter>CPP</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DataToD3D.cpp">
+      <Filter>CPP</Filter>
+    </ClCompile>
+    <ClCompile Include="src\IndexBufferImp.cpp">
+      <Filter>CPP</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\includes\Graphics\Camera.h">
@@ -118,6 +127,15 @@
       <Filter>H</Filter>
     </ClInclude>
     <ClInclude Include="..\includes\Internal\Graphics\Internal_common_graphics.h">
+      <Filter>H_Internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\Internal\Graphics\VertexBufferImp.h">
+      <Filter>H_Internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\Internal\Graphics\DataToD3D.h">
+      <Filter>H_Internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\Internal\Graphics\IndexBufferImp.h">
       <Filter>H_Internal</Filter>
     </ClInclude>
   </ItemGroup>

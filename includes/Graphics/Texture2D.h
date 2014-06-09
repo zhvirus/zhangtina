@@ -73,8 +73,8 @@ namespace ZH{
             Texture2D( const char* const, Texture2DImp* );
 
         private:
-            TEX2D_DESC m_sDesc;
             Texture2DImp* m_pTex2DImp;
+            TEX2D_DESC m_sDesc;
 
             friend class DeviceDX11;
 

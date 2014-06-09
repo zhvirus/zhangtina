@@ -7,6 +7,7 @@
 
 #include "Graphics/Camera.h"
 #include "Graphics/RenderFragment.h"
+#include "Graphics/VertexBuffer.h"
 #include "Math/float3.h"
 
 
@@ -70,10 +71,6 @@ namespace ZH{
 
             return pObj;
         }
-
-
-
-
 
     }
 }

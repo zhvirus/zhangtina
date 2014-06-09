@@ -120,10 +120,10 @@ namespace ZH{
         };
 
         enum USAGE {
-            USAGE_DEFAULT     = 0,
-            USAGE_IMMUTABLE   = 1,
-            USAGE_DYNAMIC     = 2,
-            USAGE_STAGING     = 3 
+            USAGE_DEFAULT     = 0,  // CPU:          , GPU: Read|Write
+            USAGE_IMMUTABLE   = 1,  // CPU: No access, GPU: Read
+            USAGE_DYNAMIC     = 2,  // CPU: Write,     GPU: Read
+            USAGE_STAGING     = 3   // GPU  --> CPU copy
         };
 
         enum BIND_FLAG {
@@ -138,11 +138,13 @@ namespace ZH{
         };
 
         enum CPU_ACCESS_FLAG {
+            CPU_ACCESS_NO      = 0x0L,
             CPU_ACCESS_WRITE   = 0x10000L,
             CPU_ACCESS_READ    = 0x20000L 
         };
 
         enum RESOURCE_MISC_FLAG {
+            RESOURCE_MISC_UNUSED                   = 0x0L,
             RESOURCE_MISC_GENERATE_MIPS            = 0x1L,
             RESOURCE_MISC_SHARED                   = 0x2L,
             RESOURCE_MISC_TEXTURECUBE              = 0x4L,
@@ -153,6 +155,7 @@ namespace ZH{
             RESOURCE_MISC_SHARED_KEYEDMUTEX        = 0x100L,
             RESOURCE_MISC_GDI_COMPATIBLE           = 0x200L 
         };
+
     } // namespace Graphics
 
 } // namespace ZH
