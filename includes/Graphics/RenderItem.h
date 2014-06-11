@@ -11,6 +11,10 @@
 namespace ZH{
     namespace Graphics{
 
+        enum E_RENDER_ITEM_FLAG{
+            E_DISABLED  = 0x1
+        };
+
         class ZH_GRAPHICS_DLL RenderItem : public Resource
         {
         public:
@@ -25,8 +29,13 @@ namespace ZH{
             void effectInst( EffectInstance* inst ) { m_effectInst = inst; }
 
         private:
+            // World matrix
             ZH::Math::matrix4x4_f   m_worldMatrix;
+
+            // Geomtry instance
             GeometryInstance        m_geoInst;
+
+            // Effect instance
             EffectInstance*         m_effectInst;
         private:
             RenderItem( const char* const );

@@ -10,7 +10,7 @@ namespace ZH{
 
         RenderTargetImp::~RenderTargetImp()
         {
-            SAFE_RELEASE( m_pRenderTargetView_d3d );
+            SAFE_RELEASE<ID3D11RenderTargetView*>( m_pRenderTargetView_d3d );
         }
 
         bool RenderTargetImp::isValid()

@@ -10,7 +10,7 @@ namespace ZH{
 
         Texture2DImp::~Texture2DImp()
         {
-            SAFE_RELEASE( m_pTexture2D_d3d );
+            SAFE_RELEASE<ID3D11Texture2D*>( m_pTexture2D_d3d );
         }
 
         bool Texture2DImp::isValid()

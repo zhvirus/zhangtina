@@ -24,6 +24,7 @@
     <ClInclude Include="..\includes\Graphics\Device.h" />
     <ClInclude Include="..\includes\Graphics\DeviceDX11.h" />
     <ClInclude Include="..\includes\Graphics\Effect.h" />
+    <ClInclude Include="..\includes\Graphics\EffectSolid.h" />
     <ClInclude Include="..\includes\Graphics\Enums.h" />
     <ClInclude Include="..\includes\Graphics\GeometryInstance.h" />
     <ClInclude Include="..\includes\Graphics\IndexBuffer.h" />
@@ -53,6 +54,7 @@
     <ClCompile Include="src\DeviceDX11.cpp" />
     <ClCompile Include="src\DeviceDX11Imp.cpp" />
     <ClCompile Include="src\Effect.cpp" />
+    <ClCompile Include="src\EffectSolid.cpp" />
     <ClCompile Include="src\GeometryInstance.cpp" />
     <ClCompile Include="src\IndexBuffer.cpp" />
     <ClCompile Include="src\IndexBufferImp.cpp" />
@@ -123,29 +125,29 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)\x86-debug\</OutDir>
     <IntDir>x86-debug\</IntDir>
-    <IncludePath>$(IncludePath);$(DXSDK_DIR)Include</IncludePath>
-    <LibraryPath>$(LibraryPath);$(DXSDK_DIR)Lib\x86</LibraryPath>
+    <IncludePath>$(IncludePath);</IncludePath>
+    <LibraryPath>$(LibraryPath);</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)\x64-debug\</OutDir>
     <IntDir>x64-debug\</IntDir>
-    <IncludePath>$(IncludePath);$(DXSDK_DIR)Include</IncludePath>
-    <LibraryPath>$(LibraryPath);$(DXSDK_DIR)Lib\x64</LibraryPath>
+    <IncludePath>$(IncludePath);</IncludePath>
+    <LibraryPath>$(LibraryPath);</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)\x86-release\</OutDir>
     <IntDir>x86-release\</IntDir>
-    <IncludePath>$(IncludePath);$(DXSDK_DIR)Include</IncludePath>
-    <LibraryPath>$(LibraryPath);$(DXSDK_DIR)Lib\x86</LibraryPath>
+    <IncludePath>$(IncludePath);</IncludePath>
+    <LibraryPath>$(LibraryPath);</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)\x64-release\</OutDir>
     <IntDir>x64-release\</IntDir>
-    <IncludePath>$(IncludePath);$(DXSDK_DIR)Include</IncludePath>
-    <LibraryPath>$(LibraryPath);$(DXSDK_DIR)Lib\x64</LibraryPath>
+    <IncludePath>$(IncludePath);</IncludePath>
+    <LibraryPath>$(LibraryPath);</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -161,7 +163,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;DXGI.lib;TinaWidget.lib;TinaUtil.lib;TinaMath.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(LibraryPath);$(DXSDK_DIR)Lib/x86;$(SolutionDir)\x86-debug</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(LibraryPath);$(SolutionDir)\x86-debug</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -178,7 +180,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;DXGI.lib;TinaWidget.lib;TinaUtil.lib;TinaMath.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(LibraryPath);$(DXSDK_DIR)Lib/x64;$(SolutionDir)\x64-debug</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(LibraryPath);$(SolutionDir)\x64-debug</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -199,7 +201,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;DXGI.lib;TinaWidget.lib;TinaUtil.lib;TinaMath.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(LibraryPath);$(DXSDK_DIR)Lib/x86;$(SolutionDir)\x86-release</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(LibraryPath);$(SolutionDir)\x86-release</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -220,7 +222,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;DXGI.lib;TinaWidget.lib;TinaUtil.lib;TinaMath.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(LibraryPath);$(DXSDK_DIR)Lib/x64;$(SolutionDir)\x64-release</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(LibraryPath);$(SolutionDir)\x64-release</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

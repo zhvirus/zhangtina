@@ -29,7 +29,10 @@ namespace ZH{
             void clear();
 
         private:
+            // World matrix
             ZH::Math::matrix4x4_f m_worldMatrix;
+
+            // Render items of this node
             RenderItemPtrArray    m_renderItems;
 
         private:

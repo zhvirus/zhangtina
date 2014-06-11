@@ -4,6 +4,7 @@
 // DX head file
 #include <d3d11.h>
 #include <dxgi.h>
+#include <D3Dcompiler.h>
 #include <iostream>
 #include <string>
 #include <assert.h>

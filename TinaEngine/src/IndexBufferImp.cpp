@@ -12,7 +12,7 @@ namespace ZH{
 
         IndexBufferImp::~IndexBufferImp()
         {
-            SAFE_RELEASE( m_pIndexBuffer_d3d );
+            SAFE_RELEASE<ID3D11Buffer*>( m_pIndexBuffer_d3d );
         }
 
         bool IndexBufferImp::isValid()

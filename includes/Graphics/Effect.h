@@ -14,8 +14,12 @@ namespace ZH{
             Effect( const char* const );
             virtual ~Effect();
             virtual bool isValid();
-        private:
 
+        protected:
+            bool buildEffect( const char* const sourceName, const char* const codes, size_t size );
+
+        private:
+            void* m_pShader;
             // Put at last line
             CLASS_TYPE_NAME_DECLEARATION
         };

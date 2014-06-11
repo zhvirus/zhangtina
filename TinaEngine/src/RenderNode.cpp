@@ -12,7 +12,6 @@ namespace ZH{
         RenderNode::RenderNode( const char* const name ):
             Resource(name)
         {
-
         }
 
         RenderNode::~RenderNode()

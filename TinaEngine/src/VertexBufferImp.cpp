@@ -12,7 +12,7 @@ namespace ZH{
 
         VertexBufferImp::~VertexBufferImp()
         {
-            SAFE_RELEASE( m_pVertexBuffer_d3d );
+            SAFE_RELEASE<ID3D11Buffer*>( m_pVertexBuffer_d3d );
         }
 
         bool VertexBufferImp::isValid()

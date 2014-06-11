@@ -70,6 +70,9 @@
     <ClCompile Include="src\RenderItem.cpp">
       <Filter>CPP</Filter>
     </ClCompile>
+    <ClCompile Include="src\EffectSolid.cpp">
+      <Filter>CPP</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\includes\Graphics\Camera.h">
@@ -148,6 +151,9 @@
       <Filter>H</Filter>
     </ClInclude>
     <ClInclude Include="..\includes\Graphics\RenderItem.h">
+      <Filter>H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\Graphics\EffectSolid.h">
       <Filter>H</Filter>
     </ClInclude>
   </ItemGroup>

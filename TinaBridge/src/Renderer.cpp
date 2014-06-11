@@ -8,6 +8,7 @@
 #include "Graphics/DeviceDX11.h"
 #include "Graphics/ResourceManager.h"
 #include "Math/MathCommon.h"
+#include "Graphics/EffectSolid.h"
 
 namespace ZH
 {
@@ -43,6 +44,9 @@ namespace ZH
             if ( !m_pDevice->start( &winInfo ) ){
                 return false;
             }
+
+            // Test code
+            ZH::Graphics::EffectSolid solid;
 
             return true;
         }
