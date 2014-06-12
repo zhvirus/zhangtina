@@ -24,4 +24,25 @@ inline void SAFE_DELETE_ARRAY(T& p){delete []p;p=0;}
 template<typename T>
 inline void SAFE_RELEASE(T& p){if(p){p->Release();}}
 
+// assert, error return NULL
+#define ASSERT_RET_NULL(v) \
+    assert((v)); \
+    if ( NULL == (v) ) { \
+        return NULL; \
+    }
+
+// assert, error return false
+#define ASSERT_RET_FALSE(v) \
+    assert((v)); \
+    if ( NULL == (v) ) { \
+        return false; \
+    }
+
+// assert, error return
+#define ASSERT_RET(v) \
+    assert((v)); \
+    if ( NULL == (v) ) { \
+        return; \
+    }
+
 #endif

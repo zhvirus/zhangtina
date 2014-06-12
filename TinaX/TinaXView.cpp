@@ -91,7 +91,7 @@ IMPLEMENT_DYNCREATE(CTinaXView, CView)
             winInfo.fWndHandle = this->GetSafeHwnd();
 
             // Start device
-            if( ZH::Bridge::Renderer::instance().startDevice( winInfo ) ){
+            if( ZH::Bridge::Renderer::instance().startEngine( winInfo ) ){
                 ZH::Util::TNX_INF("Device created with win_size(%d,%d)\n",winInfo.fWidth, winInfo.fHeight);
             }else{
                 ZH::Util::TNX_ERR("Device create failed with win_size(%d,%d)\n",winInfo.fWidth, winInfo.fHeight);

@@ -8,7 +8,6 @@
 #include "Graphics/DeviceDX11.h"
 #include "Graphics/ResourceManager.h"
 #include "Math/MathCommon.h"
-#include "Graphics/EffectSolid.h"
 
 namespace ZH
 {
@@ -27,7 +26,7 @@ namespace ZH
             }
         }
 
-        bool Renderer::startDevice( ZH::Widgets::WindowsInfo& winInfo )
+        bool Renderer::startEngine( ZH::Widgets::WindowsInfo& winInfo )
         {
             // Get device if not get
             if ( !m_pDevice ){
@@ -45,8 +44,25 @@ namespace ZH
                 return false;
             }
 
-            // Test code
-            ZH::Graphics::EffectSolid solid;
+            // Build shaders
+            ZH::Graphics::ResourceManager::instance().buildShaders();
+
+            return true;
+        }
+
+        bool Renderer::shutdownEngine()
+        {
+            // Clear shaders
+            ZH::Graphics::ResourceManager::instance().clearShaders();
+
+            // Release resources
+
+
+            // Shutdown device
+            if( m_pDevice ){
+                m_pDevice->shutdown();
+                m_pDevice = NULL;
+            }
 
             return true;
         }

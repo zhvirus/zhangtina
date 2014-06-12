@@ -22,6 +22,10 @@ namespace ZH {
         public:
             static ResourceManager& instance() { static ResourceManager rm; return rm; }
 
+            // Shader
+            bool buildShaders();
+            void clearShaders();
+
             // World
             World* findWorldByName( const char* const name );
             World* acquireWorld( const char* const name );

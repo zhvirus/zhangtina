@@ -8,6 +8,7 @@
 #include "Graphics/DeviceDX11.h"
 #include "Internal/Graphics/DeviceDX11Imp.h"
 #include "Internal/Graphics/ResourceFactory.h"
+#include "Internal/Graphics/ShaderLibrary.h"
 #include "Util/Print.h"
 #include "Widget/Window.h"
 #include "Math/MathCommon.h"
@@ -21,6 +22,21 @@ namespace ZH{
 
         ResourceManager::~ResourceManager()
         {
+        }
+
+        //----------------------------------------------------------------
+        //
+        //  Shaders
+        //
+        //----------------------------------------------------------------
+        bool ResourceManager::buildShaders()
+        {
+            return ShaderLibrary::instance().initialize();
+        }
+
+        void ResourceManager::clearShaders()
+        {
+            ShaderLibrary::instance().clear();
         }
 
         template<class S, class T>

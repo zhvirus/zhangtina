@@ -73,6 +73,9 @@
     <ClCompile Include="src\EffectSolid.cpp">
       <Filter>CPP</Filter>
     </ClCompile>
+    <ClCompile Include="src\ShaderLibrary.cpp">
+      <Filter>CPP</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\includes\Graphics\Camera.h">
@@ -155,6 +158,9 @@
     </ClInclude>
     <ClInclude Include="..\includes\Graphics\EffectSolid.h">
       <Filter>H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\Internal\Graphics\ShaderLibrary.h">
+      <Filter>H_Internal</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
