@@ -22,33 +22,27 @@ namespace ZH{
 
         bool EffectSolid::isValid()
         {
-
-            return true;
+            return m_pVertexShader && m_pPixelShader;
         }
 
         bool EffectSolid::buildEffect()
         {
-            const ShaderLibrary& shaderLib = ShaderLibrary::instance();
-            if ( !shaderLib.ready() ){
-                ZH::Util::ENG_ERR("EffectSolid::buildEffect(): shader lib not ready!\n");
-                return false;
+            bool result = true;
+            if ( !createShader( E_SHADER_TYPE_VERTEX, E_VS_POS ) ){
+                result = false;
+                ZH::Util::ENG_ERR("EffectSolid: create vertex shader failed!\n");
             }
 
-            // Create vertex shader
-            const ShaderCodes* pShaderCode = shaderLib.getShader( E_SHADER_TYPE_VERTEX, E_VS_POS );
-            if ( !pShaderCode ){
-                ZH::Util::ENG_ERR("Can't find vertex shader for EffectSolid!\n");
-                return false;
-            }else{
-                ID3D11VertexShader* pVertexShader = NULL;
-                ID3D11Device* pDevice = AccessInternal::device();
-
-
+            if ( !createShader( E_SHADER_TYPE_PIXEL, E_PS_SOLID_COLOR ) ){
+                result = false;
+                ZH::Util::ENG_ERR("EffectSolid: create pixel shader failed!\n");
             }
 
+            if (!result){
+                ZH::Util::ENG_ERR("EffectSolid: build effect failed!\n");
+            }
 
-
-            return true;
+            return result;
         }
 
         bool EffectSolid::setColor( const ZH::Math::float4& /*col*/ )

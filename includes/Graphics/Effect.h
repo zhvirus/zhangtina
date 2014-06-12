@@ -4,6 +4,7 @@
 #include "Common/ZHSTD.h"
 #include "Graphics/Resource.h"
 #include "Util/Cache.h"
+#include "Internal/Graphics/ShaderLibrary.h"
 
 namespace ZH{
     namespace Graphics{
@@ -25,6 +26,8 @@ namespace ZH{
 
         protected:
             virtual bool buildEffect() = 0;
+            bool createShader( E_SHADER_TYPE, E_SHADER_KEY );
+            bool releaseShader();
 
             void* m_pVertexShader;
             void* m_pHullShader;
@@ -39,6 +42,9 @@ namespace ZH{
             // Put at last line
             CLASS_TYPE_NAME_DECLEARATION
         };
+
+        ZH_GRAPHICS_EXTERN template class ZH_GRAPHICS_DLL ZH::UTIL::Cache<Effect>;
+        typedef ZH::UTIL::Cache<Effect> EffectCache;
 
         class ZH_GRAPHICS_DLL EffectInstance: public Resource
         {

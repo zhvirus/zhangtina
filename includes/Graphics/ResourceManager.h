@@ -78,11 +78,15 @@ namespace ZH {
                 const SUBRESOURCE_DATA&
                 );
 
+        private:
+            bool createDefaultEffects();
+
 
         private:
             Texture2DCache        m_texture2DCache;
             VertexBufferCache     m_vertexBufferCache;
             IndexBufferCache      m_indexBufferCache;
+            EffectCache           m_effectCache;
             EffectInstanceCache   m_effectInstanceCache;
             RenderTargetCache     m_renderTargetCache;
             RenderFragmentCache   m_renderFragmentCache;
