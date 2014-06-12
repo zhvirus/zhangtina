@@ -32,6 +32,7 @@ IMPLEMENT_DYNCREATE(CTinaXView, CView)
         ON_WM_CONTEXTMENU()
         ON_WM_RBUTTONUP()
         ON_COMMAND(ID_MENUITEM_OPTION_CLEAR_COLOR, &CTinaXView::OnOptionClearColor)
+        ON_WM_DESTROY()
     END_MESSAGE_MAP()
 
     // CTinaXView construction/destruction
@@ -118,3 +119,14 @@ IMPLEMENT_DYNCREATE(CTinaXView, CView)
 
 
     // CTinaXView message handlers
+
+
+    void CTinaXView::OnDestroy()
+    {
+        CView::OnDestroy();
+
+        // Shutdown device
+        ZH::Bridge::Renderer::instance().shutdownEngine();
+
+        // TODO: Add your message handler code here
+    }

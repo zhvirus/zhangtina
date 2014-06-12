@@ -17,6 +17,15 @@ namespace ZH{
 
         };
 
+        enum E_SHADER_TYPE{
+            E_SHADER_TYPE_VERTEX,
+            E_SHADER_TYPE_HULL,
+            E_SHADER_TYPE_DOMAIN,
+            E_SHADER_TYPE_GEOMETRY,
+            E_SHADER_TYPE_PIXEL,
+            E_SHADER_TYPE_COMPUTE
+        };
+
         class ShaderCodes{
         public:
             ShaderCodes();
@@ -36,6 +45,8 @@ namespace ZH{
 
             bool initialize();
             bool clear();
+            bool ready()const { return m_bInitialized; }
+            const ShaderCodes* getShader( E_SHADER_TYPE, E_SHADER_KEY ) const;
 
 
             ID3DBlob* compileShader(

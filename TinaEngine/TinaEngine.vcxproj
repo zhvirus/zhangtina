@@ -38,6 +38,7 @@
     <ClInclude Include="..\includes\Graphics\Texture2D.h" />
     <ClInclude Include="..\includes\Graphics\VertexBuffer.h" />
     <ClInclude Include="..\includes\Graphics\World.h" />
+    <ClInclude Include="..\includes\Internal\Graphics\AccessInternal.h" />
     <ClInclude Include="..\includes\Internal\Graphics\DataToD3D.h" />
     <ClInclude Include="..\includes\Internal\Graphics\DeviceDX11Imp.h" />
     <ClInclude Include="..\includes\Internal\Graphics\IndexBufferImp.h" />
@@ -49,6 +50,7 @@
     <ClInclude Include="..\includes\Internal\Graphics\VertexBufferImp.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\AccessInternal.cpp" />
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\DataToD3D.cpp" />
     <ClCompile Include="src\Device.cpp" />

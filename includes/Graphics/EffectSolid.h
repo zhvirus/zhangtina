@@ -13,14 +13,17 @@ namespace ZH{
             EffectSolid();
             virtual ~EffectSolid();
 
+            virtual bool isValid();
+
             bool setColor( const ZH::Math::float4& );
+
+        protected:
+            virtual bool buildEffect();
 
         private:
             ZH::Math::float4 m_solidColor;
 
         private:
-            static const char* const m_sEffectName;
-            static const char* const m_sShaderCodes;
 
             // Put at last line
             CLASS_TYPE_NAME_DECLEARATION

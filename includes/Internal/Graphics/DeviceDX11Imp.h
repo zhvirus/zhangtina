@@ -34,6 +34,7 @@ namespace ZH{
         private:
             friend class DeviceDX11;
             friend class ResourceManager;
+            friend class AccessInternal;
             CLASS_COMMON_PROTECTED_DECLEARATION(DeviceDX11Imp)
         };
 

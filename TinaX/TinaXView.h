@@ -38,6 +38,8 @@ protected:
     afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
     afx_msg void OnOptionClearColor();
     DECLARE_MESSAGE_MAP()
+public:
+    afx_msg void OnDestroy();
 };
 
 

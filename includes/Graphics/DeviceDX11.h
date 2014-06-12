@@ -28,6 +28,8 @@ namespace ZH{
         private:
             void* m_pImp;
         private:
+            friend class AccessInternal;
+
             CLASS_COMMON_PROTECTED_DECLEARATION(DeviceDX11)
 
             // Put at last line

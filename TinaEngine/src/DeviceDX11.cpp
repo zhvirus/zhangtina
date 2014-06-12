@@ -1,6 +1,8 @@
 #ifndef _ZH_GRAPHICS_DLL_
 #define _ZH_GRAPHICS_DLL_
 #endif
+#include "Graphics/DeviceDX11.h"
+
 #include "Internal/Graphics/DeviceDX11Imp.h"
 #include "Internal/Graphics/Internal_common_graphics.h"
 
@@ -10,7 +12,6 @@
 #include "Internal/Graphics/VertexBufferImp.h"
 #include "Internal/Graphics/IndexBufferImp.h"
 
-#include "Graphics/DeviceDX11.h"
 #include "Graphics/Texture2D.h"
 #include "Graphics/RenderTarget.h"
 #include "Graphics/VertexBuffer.h"

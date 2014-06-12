@@ -10,6 +10,7 @@
 #include <assert.h>
 
 #include "Util/Print.h"
+#include "Internal/Graphics/AccessInternal.h"
 
 
 // Safe delete

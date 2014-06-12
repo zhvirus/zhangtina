@@ -239,5 +239,72 @@ namespace ZH{
             return true;
         }
 
+        const ShaderCodes* ShaderLibrary::getShader( E_SHADER_TYPE type, E_SHADER_KEY key ) const
+        {
+            switch ( type ){
+            case E_SHADER_TYPE_VERTEX:
+                {
+                    std::map<E_SHADER_KEY, ShaderCodes*>::const_iterator cIt = m_vsMap.find(key);
+                    if( cIt != m_vsMap.end() ){
+                        return cIt->second;
+                    }
+                }
+                break;
+            case E_SHADER_TYPE_HULL:
+                {
+                    std::map<E_SHADER_KEY, ShaderCodes*>::const_iterator cIt = m_hsMap.find(key);
+                    if( cIt != m_hsMap.end() ){
+                        return cIt->second;
+                    }
+                }
+                break;
+            case E_SHADER_TYPE_DOMAIN:
+                {
+                    std::map<E_SHADER_KEY, ShaderCodes*>::const_iterator cIt = m_dsMap.find(key);
+                    if( cIt != m_dsMap.end() ){
+                        return cIt->second;
+                    }
+                }
+                break;
+            case E_SHADER_TYPE_GEOMETRY:
+                {
+                    std::map<E_SHADER_KEY, ShaderCodes*>::const_iterator cIt = m_gsMap.find(key);
+                    if( cIt != m_gsMap.end() ){
+                        return cIt->second;
+                    }
+                }
+                break;
+            case E_SHADER_TYPE_PIXEL:
+                {
+                    std::map<E_SHADER_KEY, ShaderCodes*>::const_iterator cIt = m_psMap.find(key);
+                    if( cIt != m_psMap.end() ){
+                        return cIt->second;
+                    }
+                }
+                break;
+            case E_SHADER_TYPE_COMPUTE:
+                {
+                    std::map<E_SHADER_KEY, ShaderCodes*>::const_iterator cIt = m_csMap.find(key);
+                    if( cIt != m_csMap.end() ){
+                        return cIt->second;
+                    }
+                }
+                break;
+            default:
+                {
+                    assert(false);
+                    ZH::Util::ENG_ERR("ShaderLibrary::getShader() : Wrong shader type!\n");
+                }
+                break;
+            } // Switch
+
+            return NULL;
+        }
+
+
+
+
+
+
     }
 }
