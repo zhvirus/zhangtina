@@ -1,3 +1,6 @@
+#ifndef _ZH_GRAPHICS_DLL_
+#define _ZH_GRAPHICS_DLL_
+#endif
 #include "Internal/Graphics/DeviceDX11Imp.h"
 #include "Internal/Graphics/RenderTargetImp.h"
 #include "Widget/Window.h"

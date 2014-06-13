@@ -44,8 +44,9 @@ namespace ZH
                 return false;
             }
 
-            // Build shaders
-            ZH::Graphics::ResourceManager::instance().buildShaders();
+            // Initialize resource manager, like build shaders
+            // create all default internal build-in resources
+            ZH::Graphics::ResourceManager::instance().initialize();
 
             return true;
         }
@@ -53,7 +54,7 @@ namespace ZH
         bool Renderer::shutdownEngine()
         {
             // Clear shaders
-            ZH::Graphics::ResourceManager::instance().clearShaders();
+            ZH::Graphics::ResourceManager::instance().deinitialize();
 
             // Release resources
 

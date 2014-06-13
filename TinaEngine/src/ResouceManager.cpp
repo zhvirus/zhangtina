@@ -6,6 +6,7 @@
 #include "Internal/Graphics/Internal_common_graphics.h"
 
 #include "Graphics/DeviceDX11.h"
+#include "Graphics/EffectSolid.h"
 #include "Internal/Graphics/DeviceDX11Imp.h"
 #include "Internal/Graphics/ResourceFactory.h"
 #include "Internal/Graphics/ShaderLibrary.h"
@@ -16,12 +17,47 @@
 namespace ZH{
     namespace Graphics{
 
-        ResourceManager::ResourceManager()
+        ResourceManager::ResourceManager():
+            m_bInitialized(false)
         {
         }
 
         ResourceManager::~ResourceManager()
         {
+        }
+
+        void ResourceManager::initialize()
+        {
+            assert(!m_bInitialized);
+            if( m_bInitialized ){
+                return;
+            }
+
+            bool result = true;
+
+            // Build shaders
+            result = buildShaders();
+
+            m_bInitialized = true;
+            if ( result ){
+                ZH::Util::ENG_DBG("ResourceManager::initialzie() succeeded.\n");
+            }else{
+                ZH::Util::ENG_ERR("ResourceManager::initialzie() not succeeded!\n");
+            }
+        }
+
+        void ResourceManager::deinitialize()
+        {
+            assert(m_bInitialized);
+            if( !m_bInitialized ){
+                return;
+            }
+
+            // Release shaders
+            clearShaders();
+
+
+            m_bInitialized = false;
         }
 
         //----------------------------------------------------------------
@@ -31,11 +67,42 @@ namespace ZH{
         //----------------------------------------------------------------
         bool ResourceManager::buildShaders()
         {
-            return ShaderLibrary::instance().initialize();
+            // Build shader blobs
+            bool result = ShaderLibrary::instance().initialize();
+            assert(result);
+            if ( !result ){
+                ZH::Util::ENG_ERR("ResourceManager::buildShaders() - build shaders failed!\n");
+                return false;
+            }
+
+            // Create default build-in effects
+            Effect* pEffect = NULL;
+
+            // EffectSolid
+            {
+                pEffect = new EffectSolid();
+                if ( !pEffect->isValid() ){
+                    result = false;
+                    delete pEffect;
+                    pEffect = NULL;
+                    ZH::Util::ENG_ERR("Create EffectSolid failed!\n");
+                }else{
+                    m_effectCache.insert( pEffect );
+                    pEffect = NULL;
+                    ZH::Util::ENG_DBG("Create EffectSolid succeeded.\n");
+                }
+            }
+
+            return true;
         }
 
         void ResourceManager::clearShaders()
         {
+            // Free effect
+            m_effectCache.destroy();
+
+
+            // Free shader blobs
             ShaderLibrary::instance().clear();
         }
 

@@ -1,3 +1,6 @@
+#ifndef _ZH_GRAPHICS_DLL_
+#define _ZH_GRAPHICS_DLL_
+#endif
 #include "Internal/Graphics/Texture2DImp.h"
 
 namespace ZH{

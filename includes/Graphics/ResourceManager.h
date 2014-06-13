@@ -22,9 +22,8 @@ namespace ZH {
         public:
             static ResourceManager& instance() { static ResourceManager rm; return rm; }
 
-            // Shader
-            bool buildShaders();
-            void clearShaders();
+            void initialize();
+            void deinitialize();
 
             // World
             World* findWorldByName( const char* const name );
@@ -79,7 +78,9 @@ namespace ZH {
                 );
 
         private:
-            bool createDefaultEffects();
+            // Shader
+            bool buildShaders();
+            void clearShaders();
 
 
         private:
@@ -93,6 +94,8 @@ namespace ZH {
             CameraOrthoCache      m_cameraOrthoCache;
             CameraPerspCache      m_cameraPerspCache;
             WorldCache            m_worldCache;
+
+            bool m_bInitialized;
 
             // Put at last line
             CLASS_COMMON_PROTECTED_DECLEARATION(ResourceManager)

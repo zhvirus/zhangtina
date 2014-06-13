@@ -10,7 +10,7 @@ namespace ZH{
         class ZH_GRAPHICS_DLL EffectSolid: public Effect
         {
         public:
-            EffectSolid();
+
             virtual ~EffectSolid();
 
             virtual bool isValid();
@@ -24,6 +24,8 @@ namespace ZH{
             ZH::Math::float4 m_solidColor;
 
         private:
+            friend class ResourceManager;
+            EffectSolid();
 
             // Put at last line
             CLASS_TYPE_NAME_DECLEARATION
