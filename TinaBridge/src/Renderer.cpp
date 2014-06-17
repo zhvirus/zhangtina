@@ -14,7 +14,8 @@ namespace ZH
     namespace Bridge{
 
         Renderer::Renderer():
-            m_pDevice(NULL)
+            m_pDevice(NULL),
+            m_pDefaultRenderFrag(NULL)
         {
         }
 
@@ -70,57 +71,13 @@ namespace ZH
 
         ZH::Graphics::RenderFragment* Renderer::defaultRenderFragment()
         {
-            for ( unsigned int i=0; i< m_renderFragArray.size(); ++i ){
-                ZH::Graphics::RenderFragment* pRenderFrag = m_renderFragArray[i];
-                if ( pRenderFrag &&
-                    ( strcmp(pRenderFrag->name(), ZH::Graphics::RenderFragment::m_sDefaultRenderFragmentName)==0))
-                {
-                    return pRenderFrag;
-                }
+            if ( !m_pDefaultRenderFrag ){
+                m_pDefaultRenderFrag = ZH::Graphics::ResourceManager::instance().findRenderFragmentByName( ZH::Graphics::RenderFragment::m_sDefaultRenderFragmentName );
             }
 
-            return NULL;
+            assert( m_pDefaultRenderFrag );
+            return m_pDefaultRenderFrag;
         }
-
-        ZH::Graphics::RenderFragment* Renderer::createDefaultRenderFragment( ZH::Widgets::WindowsInfo& winInfo )
-        {
-            ZH::Graphics::RenderFragment* pDefaultRenderFragment = defaultRenderFragment();
-            if ( pDefaultRenderFragment ){
-                return pDefaultRenderFragment;
-            }
-
-            // Default camera
-            ZH::Graphics::CameraPersp* pDefaultCamera = ZH::Graphics::ResourceManager::instance().acquireDefaultCameraPersp();
-            if ( pDefaultCamera ){
-                float aspect = (float)winInfo.fWidth/winInfo.fHeight;
-                pDefaultCamera->aspect( aspect );
-            }
-
-            // Default world
-            ZH::Graphics::World* defaultWorld = ZH::Graphics::ResourceManager::instance().acquireWorld("defaultWorld");
-
-            // Default render target
-            ZH::Graphics::RenderTargetPtrArray renderTargets;
-
-            ZH::Graphics::Texture2D* backBuffer =
-                ZH::Graphics::ResourceManager::instance().acquireBackBuffer(m_pDevice);
-
-            ZH::Graphics::RenderTarget* renderTarget =
-                ZH::Graphics::ResourceManager::instance().acquireRenderTarget(
-                ZH::Graphics::RenderTarget::m_sDefaultRenderTargetName, m_pDevice, backBuffer );
-
-            renderTargets.push_back(renderTarget);
-
-            // Default render fragment
-            pDefaultRenderFragment = ZH::Graphics::ResourceManager::instance().acquireRenderFragment(
-                ZH::Graphics::RenderFragment::m_sDefaultRenderFragmentName, m_pDevice, pDefaultCamera, defaultWorld, renderTargets);
-
-            // Save it in the array
-            m_renderFragArray.push_back( pDefaultRenderFragment );
-
-            return pDefaultRenderFragment;
-        }
-
 
         void Renderer::doRender()
         {

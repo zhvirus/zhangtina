@@ -26,8 +26,8 @@ namespace ZH {
             void deinitialize();
 
             // World
-            World* findWorldByName( const char* const name );
-            World* acquireWorld( const char* const name );
+            SimpleWorld* findSimpleWorldByName( const char* const name );
+            SimpleWorld* acquireSimpleWorld( const char* const name );
 
             // Render target
             RenderTarget* findRenderTargetByName( const char* const );
@@ -38,7 +38,6 @@ namespace ZH {
 
             // Camera
             CameraPersp* findCameraPerspByName( const char* const name );
-            CameraPersp* acquireDefaultCameraPersp();
             CameraPersp* acquireCameraPersp(
                 const char* const name,
                 const ZH::Math::float3& pos,
@@ -82,6 +81,11 @@ namespace ZH {
             bool buildShaders();
             void clearShaders();
 
+            bool createDefaultWorld();
+            bool createDefaultCameras();
+            bool createDefaultRenderTargets();
+            bool createDefaultRenderFragment();
+
 
         private:
             Texture2DCache        m_texture2DCache;
@@ -91,8 +95,7 @@ namespace ZH {
             EffectInstanceCache   m_effectInstanceCache;
             RenderTargetCache     m_renderTargetCache;
             RenderFragmentCache   m_renderFragmentCache;
-            CameraOrthoCache      m_cameraOrthoCache;
-            CameraPerspCache      m_cameraPerspCache;
+            CameraCache           m_cameraCache;
             WorldCache            m_worldCache;
 
             bool m_bInitialized;

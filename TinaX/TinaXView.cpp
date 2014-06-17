@@ -97,13 +97,6 @@ IMPLEMENT_DYNCREATE(CTinaXView, CView)
             }else{
                 ZH::Util::TNX_ERR("Device create failed with win_size(%d,%d)\n",winInfo.fWidth, winInfo.fHeight);
             }
-
-            // Create default render fragment
-            if( ZH::Bridge::Renderer::instance().createDefaultRenderFragment( winInfo ) ){
-                ZH::Util::TNX_INF("Default render fragment created with win_size(%d,%d)\n",winInfo.fWidth, winInfo.fHeight);
-            }else{
-                ZH::Util::TNX_ERR("Default render fragment created with win_size(%d,%d)\n",winInfo.fWidth, winInfo.fHeight);
-            }
         }
     }
 

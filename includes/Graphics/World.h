@@ -1,10 +1,13 @@
 #ifndef WORLD_H
 #define WORLD_H
 
+
 #include "Common/ZHSTD.h"
 #include "Graphics/Name.h"
+#include "Graphics/RenderNode.h"
 #include "Util/Array.h"
 #include "Util/Cache.h"
+
 
 
 namespace ZH {
@@ -15,7 +18,8 @@ namespace ZH {
         public:
             virtual ~World();
         public:
-            virtual unsigned int numOfNodes()const;
+            virtual unsigned int numOfNodes()const = 0;
+            virtual void clear() = 0;
         protected:
             World( const char* const name );
 
@@ -30,9 +34,16 @@ namespace ZH {
         {
         public:
             virtual ~SimpleWorld();
+            virtual unsigned int numOfNodes()const;
+            virtual void clear();
+            RenderNode* addRenderNode( const char* const );
+            RenderNode* findRenderNode( const char* const );
+            bool        removeRenderNode( const char* const );
 
-
+            static const char* const m_sDefaultSimpleWorldName;
         private:
+            RenderNodeMap* m_pRenderNodes;
+
         private:
             SimpleWorld( const char* const name );
             friend class ResourceManager;

@@ -27,12 +27,11 @@ namespace ZH
             bool shutdownEngine();
 
             ZH::Graphics::RenderFragment* defaultRenderFragment();
-            ZH::Graphics::RenderFragment* createDefaultRenderFragment( ZH::Widgets::WindowsInfo& );
 
             void doRender();
         private:
             ZH::Graphics::Device* m_pDevice;
-            ZH::Graphics::RenderFragmentPtrArray m_renderFragArray;
+            ZH::Graphics::RenderFragment* m_pDefaultRenderFrag;
 
         private:
             Renderer();

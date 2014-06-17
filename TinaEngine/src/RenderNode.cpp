@@ -10,13 +10,16 @@ namespace ZH{
         CLASS_TYPE_NAME_DEFINITION( RenderNode )
 
         RenderNode::RenderNode( const char* const name ):
-            Resource(name)
+            Resource(name),
+            m_pRenderItems(NULL)
         {
+            m_pRenderItems = new RenderItemMap;
         }
 
         RenderNode::~RenderNode()
         {
             clear();
+            delete m_pRenderItems;
         }
 
         bool RenderNode::isValid()
@@ -28,12 +31,19 @@ namespace ZH{
 
         void RenderNode::clear()
         {
-            RenderItem* renderItem = NULL;
-            const unsigned int size = m_renderItems.size();
-            for( unsigned int i = 0; i<size; ++i ){
-                renderItem = m_renderItems[i];
-                delete renderItem;
+            assert( m_pRenderItems );
+            if( !m_pRenderItems ){
+                return;
             }
+
+            RenderItem* pRenderItem = NULL;
+            RenderItemMap::iterator  it = m_pRenderItems->begin();
+            for(;it != m_pRenderItems->end(); ++it){
+                pRenderItem = it->second;
+                delete pRenderItem;
+            }
+
+            m_pRenderItems->clear();
         }
 
         bool RenderNode::removeRenderItem( const char* const name )

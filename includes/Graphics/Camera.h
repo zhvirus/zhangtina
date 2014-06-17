@@ -124,11 +124,8 @@ namespace ZH{
             CLASS_TYPE_NAME_DECLEARATION
         };
 
-        ZH_GRAPHICS_EXTERN template class ZH_GRAPHICS_DLL ZH::UTIL::Cache<CameraPersp>;
-        typedef ZH::UTIL::Cache<CameraPersp> CameraPerspCache;
-
-        ZH_GRAPHICS_EXTERN template class ZH_GRAPHICS_DLL ZH::UTIL::Cache<CameraOrtho>;
-        typedef ZH::UTIL::Cache<CameraOrtho> CameraOrthoCache;
+        ZH_GRAPHICS_EXTERN template class ZH_GRAPHICS_DLL ZH::UTIL::Cache<Camera>;
+        typedef ZH::UTIL::Cache<Camera> CameraCache;
     }
 }
 

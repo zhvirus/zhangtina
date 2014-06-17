@@ -1,6 +1,9 @@
 #ifndef RENDER_ITEM_H
 #define RENDER_ITEM_H
 
+#include <map>
+#include <string>
+
 #include "Common/ZHSTD.h"
 #include "Graphics/Resource.h"
 #include "Graphics/GeometryInstance.h"
@@ -48,6 +51,8 @@ namespace ZH{
 
         ZH_GRAPHICS_EXTERN template class ZH_GRAPHICS_DLL ZH::UTIL::Array<RenderItem*>;
         typedef ZH::UTIL::Array<RenderItem*> RenderItemPtrArray;
+
+        typedef std::map<std::string, RenderItem*> RenderItemMap;
 
     } // namespace Graphics
 } // namespace ZH

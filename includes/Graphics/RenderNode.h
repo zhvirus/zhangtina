@@ -1,6 +1,9 @@
 #ifndef RENDER_NODE_H
 #define RENDER_NODE_H
 
+#include <map>
+#include <string>
+
 #include "Common/ZHSTD.h"
 #include "Graphics/Resource.h"
 #include "Graphics/RenderItem.h"
@@ -33,7 +36,7 @@ namespace ZH{
             ZH::Math::matrix4x4_f m_worldMatrix;
 
             // Render items of this node
-            RenderItemPtrArray    m_renderItems;
+            RenderItemMap*        m_pRenderItems;
 
         private:
             RenderNode( const char* const );
@@ -43,6 +46,8 @@ namespace ZH{
             // Put at last line
             CLASS_TYPE_NAME_DECLEARATION
         };
+
+        typedef std::map<std::string, RenderNode*> RenderNodeMap;
 
         ZH_GRAPHICS_EXTERN template class ZH_GRAPHICS_DLL ZH::UTIL::Array<RenderNode*>;
         typedef ZH::UTIL::Array<RenderNode*> RenderNodePtrArray;

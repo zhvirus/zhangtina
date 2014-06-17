@@ -12,6 +12,7 @@ namespace ZH{
             Name( const char* const );
             virtual ~Name();
             const char* const name()const { return m_name; }
+            bool nameEqual( const char* const ) const;
 
         protected:
             void makeDefaultName( const std::string& type, const std::string& key );

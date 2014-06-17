@@ -34,5 +34,16 @@ namespace ZH{
 
             strcpy_s( m_name, temp_name.c_str() );
         }
+
+        bool Name::nameEqual( const char* const name ) const
+        {
+            if ( !name || (strcmp(name, m_name) != 0) ){
+                return false;
+            }
+
+            return true;
+        }
+
+
     }
 }

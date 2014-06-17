@@ -38,6 +38,18 @@ namespace ZH{
             // Build shaders
             result = buildShaders();
 
+            // Create default world
+            result = result && createDefaultWorld();
+
+            // Create default Cameras
+            result = result && createDefaultCameras();
+
+            // Create default render targets
+            result = result && createDefaultRenderTargets();
+
+            // Create default render fragment
+            result = result && createDefaultRenderFragment();
+
             m_bInitialized = true;
             if ( result ){
                 ZH::Util::ENG_DBG("ResourceManager::initialzie() succeeded.\n");
@@ -119,32 +131,53 @@ namespace ZH{
 
         //----------------------------------------------------------------
         //
-        //  Render target
+        //  World
         //
         //----------------------------------------------------------------
-        World* ResourceManager::findWorldByName( const char* const name )
+        SimpleWorld* ResourceManager::findSimpleWorldByName( const char* const name )
         {
-            return findResourceByName<World, WorldCache>( name, m_worldCache );
+            World* pWorld = findResourceByName<World, WorldCache>( name, m_worldCache );
+            if (!pWorld){
+                return NULL;
+            }
+
+            SimpleWorld* pSimpleWorld = dynamic_cast<SimpleWorld*>(pWorld);
+            if ( !pSimpleWorld ){
+                return NULL;
+            }
+
+            return pSimpleWorld;
         }
 
-        World* ResourceManager::acquireWorld( const char* const name )
+        SimpleWorld* ResourceManager::acquireSimpleWorld( const char* const name )
         {
             // Find in cache first
-            World* pWorld = findWorldByName(name);
-            if ( pWorld ){
-                return pWorld;
+            SimpleWorld* pSimpleWorld = findSimpleWorldByName(name);
+            if ( pSimpleWorld ){
+                return pSimpleWorld;
             }
 
-            World* newWorld = new World( name );
+            pSimpleWorld = new SimpleWorld( name );
 
-            if ( newWorld ){
-                m_worldCache.insert( newWorld );
-                ZH::Util::ENG_DBG("World (\"%s\") created successfully.\n", name );
+            if ( pSimpleWorld ){
+                m_worldCache.insert( pSimpleWorld );
+                ZH::Util::ENG_DBG("SimpleWorld (\"%s\") created successfully.\n", name );
             }else{
-                ZH::Util::ENG_ERR("World (\"%s\") created failed!\n", name );
+                ZH::Util::ENG_ERR("SimpleWorld (\"%s\") created failed!\n", name );
             }
 
-            return newWorld;
+            return pSimpleWorld;
+        }
+
+        bool ResourceManager::createDefaultWorld()
+        {
+            SimpleWorld* pNewSimpleWorld = acquireSimpleWorld( SimpleWorld::m_sDefaultSimpleWorldName );
+            if ( !pNewSimpleWorld ){
+                return false;
+            }
+
+
+            return true;
         }
 
 
@@ -184,6 +217,25 @@ namespace ZH{
             return NULL;
         }
 
+        bool ResourceManager::createDefaultRenderTargets()
+        {
+            DeviceDX11* m_pDevice = DeviceDX11::instance();
+            if ( !m_pDevice || !m_pDevice->isRunning() ){
+                assert(false);
+                return false;
+            }
+
+            Texture2D* backBuffer = acquireBackBuffer( m_pDevice );
+
+            RenderTarget* renderTarget = acquireRenderTarget(
+                RenderTarget::m_sDefaultRenderTargetName, m_pDevice, backBuffer );
+
+            if ( !renderTarget ){
+                return false;
+            }
+
+            return true;
+        }
 
         //----------------------------------------------------------------
         //
@@ -222,31 +274,24 @@ namespace ZH{
 
         //----------------------------------------------------------------
         //
-        //  Perspective camera
+        //  Camera
         //
         //----------------------------------------------------------------
 
         CameraPersp* ResourceManager::findCameraPerspByName( const char* const name )
         {
-            return findResourceByName<CameraPersp, CameraPerspCache>( name, m_cameraPerspCache );
-        }
+            Camera* pCamera = findResourceByName<Camera, CameraCache>( name, m_cameraCache );
 
-        CameraPersp* ResourceManager::acquireDefaultCameraPersp()
-        {
-            // Find in cache first
-            CameraPersp* pRes = findCameraPerspByName( CameraPersp::m_sDefaultName );
-            if ( pRes ){
-                return pRes;
+            if (!pCamera){
+                return NULL;
             }
 
-            // Default camera
-            ZH::Math::float3 pos(0.0f,0.0f, -10.0f);
-            ZH::Math::float3 lookDir(0.0f,0.0f,1.0f);
-            ZH::Math::float3 upDir(0.0f,1.0f,0.0f);
-            float fovy = ZH::Math::PI/3.0f;
-            float aspect = 1.0f;
+            CameraPersp* pCameraPersp = dynamic_cast<CameraPersp*>(pCamera);
+            if ( !pCameraPersp ){
+                return NULL;
+            }
 
-            return acquireCameraPersp( CameraPersp::m_sDefaultName, pos, lookDir, upDir, fovy, aspect, 0.1f, 5000.0f);
+            return pCameraPersp;
         }
 
         CameraPersp* ResourceManager::acquireCameraPersp(
@@ -260,21 +305,38 @@ namespace ZH{
                 float farZ)
         {
             // Find in cache first
-            CameraPersp* pCam = findCameraPerspByName( name );
-            if ( pCam ){
-                return pCam;
+            CameraPersp* pCamPersp = findCameraPerspByName( name );
+            if ( pCamPersp ){
+                return pCamPersp;
             }
 
             // Create a new persp camera
-            pCam = ResourceFactory::createCameraPersp(
+            pCamPersp = ResourceFactory::createCameraPersp(
                 name, pos, lookDir, upDir, fovy, aspect, nearZ, farZ);
 
-            if ( pCam ){
+            if ( pCamPersp ){
                 ZH::Util::ENG_DBG("CameraPersp (\"%s\") created.\n", name);
-                m_cameraPerspCache.insert( pCam );
+                m_cameraCache.insert( pCamPersp );
             }
 
-            return pCam;
+            return pCamPersp;
+        }
+
+        bool ResourceManager::createDefaultCameras()
+        {
+            // Default perspective camera
+            ZH::Math::float3 pos(0.0f,0.0f, -10.0f);
+            ZH::Math::float3 lookDir(0.0f,0.0f,1.0f);
+            ZH::Math::float3 upDir(0.0f,1.0f,0.0f);
+            float fovy = ZH::Math::PI/3.0f;
+            float aspect = 1.0f;
+
+            CameraPersp* pCamPersp = acquireCameraPersp( CameraPersp::m_sDefaultName, pos, lookDir, upDir, fovy, aspect, 0.1f, 5000.0f);
+            if ( !pCamPersp ){
+                return false;
+            }
+
+            return true;
         }
 
 
@@ -312,6 +374,54 @@ namespace ZH{
             }
 
             return pRes;
+        }
+
+        bool ResourceManager::createDefaultRenderFragment()
+        {
+            RenderFragment* pDefaultRenderFrag = findRenderFragmentByName(
+                RenderFragment::m_sDefaultRenderFragmentName);
+            if( pDefaultRenderFrag ){
+                return true;
+            }
+
+            // Device
+            DeviceDX11* m_pDevice = DeviceDX11::instance();
+            if ( !m_pDevice || !m_pDevice->isRunning() ){
+                assert(false);
+                return false;
+            }
+
+            // Camera
+            CameraPersp* pCamera = findCameraPerspByName( CameraPersp::m_sDefaultName );
+            assert( pCamera );
+            if( !pCamera ){
+                return false;
+            }
+
+            // World
+            SimpleWorld* pSimpleWorld = findSimpleWorldByName( SimpleWorld::m_sDefaultSimpleWorldName );
+            assert( pSimpleWorld );
+            if( !pSimpleWorld ){
+                return false;
+            }
+
+            // Render targets
+            RenderTargetPtrArray renderTargets;
+            RenderTarget* renderTarget = findRenderTargetByName( RenderTarget::m_sDefaultRenderTargetName );
+            assert( renderTarget );
+            if( !renderTarget ){
+                return false;
+            }
+            renderTargets.push_back(renderTarget);
+
+            // Render fragment
+            RenderFragment* pRenderFrag = acquireRenderFragment(
+                RenderFragment::m_sDefaultRenderFragmentName, m_pDevice, pCamera, pSimpleWorld, renderTargets);
+            if ( !pRenderFrag ){
+                return false;
+            }
+
+            return true;
         }
 
         //----------------------------------------------------------------
