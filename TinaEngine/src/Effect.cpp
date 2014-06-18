@@ -10,15 +10,14 @@ namespace ZH{
         //-----------------------------------
         // Effect
         //-----------------------------------
-        Effect::Effect( const char* const name, E_EFFECT_KEY key):
+        Effect::Effect( const char* const name ):
             Resource( name ),
             m_pVertexShader(NULL),
             m_pHullShader(NULL),
             m_pDomainShader(NULL),
             m_pGeometryShader(NULL),
             m_pPixelShader(NULL),
-            m_pComputeShader(NULL),
-            m_eEffectKey(key)
+            m_pComputeShader(NULL)
         {
         }
 

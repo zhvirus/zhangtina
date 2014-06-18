@@ -141,9 +141,6 @@
     <ClInclude Include="..\includes\Common\ZHSTD.h">
       <Filter>H\common</Filter>
     </ClInclude>
-    <ClInclude Include="..\includes\Internal\Graphics\ResourceFactory.h">
-      <Filter>H</Filter>
-    </ClInclude>
     <ClInclude Include="..\includes\Internal\Graphics\Internal_common_graphics.h">
       <Filter>H_Internal</Filter>
     </ClInclude>
@@ -175,6 +172,9 @@
       <Filter>H</Filter>
     </ClInclude>
     <ClInclude Include="..\includes\Graphics\ClassIdentifier.h">
+      <Filter>H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\Graphics\ResourceFactory.h">
       <Filter>H</Filter>
     </ClInclude>
   </ItemGroup>

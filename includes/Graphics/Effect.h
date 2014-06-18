@@ -9,21 +9,13 @@
 namespace ZH{
     namespace Graphics{
 
-        enum E_EFFECT_KEY{
-            E_EFFECT_NONE,
-            E_EFFECT_SOLID_COLOR
-
-        };
-
         class ZH_GRAPHICS_DLL Effect: public Resource
         {
             CLASS_IDENTIFIER( E_CID_EFFECT );
         public:
-            Effect( const char* const, E_EFFECT_KEY );
+            Effect( const char* const );
             virtual ~Effect();
             virtual bool isValid() = 0;
-
-            E_EFFECT_KEY key()const { return m_eEffectKey; }
 
         protected:
             virtual bool buildEffect() = 0;
@@ -36,9 +28,6 @@ namespace ZH{
             void* m_pGeometryShader;
             void* m_pPixelShader;
             void* m_pComputeShader;
-
-            E_EFFECT_KEY m_eEffectKey;
-
         };
 
         ZH_GRAPHICS_EXTERN template class ZH_GRAPHICS_DLL ZH::UTIL::Cache<Effect>;
@@ -53,7 +42,7 @@ namespace ZH{
 
             bool operator==(const EffectInstance&);
 
-        private:
+        protected:
             Effect* m_pEffect;
         };
 

@@ -2,7 +2,7 @@
 #define _ZH_GRAPHICS_DLL_
 #endif
 
-#include "Internal/Graphics/ResourceFactory.h"
+#include "Graphics/ResourceFactory.h"
 #include "Internal/Graphics/Internal_common_graphics.h"
 
 #include "Graphics/Camera.h"
@@ -11,6 +11,7 @@
 #include "Graphics/RenderNode.h"
 #include "Graphics/RenderNodeGrid.h"
 #include "Graphics/RenderItem.h"
+#include "Graphics/EffectSolid.h"
 #include "Math/float3.h"
 
 
@@ -125,8 +126,32 @@ namespace ZH{
             return pRenderItem;
         }
 
+        // Effect instance
+        EffectInstance* ResourceFactory::createEffectInstance(
+            E_CLASS_ID c_id,
+            const char* const name
+            )
+        {
+            if ( non_empty_string(name) ){
+                assert(false);
+                return NULL;
+            }
 
-
+            switch ( c_id ){
+            case E_CID_EFFECT_INSTANCE_SOLID:
+                {
+                    EffectInstance* pEffectInstance = new EffectInstanceSolid( name );
+                    return pEffectInstance;
+                }
+                break;
+            default:
+                {
+                    assert(false);
+                    return NULL;
+                }
+                break;
+            }
+        }
 
 
 

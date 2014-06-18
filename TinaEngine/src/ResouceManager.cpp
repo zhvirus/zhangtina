@@ -5,10 +5,10 @@
 #include "Graphics/ResourceManager.h"
 #include "Internal/Graphics/Internal_common_graphics.h"
 
+#include "Graphics/ResourceFactory.h"
 #include "Graphics/DeviceDX11.h"
 #include "Graphics/EffectSolid.h"
 #include "Internal/Graphics/DeviceDX11Imp.h"
-#include "Internal/Graphics/ResourceFactory.h"
 #include "Internal/Graphics/ShaderLibrary.h"
 #include "Util/Print.h"
 #include "Widget/Window.h"
@@ -92,7 +92,7 @@ namespace ZH{
 
             // EffectSolid
             {
-                pEffect = new EffectSolid();
+                pEffect = new EffectSolid( EffectSolid::m_sDefaultName );
                 if ( !pEffect->isValid() ){
                     result = false;
                     delete pEffect;
@@ -498,6 +498,65 @@ namespace ZH{
 
             return ib;
         }
+
+        //----------------------------------------------------------------
+        //
+        //  Effect
+        //
+        //----------------------------------------------------------------
+        Effect* ResourceManager::findEffect(
+                E_CLASS_ID c_id,
+                const char* const name
+                )
+        {
+            ASSERT_NOT_NULL_RET_NULL( name );
+
+            Effect* pEffect = findResourceByName<Effect, EffectCache>( name, m_effectCache );
+            if ( !pEffect ){
+                return NULL;
+            }
+
+            if ( pEffect->m_eClassID != c_id ){
+                return NULL;
+            }
+
+            return pEffect;
+
+        }
+
+
+        //----------------------------------------------------------------
+        //
+        //  Effect instance
+        //
+        //----------------------------------------------------------------
+        EffectInstance* ResourceManager::findEffectInstanceByName( const char* const name )
+        {
+            return findResourceByName<EffectInstance, EffectInstanceCache>( name, m_effectInstanceCache );
+        }
+
+        EffectInstance* ResourceManager::acquireEffectInstance(
+            E_CLASS_ID c_id,
+            const char* const name
+            )
+        {
+            // Find in cache first
+            EffectInstance* pEffectInstance = findEffectInstanceByName( name );
+            if( pEffectInstance ){
+                return pEffectInstance;
+            }
+
+            // Create new effect instance
+            pEffectInstance = ResourceFactory::createEffectInstance( c_id, name );
+
+            if( pEffectInstance ){
+                m_effectInstanceCache.insert( pEffectInstance );
+            }
+
+            return pEffectInstance;
+        }
+
+
 
     }
 }

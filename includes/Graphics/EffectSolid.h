@@ -1,7 +1,8 @@
 #ifndef EFFECT_SOLID_H
 #define EFFECT_SOLID_H
 
-#include "Effect.h"
+#include "Graphics/ClassIdentifier.h"
+#include "Graphics/Effect.h"
 #include "Math/float4.h"
 
 namespace ZH{
@@ -10,6 +11,7 @@ namespace ZH{
         class ZH_GRAPHICS_DLL EffectSolid: public Effect
         {
             CLASS_IDENTIFIER( E_CID_EFFECT_SOLID );
+            static const char* const m_sDefaultName;
         public:
 
             virtual ~EffectSolid();
@@ -26,8 +28,24 @@ namespace ZH{
 
         private:
             friend class ResourceManager;
-            EffectSolid();
+            EffectSolid( const char* const );
         };
+
+
+        class ZH_GRAPHICS_DLL EffectInstanceSolid : public EffectInstance
+        {
+            CLASS_IDENTIFIER( E_CID_EFFECT_INSTANCE_SOLID );
+        public:
+            virtual ~EffectInstanceSolid();
+            virtual bool isValid() const;
+
+        private:
+
+            friend class ResourceFactory;
+            EffectInstanceSolid( const char* const );
+
+        };
+
     }
 }
 

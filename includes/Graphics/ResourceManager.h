@@ -76,6 +76,19 @@ namespace ZH {
                 const SUBRESOURCE_DATA&
                 );
 
+            // Effect
+            Effect* findEffect(
+                E_CLASS_ID c_id,
+                const char* const name
+                );
+
+            // Effect instance
+            EffectInstance* findEffectInstanceByName( const char* const name );
+            EffectInstance* acquireEffectInstance(
+                E_CLASS_ID c_id,
+                const char* const name
+                );
+
         private:
             // Shader
             bool buildShaders();

@@ -121,10 +121,10 @@ namespace ZH{
             const char* const target)
         {
             // Sanity check
-            ASSERT_RET_NULL(name);
-            ASSERT_RET_NULL(codes);
-            ASSERT_RET_NULL(entryPoint);
-            ASSERT_RET_NULL(target);
+            ASSERT_NOT_NULL_RET_NULL(name);
+            ASSERT_NOT_NULL_RET_NULL(codes);
+            ASSERT_NOT_NULL_RET_NULL(entryPoint);
+            ASSERT_NOT_NULL_RET_NULL(target);
 
             // Code size
             const size_t code_size = strlen(codes);

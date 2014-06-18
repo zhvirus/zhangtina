@@ -33,7 +33,7 @@ namespace ZH{
 
             void clear();
 
-        private:
+        protected:
             // World matrix
             ZH::Math::matrix4x4_f m_worldMatrix;
 
@@ -41,6 +41,7 @@ namespace ZH{
             RenderItemMap*        m_pRenderItems;
 
         protected:
+            virtual bool prepareDefaultData();
             RenderNode( const char* const );
 
             friend class ResourceFactory;

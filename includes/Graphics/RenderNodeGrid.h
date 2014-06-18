@@ -12,10 +12,21 @@ namespace ZH{
         {
             CLASS_IDENTIFIER( E_CID_RENDER_NODE_GRID );
         public:
-            RenderNodeGrid();
-            virtual ~RenderNodeGrid();
 
+            virtual ~RenderNodeGrid();
+            virtual bool addRenderItem( RenderItem* );
+            virtual bool removeRenderItem( const char* const );
+
+        public:
+            static const char* const m_sRenderNodeGridName;
+
+
+        protected:
+            virtual bool prepareDefaultData();
         private:
+            RenderNodeGrid();
+
+            friend class ResourceFactory;
         };
 
 

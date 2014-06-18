@@ -26,23 +26,44 @@ template<typename T>
 inline void SAFE_RELEASE(T& p){if(p){p->Release();}}
 
 // assert, error return NULL
-#define ASSERT_RET_NULL(v) \
+#define ASSERT_NOT_NULL_RET_NULL(v) \
     assert((v)); \
     if ( NULL == (v) ) { \
         return NULL; \
     }
 
 // assert, error return false
-#define ASSERT_RET_FALSE(v) \
+#define ASSERT_NOT_NULL_RET_FALSE(v) \
     assert((v)); \
     if ( NULL == (v) ) { \
         return false; \
     }
 
 // assert, error return
-#define ASSERT_RET(v) \
+#define ASSERT_NOT_NULL_RET(v) \
     assert((v)); \
     if ( NULL == (v) ) { \
+        return; \
+    }
+
+// assert, error return NULL
+#define ASSERT_BOOL_RET_NULL(v) \
+    assert((v)); \
+    if ( !(v) ) { \
+        return NULL; \
+    }
+
+// assert, error return false
+#define ASSERT_BOOL_RET_FALSE(v) \
+    assert((v)); \
+    if ( !(v) ) { \
+        return false; \
+    }
+
+// assert, error return
+#define ASSERT_BOOL_RET(v) \
+    assert((v)); \
+    if ( !(v) ) { \
         return; \
     }
 

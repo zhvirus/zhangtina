@@ -132,5 +132,10 @@ namespace ZH{
         {
 
         }
+
+        bool RenderNode::prepareDefaultData()
+        {
+            return true;
+        }
     }
 }
