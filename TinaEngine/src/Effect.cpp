@@ -7,8 +7,6 @@
 
 namespace ZH{
     namespace Graphics{
-        CLASS_TYPE_NAME_DEFINITION( Effect )
-        CLASS_TYPE_NAME_DEFINITION( EffectInstance )
         //-----------------------------------
         // Effect
         //-----------------------------------

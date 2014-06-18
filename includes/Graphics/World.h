@@ -15,6 +15,7 @@ namespace ZH {
 
         class ZH_GRAPHICS_DLL World : public Name
         {
+            CLASS_IDENTIFIER( E_CID_WORLD );
         public:
             virtual ~World();
         public:
@@ -24,19 +25,17 @@ namespace ZH {
             World( const char* const name );
 
             friend class ResourceManager;
-
-            // Put at last line
-            CLASS_TYPE_NAME_DECLEARATION
         };
 
         // Simple world
         class ZH_GRAPHICS_DLL SimpleWorld : public World
         {
+            CLASS_IDENTIFIER( E_CID_SIMPLE_WORLD );
         public:
             virtual ~SimpleWorld();
             virtual unsigned int numOfNodes()const;
             virtual void clear();
-            RenderNode* addRenderNode( const char* const );
+            bool        addRenderNode( RenderNode* );
             RenderNode* findRenderNode( const char* const );
             bool        removeRenderNode( const char* const );
 
@@ -47,8 +46,6 @@ namespace ZH {
         private:
             SimpleWorld( const char* const name );
             friend class ResourceManager;
-            // Put at last line
-            CLASS_TYPE_NAME_DECLEARATION
         };
 
 

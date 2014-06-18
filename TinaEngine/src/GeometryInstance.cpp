@@ -6,7 +6,6 @@
 
 namespace ZH{
     namespace Graphics{
-        CLASS_TYPE_NAME_DEFINITION( GeometryInstance )
 
         GeometryInstance::GeometryInstance():
             m_pIndexBuffer(NULL)

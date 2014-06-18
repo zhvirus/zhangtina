@@ -58,6 +58,7 @@ namespace ZH{
 
         class ZH_GRAPHICS_DLL Texture2D : public Resource
         {
+            CLASS_IDENTIFIER( E_CID_TEXTURE2D );
         public:
             virtual ~Texture2D();
 
@@ -77,9 +78,6 @@ namespace ZH{
             TEX2D_DESC m_sDesc;
 
             friend class DeviceDX11;
-
-            // Put at last line
-            CLASS_TYPE_NAME_DECLEARATION
         };
 
         ZH_GRAPHICS_EXTERN template class ZH_GRAPHICS_DLL ZH::UTIL::Cache<Texture2D>;

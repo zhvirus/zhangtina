@@ -12,7 +12,6 @@
 
 namespace ZH{
     namespace Graphics{
-        CLASS_TYPE_NAME_DEFINITION( RenderFragment )
 
         const char RenderFragment::m_sDefaultRenderFragmentName[] = "DefaultRenderFragment";
 

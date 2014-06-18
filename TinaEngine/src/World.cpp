@@ -7,9 +7,6 @@
 namespace ZH{
     namespace Graphics{
 
-        CLASS_TYPE_NAME_DEFINITION( World )
-        CLASS_TYPE_NAME_DEFINITION( SimpleWorld )
-
         //------------------------------------------------
         //
         //        World
@@ -69,27 +66,31 @@ namespace ZH{
             return m_pRenderNodes?(unsigned int)m_pRenderNodes->size():0;
         }
 
-        RenderNode* SimpleWorld::addRenderNode( const char* const name )
+        bool SimpleWorld::addRenderNode( RenderNode* pNode )
         {
-            assert( name );
-            if( !name ){
-                return NULL;
+            assert( m_pRenderNodes );
+            if( !m_pRenderNodes ){
+                return false;
             }
 
-            if ( strcmp(name, "") == 0 ){
-                return NULL;
+            assert( pNode );
+            if( !pNode ){
+                return false;
             }
 
-            RenderNode* pRenderNode = findRenderNode( name );
+            if ( pNode->nameEqual("") ){
+                return false;
+            }
+
+            RenderNode* pRenderNode = findRenderNode( pNode->name() );
             if ( pRenderNode ){
                 assert( !pRenderNode );
-                return NULL;
+                return false;
             }
 
-            pRenderNode = new RenderNode( name );
-            m_pRenderNodes->insert( std::make_pair(name, pRenderNode) );
+            m_pRenderNodes->insert( std::make_pair(pNode->name(), pRenderNode) );
 
-            return pRenderNode;
+            return true;
         }
 
         RenderNode* SimpleWorld::findRenderNode( const char* const name )

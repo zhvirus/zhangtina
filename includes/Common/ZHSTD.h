@@ -1,6 +1,8 @@
 #ifndef ZH_STD_H
 #define ZH_STD_H
 
+#include "Graphics/ClassIdentifier.h"
+
 #ifdef _ZH_GRAPHICS_DLL_
 #define ZH_GRAPHICS_DLL _declspec(dllexport)
 #define ZH_GRAPHICS_EXTERN

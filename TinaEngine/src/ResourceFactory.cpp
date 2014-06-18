@@ -8,6 +8,9 @@
 #include "Graphics/Camera.h"
 #include "Graphics/RenderFragment.h"
 #include "Graphics/VertexBuffer.h"
+#include "Graphics/RenderNode.h"
+#include "Graphics/RenderNodeGrid.h"
+#include "Graphics/RenderItem.h"
 #include "Math/float3.h"
 
 
@@ -71,6 +74,61 @@ namespace ZH{
 
             return pObj;
         }
+
+
+        // Rende nodes
+        RenderNode* ResourceFactory::createRenderNode(
+            E_CLASS_ID c_id,
+            const char* const name
+            )
+        {
+            if ( non_empty_string(name) ){
+                assert(false);
+                return NULL;
+            }
+
+            switch ( c_id ){
+            case E_CID_RENDER_NODE:
+                {
+                    RenderNode* pRenderNode = new RenderNode( name );
+                    return pRenderNode;
+                }
+                break;
+            case E_CID_RENDER_NODE_GRID:
+                {
+                    RenderNodeGrid* pRenderNode = new RenderNodeGrid();
+                    return pRenderNode;
+                }
+                break;
+            default:
+                {
+                    assert(false);
+                    return NULL;
+                }
+                break;
+            }
+        }
+
+
+        // Rende items
+        RenderItem* ResourceFactory::createRenderItem(
+            E_CLASS_ID /*c_id*/,
+            const char* const name
+            )
+        {
+            if ( non_empty_string(name) ){
+                assert(false);
+                return NULL;
+            }
+
+            RenderItem* pRenderItem = new RenderItem( name );
+            return pRenderItem;
+        }
+
+
+
+
+
 
     }
 }

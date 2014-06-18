@@ -8,10 +8,6 @@
 
 namespace ZH{
     namespace Graphics{
-        CLASS_TYPE_NAME_DEFINITION( Camera )
-        CLASS_TYPE_NAME_DEFINITION( CameraOrtho )
-        CLASS_TYPE_NAME_DEFINITION( CameraPersp )
-
 
 //------------------------------------------------
 //

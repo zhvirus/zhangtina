@@ -15,16 +15,18 @@ namespace ZH{
 
         class ZH_GRAPHICS_DLL RenderNode : public Resource
         {
+            CLASS_IDENTIFIER( E_CID_RENDER_NODE );
         public:
+            virtual ~RenderNode();
             virtual bool isValid();
 
             // World matrix
             const ZH::Math::matrix4x4_f& worldMatrix() { return m_worldMatrix; }
             void worldMatrix( const ZH::Math::matrix4x4_f& mat ) { m_worldMatrix = mat; }
 
-            bool        removeRenderItem( const char* const );
-            RenderItem* addRenderItem( const char* const );
-            RenderItem* findRenderItem( const char* const );
+            virtual bool    addRenderItem( RenderItem* );
+            virtual bool    removeRenderItem( const char* const );
+            RenderItem*     findRenderItem( const char* const );
 
             void enableRenderItem( const char* const );
             void disableRenderItem( const char* const );
@@ -38,13 +40,10 @@ namespace ZH{
             // Render items of this node
             RenderItemMap*        m_pRenderItems;
 
-        private:
+        protected:
             RenderNode( const char* const );
-            virtual ~RenderNode();
 
-            friend class SimpleWorld;
-            // Put at last line
-            CLASS_TYPE_NAME_DECLEARATION
+            friend class ResourceFactory;
         };
 
         typedef std::map<std::string, RenderNode*> RenderNodeMap;

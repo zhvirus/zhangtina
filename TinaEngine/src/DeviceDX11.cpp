@@ -24,8 +24,6 @@
 namespace ZH{
     namespace Graphics{
 
-        CLASS_TYPE_NAME_DEFINITION( DeviceDX11 )
-
         DeviceDX11::DeviceDX11():
             Device(),
             m_pImp(NULL)

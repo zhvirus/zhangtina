@@ -17,6 +17,7 @@ namespace ZH{
 
         class ZH_GRAPHICS_DLL Effect: public Resource
         {
+            CLASS_IDENTIFIER( E_CID_EFFECT );
         public:
             Effect( const char* const, E_EFFECT_KEY );
             virtual ~Effect();
@@ -37,10 +38,7 @@ namespace ZH{
             void* m_pComputeShader;
 
             E_EFFECT_KEY m_eEffectKey;
-        private:
 
-            // Put at last line
-            CLASS_TYPE_NAME_DECLEARATION
         };
 
         ZH_GRAPHICS_EXTERN template class ZH_GRAPHICS_DLL ZH::UTIL::Cache<Effect>;
@@ -48,6 +46,7 @@ namespace ZH{
 
         class ZH_GRAPHICS_DLL EffectInstance: public Resource
         {
+            CLASS_IDENTIFIER( E_CID_EFFECT_INSTANCE );
         public:
             EffectInstance( const char* const );
             virtual ~EffectInstance();
@@ -56,9 +55,6 @@ namespace ZH{
 
         private:
             Effect* m_pEffect;
-
-            // Put at last line
-            CLASS_TYPE_NAME_DECLEARATION
         };
 
         ZH_GRAPHICS_EXTERN template class ZH_GRAPHICS_DLL ZH::UTIL::Cache<Effect>;

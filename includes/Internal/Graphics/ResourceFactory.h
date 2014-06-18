@@ -2,6 +2,7 @@
 #define RESOURCE_FACTORY_H
 
 #include "Graphics/RenderTarget.h"
+#include "Graphics/ClassIdentifier.h"
 
 namespace ZH{
     namespace Math{
@@ -18,6 +19,8 @@ namespace ZH{
         class World;
         class RenderTarget;
         class VertexBuffer;
+        class RenderNode;
+        class RenderItem;
 
         class ResourceFactory
         {
@@ -41,6 +44,18 @@ namespace ZH{
                   Camera* camera,
                   World* world,
                   const ZH::Graphics::RenderTargetPtrArray&
+                );
+
+            // Create RenderNode
+            static RenderNode* createRenderNode(
+                E_CLASS_ID c_id,
+                const char* const name
+                );
+
+            // Create RenderItem
+            static RenderItem* createRenderItem(
+                E_CLASS_ID id,
+                const char* const name
                 );
 
 

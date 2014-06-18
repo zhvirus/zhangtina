@@ -12,7 +12,10 @@ namespace ZH{
         class Texture2D;
         class RenderTargetImp;
 
-        class ZH_GRAPHICS_DLL RenderTarget : public Resource {
+        class ZH_GRAPHICS_DLL RenderTarget : public Resource
+        {
+            CLASS_IDENTIFIER( E_CID_RENDER_TARGET );
+
         public:
             virtual ~RenderTarget();
             virtual bool isValid();
@@ -27,9 +30,6 @@ namespace ZH{
 
             friend class DeviceDX11;
             friend class DeviceDX11Imp;
-
-            // Put at last line
-            CLASS_TYPE_NAME_DECLEARATION
         };
 
         ZH_GRAPHICS_EXTERN template class ZH_GRAPHICS_DLL ZH::UTIL::Array<RenderTarget*>;

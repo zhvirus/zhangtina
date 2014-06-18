@@ -7,7 +7,6 @@
 
 namespace ZH{
     namespace Graphics{
-        CLASS_TYPE_NAME_DEFINITION( VertexBuffer )
 
         VertexBuffer::VertexBuffer( const char* const name, VertexBufferImp* imp, const BUFFER_DESC& desc ):
             Resource( name ),

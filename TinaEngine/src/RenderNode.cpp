@@ -7,7 +7,6 @@
 
 namespace ZH{
     namespace Graphics{
-        CLASS_TYPE_NAME_DEFINITION( RenderNode )
 
         RenderNode::RenderNode( const char* const name ):
             Resource(name),
@@ -46,59 +45,83 @@ namespace ZH{
             m_pRenderItems->clear();
         }
 
-        bool RenderNode::removeRenderItem( const char* const name )
+        bool RenderNode::addRenderItem( RenderItem* pItem )
         {
-            RenderItem* item =  findRenderItem( name );
-            if ( !item ){
+            assert( m_pRenderItems );
+            if( !m_pRenderItems ){
                 return false;
             }
 
-            if( m_renderItems.remove( item ) ){
-                delete item;
+            assert( pItem );
+            if( !pItem ){
+                return false;
+            }
+
+            if ( pItem->nameEqual("") ){
+                return false;
+            }
+
+            RenderItem* pRenderItem = findRenderItem( pItem->name() );
+            if ( pRenderItem ){
+                assert( !pRenderItem );
+                return false;
+            }
+
+            m_pRenderItems->insert( std::make_pair(pItem->name(), pRenderItem) );
+
+            return true;
+        }
+
+        RenderItem* RenderNode::findRenderItem( const char* const name )
+        {
+            assert( name );
+            if( !name ){
+                return NULL;
+            }
+
+            if ( strcmp(name, "") == 0 ){
+                return NULL;
+            }
+
+            if ( !m_pRenderItems ){
+                return NULL;
+            }
+
+            RenderItemMap::iterator  it = m_pRenderItems->find( name );
+            if ( it != m_pRenderItems->end() ){
+                return it->second;
+            }
+
+            return NULL;
+        }
+
+        bool RenderNode::removeRenderItem( const char* const name )
+        {
+            assert( name );
+            if( !name ){
+                return false;
+            }
+
+            if ( strcmp(name, "") == 0 ){
+                return false;
+            }
+
+            RenderItem* pRenderItem = NULL;
+            RenderItemMap::iterator  it = m_pRenderItems->begin();
+            for(;it != m_pRenderItems->end(); ++it){
+                pRenderItem = it->second;
+                if ( !pRenderItem || !pRenderItem->nameEqual(name) ){
+                    continue;
+                }
+
+                delete pRenderItem;
+                it = m_pRenderItems->erase( it );
                 return true;
             }
 
             return false;
         }
 
-        RenderItem* RenderNode::addRenderItem( const char* const name )
-        {
-            assert( name );
-            if ( !name ){
-                return NULL;
-            }
-
-            RenderItem* item = findRenderItem( name );
-            if ( item ){
-                ZH::Util::ENG_ERR("RenderNode::addRenderItem(), name '%s' already exists!\n", name);
-                return NULL;
-            }
-
-            item = new RenderItem( name );
-            m_renderItems.push_back( item );
-
-            return item;
-        }
-
-        RenderItem* RenderNode::findRenderItem( const char* const name )
-        {
-            assert( name );
-            if ( !name ){
-                return NULL;
-            }
-
-            RenderItem* renderItem = NULL;
-            const unsigned int size = m_renderItems.size();
-            for( unsigned int i = 0; i<size; ++i ){
-                renderItem = m_renderItems[i];
-                if ( !renderItem )
-                    continue;
-                if ( strcmp( renderItem->name(), name) == 0 )
-                    return renderItem;
-            }
-
-            return NULL;
-        }
 
         void RenderNode::enableRenderItem( const char* const /*name*/ )
         {

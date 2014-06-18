@@ -12,6 +12,7 @@ namespace ZH{
 
         class ZH_GRAPHICS_DLL DeviceDX11 : public Device
         {
+            CLASS_IDENTIFIER( E_CID_DEVICE_DX11 );
         public:
             static DeviceDX11* instance(){static DeviceDX11 d; return &d;}
         public:
@@ -31,9 +32,6 @@ namespace ZH{
             friend class AccessInternal;
 
             CLASS_COMMON_PROTECTED_DECLEARATION(DeviceDX11)
-
-            // Put at last line
-            CLASS_TYPE_NAME_DECLEARATION
         };
 
     }

@@ -33,6 +33,7 @@ namespace ZH{
 
         class ZH_GRAPHICS_DLL Device
         {
+            CLASS_IDENTIFIER(E_CID_DEVICE);
         public:
             virtual bool isRunning()const{return m_status == DEVICE_STATUS_RUNNING;};
             virtual bool isPaused()const{ return m_status == DEVICE_STATUS_PAUSED; }

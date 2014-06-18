@@ -20,7 +20,9 @@ namespace ZH{
 
         class ZH_GRAPHICS_DLL RenderItem : public Resource
         {
+            CLASS_IDENTIFIER( E_CID_RENDER_ITEM );
         public:
+            virtual ~RenderItem();
             virtual bool isValid();
 
             // World matrix
@@ -42,11 +44,9 @@ namespace ZH{
             EffectInstance*         m_effectInst;
         private:
             RenderItem( const char* const );
-            virtual ~RenderItem();
 
-            friend class RenderNode;
-            // Put at last line
-            CLASS_TYPE_NAME_DECLEARATION
+
+            friend class ResourceFactory;
         };
 
         ZH_GRAPHICS_EXTERN template class ZH_GRAPHICS_DLL ZH::UTIL::Array<RenderItem*>;

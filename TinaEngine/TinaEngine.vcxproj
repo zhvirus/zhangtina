@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="..\includes\Common\ZHSTD.h" />
     <ClInclude Include="..\includes\Graphics\Camera.h" />
+    <ClInclude Include="..\includes\Graphics\ClassIdentifier.h" />
     <ClInclude Include="..\includes\Graphics\Device.h" />
     <ClInclude Include="..\includes\Graphics\DeviceDX11.h" />
     <ClInclude Include="..\includes\Graphics\Effect.h" />
@@ -32,6 +33,7 @@
     <ClInclude Include="..\includes\Graphics\RenderFragment.h" />
     <ClInclude Include="..\includes\Graphics\RenderItem.h" />
     <ClInclude Include="..\includes\Graphics\RenderNode.h" />
+    <ClInclude Include="..\includes\Graphics\RenderNodeGrid.h" />
     <ClInclude Include="..\includes\Graphics\RenderTarget.h" />
     <ClInclude Include="..\includes\Graphics\Resource.h" />
     <ClInclude Include="..\includes\Graphics\ResourceManager.h" />
@@ -65,6 +67,7 @@
     <ClCompile Include="src\RenderFragment.cpp" />
     <ClCompile Include="src\RenderItem.cpp" />
     <ClCompile Include="src\RenderNode.cpp" />
+    <ClCompile Include="src\RenderNodeGrid.cpp" />
     <ClCompile Include="src\RenderTarget.cpp" />
     <ClCompile Include="src\RenderTargetImp.cpp" />
     <ClCompile Include="src\ResouceManager.cpp" />

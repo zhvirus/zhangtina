@@ -79,6 +79,9 @@
     <ClCompile Include="src\AccessInternal.cpp">
       <Filter>CPP</Filter>
     </ClCompile>
+    <ClCompile Include="src\RenderNodeGrid.cpp">
+      <Filter>CPP</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\includes\Graphics\Camera.h">
@@ -167,6 +170,12 @@
     </ClInclude>
     <ClInclude Include="..\includes\Internal\Graphics\AccessInternal.h">
       <Filter>H_Internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\Graphics\RenderNodeGrid.h">
+      <Filter>H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\Graphics\ClassIdentifier.h">
+      <Filter>H</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

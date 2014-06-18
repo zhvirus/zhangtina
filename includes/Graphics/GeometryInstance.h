@@ -12,6 +12,7 @@ namespace ZH{
 
         class ZH_GRAPHICS_DLL GeometryInstance
         {
+            CLASS_IDENTIFIER( E_CID_GEOMETRY_INSTANCE );
         public:
             virtual bool isValid();
 
@@ -31,8 +32,6 @@ namespace ZH{
             virtual ~GeometryInstance();
 
             friend class RenderItem;
-            // Put at last line
-            CLASS_TYPE_NAME_DECLEARATION
         };
 
     } // namespace Graphics

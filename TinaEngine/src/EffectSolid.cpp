@@ -7,7 +7,6 @@
 
 namespace ZH{
     namespace Graphics{
-        CLASS_TYPE_NAME_DEFINITION( EffectSolid )
 
         EffectSolid::EffectSolid():
             Effect("SolidColor", E_EFFECT_SOLID_COLOR)

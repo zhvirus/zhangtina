@@ -9,6 +9,7 @@ namespace ZH{
 
         class ZH_GRAPHICS_DLL EffectSolid: public Effect
         {
+            CLASS_IDENTIFIER( E_CID_EFFECT_SOLID );
         public:
 
             virtual ~EffectSolid();
@@ -26,9 +27,6 @@ namespace ZH{
         private:
             friend class ResourceManager;
             EffectSolid();
-
-            // Put at last line
-            CLASS_TYPE_NAME_DECLEARATION
         };
     }
 }

@@ -9,7 +9,6 @@
 
 namespace ZH{
     namespace Graphics{
-        CLASS_TYPE_NAME_DEFINITION( Texture2D )
 
         const char Texture2D::m_sBackBufferName[] = "BackBuffer";
 

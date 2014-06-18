@@ -18,7 +18,9 @@ namespace ZH{
         class Camera;
         class World;
 
-        class ZH_GRAPHICS_DLL RenderFragment : public Resource {
+        class ZH_GRAPHICS_DLL RenderFragment : public Resource
+        {
+            CLASS_IDENTIFIER( E_CID_RENDER_FRAGMENT );
         public:
             RenderFragment( const char* const );
             RenderFragment( const char* const, Device*, Camera*, World*, const ZH::Graphics::RenderTargetPtrArray& );
@@ -52,9 +54,6 @@ namespace ZH{
             ZH::Graphics::RenderTargetPtrArray m_renderTargetArray;
             ZH::Math::float4 m_clearCol;
 
-
-            // Put at last line
-            CLASS_TYPE_NAME_DECLEARATION
         };
 
         ZH_GRAPHICS_EXTERN template class ZH_GRAPHICS_DLL ZH::UTIL::Array<RenderFragment*>;

@@ -6,7 +6,6 @@
 
 namespace ZH{
     namespace Graphics{
-        CLASS_TYPE_NAME_DEFINITION( RenderItem )
 
         RenderItem::RenderItem( const char* const name ):
             Resource(name),

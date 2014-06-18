@@ -16,6 +16,7 @@ namespace ZH{
 
         class ZH_GRAPHICS_DLL VertexBuffer: public Resource
         {
+            CLASS_IDENTIFIER( E_CID_VERTEX_BUFFER );
         public:
             virtual ~VertexBuffer();
             virtual bool isValid();
@@ -28,9 +29,6 @@ namespace ZH{
 
             friend class DeviceDX11;
             VertexBuffer( const char* const, VertexBufferImp*, const BUFFER_DESC& desc );
-
-            // Put at last line
-            CLASS_TYPE_NAME_DECLEARATION
         };
 
         ZH_GRAPHICS_EXTERN template class ZH_GRAPHICS_DLL ZH::UTIL::Cache<VertexBuffer>;

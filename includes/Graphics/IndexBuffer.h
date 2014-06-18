@@ -15,6 +15,7 @@ namespace ZH{
 
         class ZH_GRAPHICS_DLL IndexBuffer: public Resource
         {
+            CLASS_IDENTIFIER( E_CID_INDEX_BUFFER );
         public:
 
             virtual ~IndexBuffer();
@@ -28,9 +29,6 @@ namespace ZH{
 
             friend class DeviceDX11;
             IndexBuffer( const char* const, IndexBufferImp*, const BUFFER_DESC& desc );
-
-            // Put at last line
-            CLASS_TYPE_NAME_DECLEARATION
         };
 
         ZH_GRAPHICS_EXTERN template class ZH_GRAPHICS_DLL ZH::UTIL::Cache<IndexBuffer>;

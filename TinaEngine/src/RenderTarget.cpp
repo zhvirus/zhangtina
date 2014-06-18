@@ -10,7 +10,6 @@
 
 namespace ZH{
     namespace Graphics{
-        CLASS_TYPE_NAME_DEFINITION( RenderTarget )
 
         const char RenderTarget::m_sDefaultRenderTargetName[] = "DefaultRenderTarget";
 

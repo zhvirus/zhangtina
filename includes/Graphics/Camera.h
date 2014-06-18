@@ -12,6 +12,7 @@ namespace ZH{
 
         class ZH_GRAPHICS_DLL Camera : public Resource
         {
+            CLASS_IDENTIFIER(E_CID_CAMERA);
         public:
             Camera( const char* const );
             Camera( const char* const, Math::float3 pos, Math::float3 look, Math::float3 up );
@@ -46,13 +47,11 @@ namespace ZH{
             Math::matrix4x4_f m_projMat;
             bool m_viewMatDirtyFlag;
             bool m_projMatDirtyFlag;
-
-            // Put at last line
-            CLASS_TYPE_NAME_DECLEARATION
         };
 
         class ZH_GRAPHICS_DLL CameraOrtho : public Camera
         {
+            CLASS_IDENTIFIER(E_CID_CAMERA_ORTHO);
         public:
             CameraOrtho( const char* const );
             CameraOrtho( const char* const, Math::float3 pos, Math::float3 look, Math::float3 up, float w, float h, float nz, float fz );
@@ -81,13 +80,11 @@ namespace ZH{
             float m_height;
             float m_nearZ;
             float m_farZ;
-
-            // Put at last line
-            CLASS_TYPE_NAME_DECLEARATION
         };
 
         class ZH_GRAPHICS_DLL CameraPersp : public Camera
         {
+            CLASS_IDENTIFIER(E_CID_CAMERA_PERSP);
         public:
             virtual bool operator==(const Camera&);
 
@@ -119,9 +116,6 @@ namespace ZH{
 
             // friend
             friend class ResourceFactory;
-
-            // Put at last line
-            CLASS_TYPE_NAME_DECLEARATION
         };
 
         ZH_GRAPHICS_EXTERN template class ZH_GRAPHICS_DLL ZH::UTIL::Cache<Camera>;

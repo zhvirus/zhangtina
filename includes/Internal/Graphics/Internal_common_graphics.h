@@ -46,4 +46,14 @@ inline void SAFE_RELEASE(T& p){if(p){p->Release();}}
         return; \
     }
 
+// non-empty string check
+inline bool non_empty_string( const char* const name )
+{
+    if ( !name || (strcmp(name,"")==0 ) ){
+        return false;
+    }
+
+    return true;
+}
+
 #endif
