@@ -8,7 +8,7 @@ namespace ZH{
     namespace Graphics{
 
         BUFFER_DESC::BUFFER_DESC( const BUFFER_DESC& desc ):
-            widthInByte( desc.widthInByte ),
+            buffSizeInByte( desc.buffSizeInByte ),
             usage( desc.usage ),
             bind_flag( desc.bind_flag ),
             cpu_access_flag( desc.cpu_access_flag ),

@@ -8,7 +8,8 @@ namespace ZH{
     namespace Graphics{
 
         GeometryInstance::GeometryInstance():
-            m_pIndexBuffer(NULL)
+            m_pIndexBuffer(NULL),
+            m_primitiveType(PRIMITIVE_TOPOLOGY_TRIANGLELIST)
         {
 
         }

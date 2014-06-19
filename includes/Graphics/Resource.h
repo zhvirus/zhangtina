@@ -12,7 +12,7 @@ namespace ZH {
         {
         public:
             BUFFER_DESC():
-                widthInByte(0),
+                buffSizeInByte(0),
                 usage( USAGE_DEFAULT ),
                 bind_flag( BIND_VERTEX_BUFFER ),
                 cpu_access_flag( CPU_ACCESS_WRITE ),
@@ -20,7 +20,7 @@ namespace ZH {
             {}
             BUFFER_DESC( const BUFFER_DESC& desc );
 
-            unsigned int    widthInByte;
+            unsigned int    buffSizeInByte;
             USAGE           usage;
             BIND_FLAG       bind_flag;
             CPU_ACCESS_FLAG cpu_access_flag;

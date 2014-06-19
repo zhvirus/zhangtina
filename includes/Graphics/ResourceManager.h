@@ -62,7 +62,6 @@ namespace ZH {
             VertexBuffer* findVertexBufferByName( const char* const name );
             VertexBuffer* acquireVertexBuffer(
                 const char* const name,
-                Device* device,
                 const BUFFER_DESC&,
                 const SUBRESOURCE_DATA&
                 );
@@ -71,7 +70,6 @@ namespace ZH {
             IndexBuffer* findIndexBufferByName( const char* const name );
             IndexBuffer* acquireIndexBuffer(
                 const char* const name,
-                Device* device,
                 const BUFFER_DESC&,
                 const SUBRESOURCE_DATA&
                 );

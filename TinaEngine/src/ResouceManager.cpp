@@ -436,7 +436,6 @@ namespace ZH{
 
         VertexBuffer* ResourceManager::acquireVertexBuffer(
                 const char* const name,
-                Device* device,
                 const BUFFER_DESC& desc,
                 const SUBRESOURCE_DATA& data )
         {
@@ -447,13 +446,14 @@ namespace ZH{
             }
 
             // Create a new vertex buffer
-            if ( !device ){
-                assert( device );
+            DeviceDX11* pDevice = DeviceDX11::instance();
+            if ( !pDevice ){
+                assert( pDevice );
                 ZH::Util::ENG_ERR("ResourceManager::acquireVertexBuffer(), device is NULL!\n");
                 return NULL;
             }
 
-            VertexBuffer* vb = device->createVertexBuffer( name, desc, data );
+            VertexBuffer* vb = pDevice->createVertexBuffer( name, desc, data );
             if ( vb ){
                 m_vertexBufferCache.insert( vb );
             }
@@ -474,7 +474,6 @@ namespace ZH{
 
         IndexBuffer* ResourceManager::acquireIndexBuffer(
                 const char* const name,
-                Device* device,
                 const BUFFER_DESC& desc,
                 const SUBRESOURCE_DATA& data )
         {
@@ -484,14 +483,15 @@ namespace ZH{
                 return pRes;
             }
 
-            // Create a new vertex buffer
-            if ( !device ){
-                assert( device );
+            // Create a new index buffer
+            DeviceDX11* pDevice = DeviceDX11::instance();
+            if ( !pDevice ){
+                assert( pDevice );
                 ZH::Util::ENG_ERR("ResourceManager::acquireIndexBuffer(), device is NULL!\n");
                 return NULL;
             }
 
-            IndexBuffer* ib = device->createIndexBuffer( name, desc, data );
+            IndexBuffer* ib = pDevice->createIndexBuffer( name, desc, data );
             if ( ib ){
                 m_indexBufferCache.insert( ib );
             }

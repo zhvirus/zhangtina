@@ -156,6 +156,18 @@ namespace ZH{
             RESOURCE_MISC_GDI_COMPATIBLE           = 0x200L 
         };
 
+        enum PRIMITIVE_TYPE {
+            PRIMITIVE_TOPOLOGY_UNDEFINED                    = 0,
+            PRIMITIVE_TOPOLOGY_POINTLIST                    = 1,
+            PRIMITIVE_TOPOLOGY_LINELIST                     = 2,
+            PRIMITIVE_TOPOLOGY_LINESTRIP                    = 3,
+            PRIMITIVE_TOPOLOGY_TRIANGLELIST                 = 4,
+            PRIMITIVE_TOPOLOGY_TRIANGLESTRIP                = 5
+        };
+
+
+
+
     } // namespace Graphics
 
 } // namespace ZH

@@ -10,7 +10,7 @@ namespace ZH{
 
         void toD3DBufferDesc( D3D11_BUFFER_DESC& d3d_desc, const BUFFER_DESC& desc )
         {
-            d3d_desc.ByteWidth = desc.widthInByte;
+            d3d_desc.ByteWidth = desc.buffSizeInByte;
             d3d_desc.Usage     = (D3D11_USAGE)desc.usage;
             d3d_desc.BindFlags = desc.bind_flag;
             d3d_desc.CPUAccessFlags = desc.cpu_access_flag;

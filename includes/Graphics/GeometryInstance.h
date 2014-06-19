@@ -23,9 +23,14 @@ namespace ZH{
             // Vertex buffer array
             VertexBufferPtrArray& vertexBufferArray() { return m_vertexBufferArr; }
 
+            // Topo
+            void primitiveType( PRIMITIVE_TYPE type ) { m_primitiveType = type; }
+            PRIMITIVE_TYPE primitiveType() const { return m_primitiveType; }
+
         private:
             VertexBufferPtrArray m_vertexBufferArr;
             IndexBuffer*         m_pIndexBuffer;
+            PRIMITIVE_TYPE       m_primitiveType;
 
         private:
             GeometryInstance();

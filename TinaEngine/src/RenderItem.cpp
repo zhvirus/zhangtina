@@ -9,7 +9,8 @@ namespace ZH{
 
         RenderItem::RenderItem( const char* const name ):
             Resource(name),
-            m_effectInst(NULL)
+            m_effectInst(NULL),
+            m_bufferDirty( true )
         {
 
         }
@@ -23,6 +24,20 @@ namespace ZH{
             bool valid = m_effectInst && m_effectInst->isValid() && m_geoInst.isValid();
             return valid;
         }
+
+        void RenderItem::effectInst( EffectInstance* inst )
+        {
+            m_effectInst = inst;
+            m_bufferDirty = true;
+        }
+
+        bool RenderItem::updateStreams()
+        {
+
+
+            return true;
+        }
+
 
     }
 }

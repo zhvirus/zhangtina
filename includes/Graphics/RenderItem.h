@@ -31,7 +31,14 @@ namespace ZH{
 
             // Effect instance
             const EffectInstance* effectInst()const { return m_effectInst; }
-            void effectInst( EffectInstance* inst ) { m_effectInst = inst; }
+            void effectInst( EffectInstance* inst );
+
+            // Primitive type
+            void primitiveType( PRIMITIVE_TYPE type ) { m_geoInst.primitiveType(type); }
+            PRIMITIVE_TYPE primitiveType() const { return m_geoInst.primitiveType(); }
+
+            // Update streams according to the effect used
+            bool updateStreams();
 
         private:
             // World matrix
@@ -42,6 +49,10 @@ namespace ZH{
 
             // Effect instance
             EffectInstance*         m_effectInst;
+
+            // Geometry buffers dirty flag
+            bool                    m_bufferDirty;
+
         private:
             RenderItem( const char* const );
 

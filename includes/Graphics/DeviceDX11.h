@@ -30,7 +30,7 @@ namespace ZH{
             void* m_pImp;
         private:
             friend class AccessInternal;
-
+            friend class ResourceManager;
             CLASS_COMMON_PROTECTED_DECLEARATION(DeviceDX11)
         };
 
