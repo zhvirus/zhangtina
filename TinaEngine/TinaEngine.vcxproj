@@ -38,6 +38,7 @@
     <ClInclude Include="..\includes\Graphics\Resource.h" />
     <ClInclude Include="..\includes\Graphics\ResourceFactory.h" />
     <ClInclude Include="..\includes\Graphics\ResourceManager.h" />
+    <ClInclude Include="..\includes\Graphics\StreamPool.h" />
     <ClInclude Include="..\includes\Graphics\Texture2D.h" />
     <ClInclude Include="..\includes\Graphics\VertexBuffer.h" />
     <ClInclude Include="..\includes\Graphics\World.h" />
@@ -74,6 +75,7 @@
     <ClCompile Include="src\Resource.cpp" />
     <ClCompile Include="src\ResourceFactory.cpp" />
     <ClCompile Include="src\ShaderLibrary.cpp" />
+    <ClCompile Include="src\StreamPool.cpp" />
     <ClCompile Include="src\Texture2D.cpp" />
     <ClCompile Include="src\Texture2DImp.cpp" />
     <ClCompile Include="src\VertexBuffer.cpp" />

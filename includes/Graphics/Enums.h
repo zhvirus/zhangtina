@@ -165,6 +165,18 @@ namespace ZH{
             PRIMITIVE_TOPOLOGY_TRIANGLESTRIP                = 5
         };
 
+        enum STREAM_TYPE{
+            E_STREAM_TYPE_POSITION = 0,
+            E_STREAM_TYPE_NORMAL,
+            E_STREAM_TYPE_TEXCOORD,
+            E_STREAM_TYPE_COLOR,
+            E_STREAM_TYPE_BINORMAL,
+            E_STREAM_TYPE_TANGENT,
+            E_STREAM_TYPE_PSIZE,
+            E_STREAM_TYPE_BLENDWEIGHT
+
+        };
+
 
 
 
