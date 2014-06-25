@@ -8,8 +8,9 @@
 namespace ZH{
     namespace Graphics{
 
-        VertexBuffer::VertexBuffer( const char* const name, VertexBufferImp* imp, const BUFFER_DESC& desc ):
+        VertexBuffer::VertexBuffer( SEMANTIC_TYPE type, const char* const name, VertexBufferImp* imp, const BUFFER_DESC& desc ):
             Resource( name ),
+            m_type( type ),
             m_pImp( imp ),
             m_desc(desc)
         {

@@ -1,11 +1,13 @@
 #ifndef _ZH_GRAPHICS_DLL_
 #define _ZH_GRAPHICS_DLL_
 #endif
+
+#include "Internal/Graphics/Internal_common_graphics.h"
 #include "Graphics/RenderNodeGrid.h"
 #include "Graphics/ResourceFactory.h"
 #include "Graphics/ResourceManager.h"
 #include "Graphics/EffectSolid.h"
-#include "Internal/Graphics/Internal_common_graphics.h"
+#include "Graphics/StreamPool.h"
 
 
 
@@ -50,8 +52,6 @@ namespace ZH{
 
             const char* const renderItemName = "RenderItem_grid";
             const char* const effectInstName = "effectInstSolid_grid";
-            const char* const pos_VBName     = "POS_VB_grid";
-            const char* const IBName         = "IB_grid";
 
             // Create render item
             RenderItem* pItem = ResourceFactory::createRenderItem(
@@ -90,12 +90,13 @@ namespace ZH{
             SUBRESOURCE_DATA sub_res_data_vb;
             sub_res_data_vb.pSysMem = (void*)vertices;
 
-            if ( !ResourceManager::instance().acquireVertexBuffer(
-                pos_VBName,
+            if ( !StreamPool::instance().acquireVertexBuffer(
+                E_SEMANTIC_POSITION,
+                renderItemName,
                 buff_desc_vb,
                 sub_res_data_vb))
             {
-                ZH::Util::ENG_ERR("Create VB '%s' failed!\n", pos_VBName );
+                ZH::Util::ENG_ERR("Create VB '%s' failed!\n", renderItemName );
                 return false;
             }
 
@@ -117,12 +118,12 @@ namespace ZH{
             SUBRESOURCE_DATA sub_res_data_ib;
             sub_res_data_ib.pSysMem = (void*)indices;
 
-            if( !ResourceManager::instance().acquireIndexBuffer(
-                IBName,
+            if( !StreamPool::instance().acquireIndexBuffer(
+                renderItemName,
                 buff_desc_ib,
                 sub_res_data_ib))
             {
-                ZH::Util::ENG_ERR("Create IB '%s' failed!\n", IBName );
+                ZH::Util::ENG_ERR("Create IB '%s' failed!\n", renderItemName );
                 return false;
             }
 

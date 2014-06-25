@@ -30,7 +30,7 @@ namespace ZH{
             void worldMatrix( const ZH::Math::matrix4x4_f& mat ) { m_worldMatrix = mat; }
 
             // Effect instance
-            const EffectInstance* effectInst()const { return m_effectInst; }
+            const EffectInstance* effectInst()const { return m_pEffectInst; }
             void effectInst( EffectInstance* inst );
 
             // Primitive type
@@ -48,7 +48,7 @@ namespace ZH{
             GeometryInstance        m_geoInst;
 
             // Effect instance
-            EffectInstance*         m_effectInst;
+            EffectInstance*         m_pEffectInst;
 
             // Geometry buffers dirty flag
             bool                    m_bufferDirty;

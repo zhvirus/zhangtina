@@ -21,9 +21,10 @@ namespace ZH{
             virtual bool setRenderTarget( RenderTarget* );
             virtual bool clearRenderTargetView( RenderTarget*, const ZH::Math::float4& );
             virtual bool present();
-        private:
+
+            virtual bool createInputLayout( InputLayout&, const ShaderCodes* );
             virtual RenderTarget* createRenderTarget( const char* const, Texture2D* );
-            virtual VertexBuffer* createVertexBuffer( const char* const, const BUFFER_DESC&, const SUBRESOURCE_DATA&);
+            virtual VertexBuffer* createVertexBuffer( SEMANTIC_TYPE, const char* const, const BUFFER_DESC&, const SUBRESOURCE_DATA&);
             virtual IndexBuffer*  createIndexBuffer ( const char* const, const BUFFER_DESC&, const SUBRESOURCE_DATA&);
             virtual bool getBackBuffer( Texture2D*& );
         private:
@@ -31,6 +32,7 @@ namespace ZH{
         private:
             friend class AccessInternal;
             friend class ResourceManager;
+            friend class StreamPool;
             CLASS_COMMON_PROTECTED_DECLEARATION(DeviceDX11)
         };
 

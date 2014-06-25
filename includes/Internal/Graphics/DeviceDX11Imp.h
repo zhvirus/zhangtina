@@ -25,6 +25,14 @@ namespace ZH{
             bool setRenderTarget( ZH::Graphics::RenderTarget* );
             bool clearRenderTargetView( ZH::Graphics::RenderTarget*, const ZH::Math::float4& );
             bool present();
+
+            bool createInputLayout(
+                ID3D11InputLayout** ppInputLayout,
+                const D3D11_INPUT_ELEMENT_DESC* pDesc,
+                unsigned int numOfElement,
+                ID3DBlob* pBlob
+                );
+
         private:
             ID3D11Device        *m_pDevice;
             ID3D11DeviceContext *m_pContext;

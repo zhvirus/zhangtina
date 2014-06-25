@@ -23,12 +23,16 @@ namespace ZH{
 
             bool operator == ( const VertexBuffer& );
 
+            SEMANTIC_TYPE type() const { return m_type; }
+
+
         private:
             VertexBufferImp* m_pImp;
             BUFFER_DESC      m_desc;
+            SEMANTIC_TYPE      m_type;
 
             friend class DeviceDX11;
-            VertexBuffer( const char* const, VertexBufferImp*, const BUFFER_DESC& desc );
+            VertexBuffer( SEMANTIC_TYPE, const char* const, VertexBufferImp*, const BUFFER_DESC& desc );
         };
 
         ZH_GRAPHICS_EXTERN template class ZH_GRAPHICS_DLL ZH::UTIL::Cache<VertexBuffer>;

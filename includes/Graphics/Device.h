@@ -3,6 +3,7 @@
 
 #include "Common/ZHSTD.h"
 #include "Graphics/Name.h"
+#include "Graphics/Enums.h"
 
 // Forwards
 namespace ZH{
@@ -23,6 +24,8 @@ namespace ZH{
         class IndexBuffer;
         class BUFFER_DESC;
         class SUBRESOURCE_DATA;
+        class ShaderCodes;
+        class InputLayout;
 
 
         enum DEVICE_STATUS{
@@ -45,9 +48,9 @@ namespace ZH{
             virtual bool clearRenderTargetView( RenderTarget*, const ZH::Math::float4& ) = 0;
             virtual bool present() = 0;
 
-        private:
+            virtual bool createInputLayout( InputLayout&, const ShaderCodes* ) = 0;
             virtual RenderTarget* createRenderTarget( const char* const, Texture2D* ) = 0;
-            virtual VertexBuffer* createVertexBuffer( const char* const, const BUFFER_DESC&, const SUBRESOURCE_DATA&) = 0;
+            virtual VertexBuffer* createVertexBuffer( SEMANTIC_TYPE, const char* const, const BUFFER_DESC&, const SUBRESOURCE_DATA&) = 0;
             virtual IndexBuffer*  createIndexBuffer ( const char* const, const BUFFER_DESC&, const SUBRESOURCE_DATA&) = 0;
             virtual bool getBackBuffer( Texture2D*& ) = 0;
 

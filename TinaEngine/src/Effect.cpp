@@ -4,6 +4,7 @@
 #include "Graphics/Effect.h"
 #include "Internal/Graphics/Internal_common_graphics.h"
 #include "Internal/Graphics/ShaderLibrary.h"
+#include "Graphics/DeviceDX11.h"
 
 namespace ZH{
     namespace Graphics{
@@ -41,6 +42,8 @@ namespace ZH{
                 ZH::Util::ENG_ERR("Can't find shader type:%d, key:%d!\n", type, key);
                 return false;
             }
+            assert( pShaderCode->m_type == type );
+
             ID3DBlob* pBlob = pShaderCode->m_blob;
             assert(pBlob);
             if( !pBlob ){
@@ -71,6 +74,12 @@ namespace ZH{
                     }
 
                     m_pVertexShader = (void*)pVertexShader;
+
+                    // prepare input layout from VS
+                    if ( !DeviceDX11::instance()->createInputLayout( m_inputLayout, pShaderCode ) ){
+                        ZH::Util::ENG_ERR("Create input layout failed! - %s \n", name() );
+                    }
+
                     return true;
                 }
                 break;

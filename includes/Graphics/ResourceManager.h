@@ -2,8 +2,6 @@
 #define RESOURCE_MANAGER_H
 
 #include "Graphics/Texture2D.h"
-#include "Graphics/VertexBuffer.h"
-#include "Graphics/IndexBuffer.h"
 #include "Graphics/Effect.h"
 #include "Graphics/World.h"
 #include "Graphics/RenderTarget.h"
@@ -57,22 +55,6 @@ namespace ZH {
                   World* world,
                   const ZH::Graphics::RenderTargetPtrArray& rts
                  );
-
-            // Vertex buffer
-            VertexBuffer* findVertexBufferByName( const char* const name );
-            VertexBuffer* acquireVertexBuffer(
-                const char* const name,
-                const BUFFER_DESC&,
-                const SUBRESOURCE_DATA&
-                );
-
-            // Index buffer
-            IndexBuffer* findIndexBufferByName( const char* const name );
-            IndexBuffer* acquireIndexBuffer(
-                const char* const name,
-                const BUFFER_DESC&,
-                const SUBRESOURCE_DATA&
-                );
 
             // Effect
             Effect* findEffect(

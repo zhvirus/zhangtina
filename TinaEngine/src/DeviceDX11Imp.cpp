@@ -266,6 +266,26 @@ namespace ZH{
             return true;
         }
 
+        bool DeviceDX11Imp::createInputLayout(
+            ID3D11InputLayout** ppInputLayout,
+            const D3D11_INPUT_ELEMENT_DESC* pDesc,
+            unsigned int numOfElement,
+            ID3DBlob* pBlob
+            )
+        {
+            ASSERT_NOT_NULL_RET_FALSE(m_pDevice);
+            ASSERT_NOT_NULL_RET_FALSE(ppInputLayout);
+            ASSERT_NOT_NULL_RET_FALSE(pDesc);
+            ASSERT_NOT_NULL_RET_FALSE(pBlob);
+
+            // Create the input layout
+            HRESULT hr = m_pDevice->CreateInputLayout(
+                pDesc, numOfElement, pBlob->GetBufferPointer(),
+                pBlob->GetBufferSize(), ppInputLayout );
+
+            return (hr == S_OK);
+        }
+
 
 
 

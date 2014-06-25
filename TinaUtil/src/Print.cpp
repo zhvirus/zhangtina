@@ -37,7 +37,7 @@ namespace ZH{
         }
         void TNX_ERR( const char* const fmt, ... )
         {
-            PRINT_ERR_IMP("[TinaX]: ERROR: ")
+            PRINT_ERR_IMP("[TinaX]: -->ERROR: ")
         }
         void TNX_DBG( const char* const fmt, ... )
         {
@@ -51,7 +51,7 @@ namespace ZH{
         }
         void ENG_ERR( const char* const fmt, ... )
         {
-            PRINT_ERR_IMP("[Engine]: ERROR: ")
+            PRINT_ERR_IMP("[Engine]: -->ERROR: ")
         }
         void ENG_DBG( const char* const fmt, ... )
         {
@@ -65,7 +65,7 @@ namespace ZH{
         }
         void MTH_ERR( const char* const fmt, ... )
         {
-            PRINT_ERR_IMP("[Math]: ERROR: ")
+            PRINT_ERR_IMP("[Math]: -->ERROR: ")
         }
         void MTH_DBG( const char* const fmt, ... )
         {
@@ -79,7 +79,7 @@ namespace ZH{
         }
         void WGT_ERR( const char* const fmt, ... )
         {
-            PRINT_ERR_IMP("[Wiget]: ERROR: ")
+            PRINT_ERR_IMP("[Wiget]: -->ERROR: ")
         }
         void WGT_DBG( const char* const fmt, ... )
         {

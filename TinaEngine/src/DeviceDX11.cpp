@@ -11,11 +11,13 @@
 #include "Internal/Graphics/DataToD3D.h"
 #include "Internal/Graphics/VertexBufferImp.h"
 #include "Internal/Graphics/IndexBufferImp.h"
+#include "Internal/Graphics/ShaderLibrary.h"
 
 #include "Graphics/Texture2D.h"
 #include "Graphics/RenderTarget.h"
 #include "Graphics/VertexBuffer.h"
 #include "Graphics/ResourceManager.h"
+#include "Graphics/InputLayout.h"
 
 
 
@@ -145,6 +147,7 @@ namespace ZH{
         }
 
         VertexBuffer* DeviceDX11::createVertexBuffer(
+            SEMANTIC_TYPE type,
             const char* const name,
             const BUFFER_DESC& desc,
             const SUBRESOURCE_DATA& data)
@@ -173,7 +176,7 @@ namespace ZH{
 
             // Create Vertex buffer
             VertexBufferImp* pVBImp = new VertexBufferImp( pBuffer_d3d );
-            VertexBuffer*    ret_vb = new VertexBuffer( name, pVBImp, desc );
+            VertexBuffer*    ret_vb = new VertexBuffer( type, name, pVBImp, desc );
 
             return ret_vb;
         }
@@ -211,6 +214,63 @@ namespace ZH{
             IndexBuffer*    ret_ib = new IndexBuffer( name, pIBImp, desc );
 
             return ret_ib;
+        }
+
+        // Creaye input layout
+        bool DeviceDX11::createInputLayout( InputLayout& layout, const ShaderCodes* pCode )
+        {
+            // Check device
+            if ( !isRunning() ){
+                ZH::Util::ENG_ERR("ERROR: Device is not ready, can't createInputLayout()!\n");
+                return false;
+            }
+
+            ASSERT_NOT_NULL_RET_NULL( pCode );
+
+            InputLayout* pInputLayout = &layout;
+            std::vector<Semantic*>& slotVec = pInputLayout->getSlotInputVec();
+
+            const std::vector<Semantic>& semanticArray = pCode->m_semantics;
+
+            unsigned short slotIdx = 0;
+            std::vector<Semantic>::const_iterator cIt = semanticArray.begin();
+            for(; cIt != semanticArray.end(); ++cIt){
+                slotVec.push_back(new Semantic(*cIt));
+                assert( slotIdx < 16 );
+            }
+
+            // Create D3D layout object
+            const size_t usedSlotCount = slotVec.size();
+            assert( usedSlotCount <=16 );
+            D3D11_INPUT_ELEMENT_DESC* pInputDescArray = new D3D11_INPUT_ELEMENT_DESC[usedSlotCount];
+            for( unsigned short i=0; i<(unsigned short)usedSlotCount; ++i){
+
+                pInputDescArray[i].SemanticName = slotVec[i]->m_name.c_str();
+                pInputDescArray[i].SemanticIndex = slotVec[i]->m_index;
+                pInputDescArray[i].Format = slotVec[i]->m_format;
+                pInputDescArray[i].InputSlot = i;
+                pInputDescArray[i].AlignedByteOffset = 0;
+                pInputDescArray[i].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+                pInputDescArray[i].InstanceDataStepRate = 0;
+            }
+
+            ID3D11InputLayout* pInputLayut_d3d = NULL;
+            bool result = IMP_PTR->createInputLayout(
+                &pInputLayut_d3d,
+                pInputDescArray,
+                (unsigned int)usedSlotCount,
+                pCode->m_blob);
+
+            delete []pInputDescArray;
+
+            bool success = result && pInputLayut_d3d;
+
+            if ( success ){
+                pInputLayout->pLayoutImp = (void*)pInputLayut_d3d;
+                return true;
+            }
+
+            return false;
         }
 
 

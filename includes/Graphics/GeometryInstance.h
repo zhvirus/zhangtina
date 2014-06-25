@@ -10,6 +10,8 @@
 namespace ZH{
     namespace Graphics{
 
+        class Effect;
+
         class ZH_GRAPHICS_DLL GeometryInstance
         {
             CLASS_IDENTIFIER( E_CID_GEOMETRY_INSTANCE );
@@ -26,6 +28,9 @@ namespace ZH{
             // Topo
             void primitiveType( PRIMITIVE_TYPE type ) { m_primitiveType = type; }
             PRIMITIVE_TYPE primitiveType() const { return m_primitiveType; }
+
+            // Collect streams
+            bool collectStreams( Effect*, const char* const );
 
         private:
             VertexBufferPtrArray m_vertexBufferArr;

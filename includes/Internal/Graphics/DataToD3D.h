@@ -2,6 +2,8 @@
 #define DATA_TO_D3D_H
 
 #include "Internal/Graphics/Internal_common_graphics.h"
+#include "Graphics/Enums.h"
+#include <string>
 
 namespace ZH{
     namespace Graphics{
@@ -12,6 +14,7 @@ namespace ZH{
 
         void toD3DBufferDesc( D3D11_BUFFER_DESC&, const BUFFER_DESC& );
         void toD3DSubResourceData( D3D11_SUBRESOURCE_DATA &, const SUBRESOURCE_DATA& );
+        void toD3DSemanticString( SEMANTIC_TYPE, std::string& );
 
     }
 }

@@ -165,16 +165,17 @@ namespace ZH{
             PRIMITIVE_TOPOLOGY_TRIANGLESTRIP                = 5
         };
 
-        enum STREAM_TYPE{
-            E_STREAM_TYPE_POSITION = 0,
-            E_STREAM_TYPE_NORMAL,
-            E_STREAM_TYPE_TEXCOORD,
-            E_STREAM_TYPE_COLOR,
-            E_STREAM_TYPE_BINORMAL,
-            E_STREAM_TYPE_TANGENT,
-            E_STREAM_TYPE_PSIZE,
-            E_STREAM_TYPE_BLENDWEIGHT
-
+        enum SEMANTIC_TYPE{
+            E_SEMANTIC_POSITION=0,  // Vertex position in object space. float4 
+            E_SEMANTIC_COLOR,       // Diffuse and specular color float4 
+            E_SEMANTIC_NORMAL,      // Normal vector float4 
+            E_SEMANTIC_TEXCOORD,    // Texture coordinates
+            E_SEMANTIC_TANGENT,     // Tangent float4 
+            E_SEMANTIC_BINORMAL,    // Binormal float4 
+            E_SEMANTIC_BLENDINDICES,// Blend indices uint 
+            E_SEMANTIC_BLENDWEIGHT, // Blend weights float 
+            E_SEMANTIC_POSITIONT,   // Transformed vertex position. float4 
+            E_SEMANTIC_PSIZE        // Point size float 
         };
 
 

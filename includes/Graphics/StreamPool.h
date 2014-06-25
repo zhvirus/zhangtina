@@ -10,20 +10,50 @@ namespace ZH{
 
         // Forwards
         class VertexBuffer;
+        class IndexBuffer;
+        class BUFFER_DESC;
+        class SUBRESOURCE_DATA;
 
 
         class ZH_GRAPHICS_DLL StreamPool
         {
         public:
-            StreamPool& instance() { static StreamPool sp; return sp; }
+            static StreamPool& instance() { static StreamPool sp; return sp; }
+
+            // Clear all the buffers inside
+            void clear();
+
+            // Vertex buffer
+            VertexBuffer* findVertexBuffer( SEMANTIC_TYPE, const char* const name );
+            VertexBuffer* acquireVertexBuffer(
+                SEMANTIC_TYPE,
+                const char* const name,
+                const BUFFER_DESC&,
+                const SUBRESOURCE_DATA&
+                );
+
+            // Index buffer
+            IndexBuffer* findIndexBuffer( const char* const name );
+            IndexBuffer* acquireIndexBuffer(
+                const char* const name,
+                const BUFFER_DESC&,
+                const SUBRESOURCE_DATA&
+                );
 
 
         private:
-            typedef std::map<const char* const, VertexBuffer*>  CHAR_VB_MAP;
-            typedef std::map<STREAM_TYPE, CHAR_VB_MAP* >        STREAM_CHARVB_MAP;
-            STREAM_CHARVB_MAP* m_streamPool;
+            // functions
+            bool insertStream( SEMANTIC_TYPE, VertexBuffer* );
 
-            void clear();
+        private:
+            // data
+            typedef std::map<const char* const, VertexBuffer*>  CHAR_VB_MAP;
+            typedef std::map<SEMANTIC_TYPE, CHAR_VB_MAP* >        STREAM_CHARVB_MAP;
+            STREAM_CHARVB_MAP* m_pStreamPool;
+
+            typedef std::map<const char* const, IndexBuffer*> CHAR_IB_MAP;
+            CHAR_IB_MAP* m_pIndexBufferPool;
+
 
 
         private:

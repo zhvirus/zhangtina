@@ -8,8 +8,32 @@ namespace ZH{
     namespace Graphics{
         CLASS_TYPE_NAME_DEFINITION( ShaderLibrary );
 
+        Semantic::Semantic( const std::string& name, SEMANTIC_TYPE type, unsigned short i, DXGI_FORMAT fmt):
+            m_name(name),
+            m_type(type),
+            m_index(i),
+            m_format(fmt)
+        {
+        }
+
+        Semantic::Semantic( const Semantic& s )
+        {
+            operator=(s);
+        }
+
+        Semantic& Semantic::operator=( const Semantic& s )
+        {
+            m_name      = s.m_name;
+            m_type      = s.m_type;
+            m_index     = s.m_index;
+            m_format    = s.m_format;
+
+            return *this;
+        }
+
         ShaderCodes::ShaderCodes():
             m_key( E_SHADER_KEY_INVALID ),
+            m_type( E_SHADER_TYPE_NONE ),
             m_name(""),
             m_codes(""),
             m_entry(""),
@@ -32,6 +56,7 @@ namespace ZH{
             // 1. Simple position VS
             pShader = new ShaderCodes;
             pShader->m_key    = E_VS_POS;
+            pShader->m_type   = E_SHADER_TYPE_VERTEX;
             pShader->m_name   = "vs_pos";
             pShader->m_entry  = "VSMain";
             pShader->m_target = "vs_5_0";
@@ -52,6 +77,9 @@ namespace ZH{
                 "}\n"
                 "\n"
                 ;
+
+            pShader->m_semantics.push_back(Semantic("POSITION", E_SEMANTIC_POSITION, 0, DXGI_FORMAT_R32G32B32_FLOAT));
+
             m_vsMap.insert( std::make_pair(pShader->m_key, pShader) );
 
             //---------------------------------------------
@@ -80,6 +108,7 @@ namespace ZH{
             //---------------------------------------------
             pShader = new ShaderCodes;
             pShader->m_key    = E_PS_SOLID_COLOR;
+            pShader->m_type   = E_SHADER_TYPE_PIXEL;
             pShader->m_name   = "ps_solid_color";
             pShader->m_entry  = "PSMain";
             pShader->m_target = "ps_5_0";

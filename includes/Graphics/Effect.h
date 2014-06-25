@@ -5,6 +5,7 @@
 #include "Graphics/Resource.h"
 #include "Util/Cache.h"
 #include "Internal/Graphics/ShaderLibrary.h"
+#include "Graphics/InputLayout.h"
 
 namespace ZH{
     namespace Graphics{
@@ -17,10 +18,17 @@ namespace ZH{
             virtual ~Effect();
             virtual bool isValid() = 0;
 
+            const InputLayout& inputLayout() const { return m_inputLayout; }
+
+
+        private:
+
         protected:
             virtual bool buildEffect() = 0;
             bool createShader( E_SHADER_TYPE, E_SHADER_KEY );
             bool releaseShader();
+
+            InputLayout m_inputLayout;
 
             void* m_pVertexShader;
             void* m_pHullShader;
@@ -37,6 +45,7 @@ namespace ZH{
         {
             CLASS_IDENTIFIER( E_CID_EFFECT_INSTANCE );
         public:
+            Effect* effect()const { return m_pEffect; }
             EffectInstance( const char* const );
             virtual ~EffectInstance();
 

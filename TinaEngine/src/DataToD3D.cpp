@@ -25,6 +25,47 @@ namespace ZH{
             d3d_data.SysMemSlicePitch   = data.sysMemSlicePitch;
         }
 
+        void toD3DSemanticString( SEMANTIC_TYPE e_sem, std::string& str )
+        {
+            switch ( e_sem ){
+            case E_SEMANTIC_POSITION:
+                str = "POSITION";
+                break;
+            case E_SEMANTIC_COLOR:
+                str = "COLOR";
+                break;
+            case E_SEMANTIC_NORMAL:
+                str = "NORMAL";
+                break;
+            case E_SEMANTIC_TEXCOORD:
+                str = "TEXCOORD";
+                break;
+            case E_SEMANTIC_TANGENT:
+                str = "TANGENT";
+                break;
+            case E_SEMANTIC_BINORMAL:
+                str = "BINORMAL";
+                break;
+            case E_SEMANTIC_BLENDINDICES:
+                str = "BLENDINDICES";
+                break;
+            case E_SEMANTIC_BLENDWEIGHT:
+                str = "BLENDWEIGHT";
+                break;
+            case E_SEMANTIC_POSITIONT:
+                str = "POSITIONT";
+                break;
+            case E_SEMANTIC_PSIZE:
+                str = "PSIZE";
+                break;
+            default:
+                {
+                    assert(false);
+                }
+                break;
+            }
+        }
+
 
     }
 }

@@ -3,7 +3,10 @@
 
 #include "Internal/Graphics/Internal_common_graphics.h"
 #include "Common/ZHSTD.h"
+#include "Graphics/Enums.h"
 #include <map>
+#include <vector>
+#include <string>
 
 
 
@@ -18,6 +21,7 @@ namespace ZH{
         };
 
         enum E_SHADER_TYPE{
+            E_SHADER_TYPE_NONE,
             E_SHADER_TYPE_VERTEX,
             E_SHADER_TYPE_HULL,
             E_SHADER_TYPE_DOMAIN,
@@ -26,15 +30,29 @@ namespace ZH{
             E_SHADER_TYPE_COMPUTE
         };
 
+        class Semantic{
+        public:
+            Semantic( const std::string& name, SEMANTIC_TYPE type, unsigned short i, DXGI_FORMAT fmt );
+            Semantic( const Semantic& );
+            Semantic& operator=( const Semantic& );
+
+            std::string     m_name;
+            SEMANTIC_TYPE   m_type;
+            unsigned short  m_index;
+            DXGI_FORMAT     m_format;
+        };
+
         class ShaderCodes{
         public:
             ShaderCodes();
             E_SHADER_KEY    m_key;
+            E_SHADER_TYPE   m_type;
             std::string     m_name;
             std::string     m_codes;
             std::string     m_entry;
             std::string     m_target;
             ID3DBlob*       m_blob;
+            std::vector<Semantic> m_semantics;
         };
 
         class ShaderLibrary{
