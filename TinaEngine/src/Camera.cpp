@@ -204,7 +204,7 @@ namespace ZH{
                 xScale,    0.0f,   0.0f,                      0.0f,
                 0.0f,      yScale, 0.0f,                      0.0f,
                 0.0f,      0.0f,   m_farZ/(m_farZ-m_nearZ),   1.0f,
-                0.0f,      0.0f,  -m_nearZ/(m_farZ-m_nearZ),  0.0f
+                0.0f,      0.0f,  -m_nearZ*m_farZ/(m_farZ-m_nearZ),  0.0f
             };
 
             m_projMat = projMat;
