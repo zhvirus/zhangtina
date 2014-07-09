@@ -72,3 +72,6 @@ TinaX/x64-release/TinaX.res
 TinaX/x86-release/TinaX.res
 TinaX/x64-debug/TinaX.res
 TinaX/x86-debug/TinaX.res
+OpenGL/opengl-1/opengl-1/ReadMe.txt
+OpenGL/opengl-1/Debug/bintrace.conf
+*.obt
