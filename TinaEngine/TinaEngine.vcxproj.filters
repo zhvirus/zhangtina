@@ -88,6 +88,9 @@
     <ClCompile Include="src\InputLayout.cpp">
       <Filter>CPP</Filter>
     </ClCompile>
+    <ClCompile Include="src\DeviceGL.cpp">
+      <Filter>CPP</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\includes\Graphics\Camera.h">
@@ -187,6 +190,9 @@
       <Filter>H</Filter>
     </ClInclude>
     <ClInclude Include="..\includes\Graphics\InputLayout.h">
+      <Filter>H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\Graphics\DeviceGL.h">
       <Filter>H</Filter>
     </ClInclude>
   </ItemGroup>

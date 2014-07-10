@@ -14,6 +14,7 @@ namespace ZH{
             E_CID_CAMERA_PERSP,
             E_CID_DEVICE,
             E_CID_DEVICE_DX11,
+            E_CID_DEVICE_GL,
             E_CID_EFFECT,
             E_CID_EFFECT_SOLID,
             E_CID_EFFECT_INSTANCE,

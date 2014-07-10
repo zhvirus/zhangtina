@@ -26,11 +26,10 @@ void display()
     glBindVertexArray(vertexArray[0]);
     glDrawArrays( GL_TRIANGLES, 0, 6);
 
+    glutWireCube(5);
+
     glutSwapBuffers();
     //glutPostRedisplay();
-
-    static unsigned int i = 0;
-    std::cout<<"Render frame "<<i++<<std::endl;
 }
 
 
@@ -105,7 +104,7 @@ void initialize ()
             "#version 430 core\n"
             "out vec4 fColor;\n"
             "void main(){\n"
-            "    fColor = vec4(1.0, 1.0, 0.0 ,1.0);\n"
+            "    fColor = vec4(1.0, 0.0, 0.0 ,1.0);\n"
             "}\n"
             ;
         glShaderSource(PS, 1, &psSource, NULL);
@@ -170,13 +169,15 @@ int main(int argc, char **argv)
     // initialize and run program
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH );
-    glutInitContextVersion(4,3);
+    glutInitContextVersion(4,2);
     glutInitContextProfile(GLUT_CORE_PROFILE);
     glutInitWindowSize(width,height);
     glutCreateWindow("Test");
     glewExperimental = GL_TRUE;
     glewInit();
-
+    if ( GLEW_VERSION_4_2){
+        std::cout<<"Support 4.2!\n";
+    }
     glutDisplayFunc(display);
     glutIdleFunc( display );
     glutKeyboardFunc( keyboard );

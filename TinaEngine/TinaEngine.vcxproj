@@ -24,6 +24,7 @@
     <ClInclude Include="..\includes\Graphics\ClassIdentifier.h" />
     <ClInclude Include="..\includes\Graphics\Device.h" />
     <ClInclude Include="..\includes\Graphics\DeviceDX11.h" />
+    <ClInclude Include="..\includes\Graphics\DeviceGL.h" />
     <ClInclude Include="..\includes\Graphics\Effect.h" />
     <ClInclude Include="..\includes\Graphics\EffectSolid.h" />
     <ClInclude Include="..\includes\Graphics\Enums.h" />
@@ -60,6 +61,7 @@
     <ClCompile Include="src\Device.cpp" />
     <ClCompile Include="src\DeviceDX11.cpp" />
     <ClCompile Include="src\DeviceDX11Imp.cpp" />
+    <ClCompile Include="src\DeviceGL.cpp" />
     <ClCompile Include="src\Effect.cpp" />
     <ClCompile Include="src\EffectSolid.cpp" />
     <ClCompile Include="src\GeometryInstance.cpp" />
@@ -173,7 +175,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;DXGI.lib;TinaWidget.lib;TinaUtil.lib;TinaMath.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew32s.lib;opengl32.lib;d3d11.lib;d3dcompiler.lib;DXGI.lib;TinaWidget.lib;TinaUtil.lib;TinaMath.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(LibraryPath);$(SolutionDir)\x86-debug</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -183,14 +185,14 @@
       </PrecompiledHeader>
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;TINAENGINE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>GLEW_STATIC;WIN32;_DEBUG;_WINDOWS;_USRDLL;TINAENGINE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(IncludePath);$(DXSDK_DIR)Include;$(SolutionDir)includes</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;DXGI.lib;TinaWidget.lib;TinaUtil.lib;TinaMath.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew32s.lib;opengl32.lib;d3d11.lib;d3dcompiler.lib;DXGI.lib;TinaWidget.lib;TinaUtil.lib;TinaMath.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(LibraryPath);$(SolutionDir)\x64-debug</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -202,7 +204,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;TINAENGINE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>GLEW_STATIC;WIN32;NDEBUG;_WINDOWS;_USRDLL;TINAENGINE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(IncludePath);$(DXSDK_DIR)Include;$(SolutionDir)includes</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
@@ -211,7 +213,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;DXGI.lib;TinaWidget.lib;TinaUtil.lib;TinaMath.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew32s.lib;opengl32.lib;d3d11.lib;d3dcompiler.lib;DXGI.lib;TinaWidget.lib;TinaUtil.lib;TinaMath.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(LibraryPath);$(SolutionDir)\x86-release</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -232,7 +234,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;DXGI.lib;TinaWidget.lib;TinaUtil.lib;TinaMath.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew32s.lib;opengl32.lib;d3d11.lib;d3dcompiler.lib;DXGI.lib;TinaWidget.lib;TinaUtil.lib;TinaMath.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(LibraryPath);$(SolutionDir)\x64-release</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
