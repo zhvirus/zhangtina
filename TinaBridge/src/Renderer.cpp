@@ -5,7 +5,7 @@
 #include <string>
 #include "Bridge/Renderer.h"
 #include "Widget/Window.h"
-#include "Graphics/DeviceDX11.h"
+#include "Graphics/DeviceGL.h"
 #include "Graphics/ResourceManager.h"
 #include "Math/MathCommon.h"
 
@@ -32,7 +32,7 @@ namespace ZH
             // Get device if not get
             if ( !m_pDevice ){
                 // Get device
-                m_pDevice = ZH::Graphics::DeviceDX11::instance();
+                m_pDevice = &(ZH::Graphics::DeviceGL::instance());
             }
 
             // Start device if not started

@@ -13,7 +13,9 @@ namespace ZH{
     namespace Graphics{
 
         DeviceGL::DeviceGL():
-            Device()
+            Device(),
+            m_hglrc(NULL),
+            m_hdc(NULL)
         {
         }
 
@@ -24,6 +26,10 @@ namespace ZH{
 
         bool DeviceGL::start( ZH::Widgets::WindowsInfo* winInfo )
         {
+            if (  (m_status == DEVICE_STATUS_RUNNING) && m_hglrc && m_hdc ){
+                return true;
+            }
+
             if ( !winInfo ){
                 ZH::Util::ENG_ERR("DeviceGL::start() failed - winInfo is NULL!\n");
                 return false;
@@ -72,11 +78,24 @@ namespace ZH{
 
             // Create render context
             HGLRC hglrc = wglCreateContext( hdc );
+            if ( NULL == hglrc ){
+                ZH::Util::ENG_ERR("DeviceGL::start() failed - wglCreateContext failed!\n");
+                return false;
+            }
 
             // Make it current
-            wglMakeCurrent(hdc, hglrc) ;
+            if ( !wglMakeCurrent(hdc, hglrc) ){
+                ZH::Util::ENG_ERR("DeviceGL::start() failed - wglMakeCurrent failed!\n");
+                return false;
+            }
 
-            // TODO
+            m_hglrc = (void*)hglrc;
+            m_hdc   = (void*)hdc;
+            m_status = DEVICE_STATUS_RUNNING;
+
+            ZH::Util::ENG_DBG("OpenGL Device started successfully\n");
+
+
             return true;
 
         }

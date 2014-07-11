@@ -25,6 +25,8 @@ namespace ZH{
             virtual IndexBuffer*  createIndexBuffer ( const char* const, const BUFFER_DESC&, const SUBRESOURCE_DATA&);
             virtual bool getBackBuffer( Texture2D*& );
         private:
+            void* m_hglrc;
+            void* m_hdc;
 
         private:
             CLASS_COMMON_PROTECTED_DECLEARATION(DeviceGL)
