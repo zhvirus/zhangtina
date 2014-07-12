@@ -8,7 +8,6 @@ namespace ZH{
     }
 }
 
-
 class CTinaXView : public CView
 {
 protected: // create from serialization only
