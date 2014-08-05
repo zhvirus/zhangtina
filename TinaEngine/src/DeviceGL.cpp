@@ -12,7 +12,8 @@
 
 #pragma warning(disable:4127)
 
-
+#define HERE_HDC    (HDC)m_hdc
+#define HERE_HGLRC  (HGLRC)m_hglrc
 
 namespace ZH{
     namespace Graphics{
@@ -236,7 +237,14 @@ namespace ZH{
 
         bool DeviceGL::shutdown()
         {
-            // TODO
+            wglMakeCurrent(NULL, NULL);
+            wglDeleteContext(HERE_HGLRC);
+
+            m_hdc   = NULL;
+            m_hglrc = NULL;
+
+            m_status = DEVICE_STATUS_SHUTDOWN;
+
             return true;
         }
 
