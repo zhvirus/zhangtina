@@ -3,7 +3,7 @@
 #include "TinaX.h"
 #include "Global.h"
 #include "Util/Print.h"
-#include "Bridge/Renderer.h"
+//#include "Bridge/Renderer.h"
 
 extern CTinaXApp theApp;
 
@@ -44,12 +44,12 @@ void TinaX_Preference::clearColor( const ZH::Math::float4& col )
 
 void TinaX_Preference::applyToRenderer()
 {
-    ZH::Graphics::RenderFragment* pDefaultRenderFrag = 
-        ZH::Bridge::Renderer::instance().defaultRenderFragment();
+    //ZH::Graphics::RenderFragment* pDefaultRenderFrag = 
+    //    ZH::Bridge::Renderer::instance().defaultRenderFragment();
 
-    if ( pDefaultRenderFrag ){
-        // Flush clear color
-        pDefaultRenderFrag->clearColor( m_clearColor );
-    }
+    //if ( pDefaultRenderFrag ){
+    //    // Flush clear color
+    //    pDefaultRenderFrag->clearColor( m_clearColor );
+    //}
 }
 

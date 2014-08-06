@@ -19,8 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{1AA929A2-05EC-4AA2-A864-D86F438283D0}</ProjectGuid>
-    <RootNamespace>TinaBridge</RootNamespace>
+    <ProjectGuid>{284D7B13-42DB-4EE7-9271-EECA18D813DC}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>TinaEngineGL</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -66,86 +67,116 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)\x86-debug\</OutDir>
     <IntDir>x86-debug\</IntDir>
+    <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <TargetExt>.dll</TargetExt>
     <OutDir>$(SolutionDir)\x64-debug\</OutDir>
     <IntDir>x64-debug\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)\x86-release\</OutDir>
     <IntDir>x86-release\</IntDir>
+    <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)\x64-release\</OutDir>
     <IntDir>x64-release\</IntDir>
+    <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>GLEW_STATIC;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)3dparty\include;$(IncludePath);$(SolutionDir)includes</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(SolutionDir)includes</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>TinaEngineGL.lib;TinaWidget.lib;TinaMath.lib;TinaUtil.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(LibraryPath);$(SolutionDir)\x86-debug</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)\3dparty\libs\glew\Release\Win32;$(LibraryPath);$(SolutionDir)\x86-debug</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32s.lib;opengl32.lib;TinaWidget.lib;TinaUtil.lib;TinaMath.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>GLEW_STATIC;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)3dparty\include;$(IncludePath);$(SolutionDir)includes</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(SolutionDir)includes</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>TinaEngineGL.lib;TinaWidget.lib;TinaMath.lib;TinaUtil.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(LibraryPath);$(SolutionDir)\x64-debug</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)\3dparty\libs\glew\Release\x64;$(LibraryPath);$(SolutionDir)\x64-debug</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32s.lib;opengl32.lib;TinaWidget.lib;TinaUtil.lib;TinaMath.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>GLEW_STATIC;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)3dparty\include;$(IncludePath);$(SolutionDir)includes</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(SolutionDir)includes</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>TinaEngineGL.lib;TinaWidget.lib;TinaMath.lib;TinaUtil.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(LibraryPath);$(SolutionDir)\x86-release</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)\3dparty\libs\glew\Release\Win32;$(LibraryPath);$(SolutionDir)\x86-release</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32s.lib;opengl32.lib;TinaWidget.lib;TinaUtil.lib;TinaMath.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>GLEW_STATIC;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)3dparty\include;$(IncludePath);$(SolutionDir)includes</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(SolutionDir)includes</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>TinaEngineGL.lib;TinaWidget.lib;TinaMath.lib;TinaUtil.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(LibraryPath)$(SolutionDir)\x64-release</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)\3dparty\libs\glew\Release\x64;$(LibraryPath);$(SolutionDir)\x64-release</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32s.lib;opengl32.lib;TinaWidget.lib;TinaUtil.lib;TinaMath.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Renderer.cpp" />
+    <ClCompile Include="src\Device.cpp" />
+    <ClCompile Include="src\Name.cpp" />
+    <ClCompile Include="src\Shader.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\includes\Bridge\Renderer.h" />
+    <ClInclude Include="..\includes\Graphics\ClassIdentifier.h" />
+    <ClInclude Include="..\includes\Graphics\Device.h" />
+    <ClInclude Include="..\includes\Graphics\Name.h" />
+    <ClInclude Include="..\includes\Graphics\Shader.h" />
+    <ClInclude Include="..\includes\Internal\Graphics\Internal_common_graphics.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

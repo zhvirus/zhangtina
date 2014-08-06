@@ -14,13 +14,12 @@
 
 #include "Global.h"
 #include "TinaX_Preference.h"
+#include "TinaX_UI_ColorChooser.h"
 #include "Widget/Window.h"
-#include "Graphics/DeviceDX11.h"
-#include "Graphics/ResourceManager.h"
+#include "Graphics/Device.h"
 #include "Math/MathCommon.h"
 #include "Util/Print.h"
-#include "Bridge/Renderer.h"
-#include "TinaX_UI_ColorChooser.h"
+
 
 
 
@@ -57,8 +56,8 @@ IMPLEMENT_DYNCREATE(CTinaXView, CView)
     void CTinaXView::OnDraw(CDC* /*pDC*/)
     {
         // Apply setting from preference to the renderer
-        TinaX_Preference::instance().applyToRenderer();
-        ZH::Bridge::Renderer::instance().doRender();
+        //TinaX_Preference::instance().applyToRenderer();
+        //ZH::Bridge::Renderer::instance().doRender();
     }
 
     void CTinaXView::OnRButtonUp(UINT /* nFlags */, CPoint point)
@@ -92,7 +91,7 @@ IMPLEMENT_DYNCREATE(CTinaXView, CView)
             winInfo.fWndHandle = this->GetSafeHwnd();
 
             // Start device
-            if( ZH::Bridge::Renderer::instance().startEngine( winInfo ) ){
+            if( ZH::Graphics::Device::instance().start( winInfo ) ){
                 ZH::Util::TNX_INF("Device created with win_size(%d,%d)\n",winInfo.fWidth, winInfo.fHeight);
             }else{
                 ZH::Util::TNX_ERR("Device create failed with win_size(%d,%d)\n",winInfo.fWidth, winInfo.fHeight);
@@ -119,7 +118,7 @@ IMPLEMENT_DYNCREATE(CTinaXView, CView)
         CView::OnDestroy();
 
         // Shutdown device
-        ZH::Bridge::Renderer::instance().shutdownEngine();
+        //ZH::Bridge::Renderer::instance().shutdownEngine();
 
         // TODO: Add your message handler code here
     }

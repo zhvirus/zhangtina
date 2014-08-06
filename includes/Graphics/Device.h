@@ -2,8 +2,7 @@
 #define DEVICE_H
 
 #include "Common/ZHSTD.h"
-#include "Graphics/Name.h"
-#include "Graphics/Enums.h"
+#include "Graphics/ClassIdentifier.h"
 
 // Forwards
 namespace ZH{
@@ -13,24 +12,11 @@ namespace ZH{
 }
 
 namespace ZH{
-    namespace Math{
-        class float4;
-    }
+
     namespace Graphics{
-
-        class Texture2D;
-        class RenderTarget;
-        class VertexBuffer;
-        class IndexBuffer;
-        class BUFFER_DESC;
-        class SUBRESOURCE_DATA;
-        class ShaderCodes;
-        class InputLayout;
-
 
         enum DEVICE_STATUS{
             DEVICE_STATUS_RUNNING,
-            DEVICE_STATUS_PAUSED,
             DEVICE_STATUS_SHUTDOWN
         };
 
@@ -38,27 +24,19 @@ namespace ZH{
         {
             CLASS_IDENTIFIER(E_CID_DEVICE);
         public:
+            static Device& instance(){static Device d; return d;}
             virtual bool isRunning()const{return m_status == DEVICE_STATUS_RUNNING;};
-            virtual bool isPaused()const{ return m_status == DEVICE_STATUS_PAUSED; }
             virtual bool isShutdown()const{ return m_status == DEVICE_STATUS_SHUTDOWN; }
-            virtual bool start( ZH::Widgets::WindowsInfo* ) = 0;
-            virtual bool shutdown() = 0;
+            virtual bool start( const ZH::Widgets::WindowsInfo& );
+            virtual bool shutdown();
 
-            virtual bool setRenderTarget( RenderTarget* ) = 0;
-            virtual bool clearRenderTargetView( RenderTarget*, const ZH::Math::float4& ) = 0;
-            virtual bool present() = 0;
-
-            virtual bool createInputLayout( InputLayout&, const ShaderCodes* ) = 0;
-            virtual RenderTarget* createRenderTarget( const char* const, Texture2D* ) = 0;
-            virtual VertexBuffer* createVertexBuffer( SEMANTIC_TYPE, const char* const, const BUFFER_DESC&, const SUBRESOURCE_DATA&) = 0;
-            virtual IndexBuffer*  createIndexBuffer ( const char* const, const BUFFER_DESC&, const SUBRESOURCE_DATA&) = 0;
-            virtual bool getBackBuffer( Texture2D*& ) = 0;
-
-
-        protected:
-            Device();
+        private:
             DEVICE_STATUS m_status;
-            friend class ResourceManager;
+        private:
+            Device();
+            ~Device();
+            Device(const Device&){}
+            Device& operator=(Device&){return *this;}
         };
 
     }

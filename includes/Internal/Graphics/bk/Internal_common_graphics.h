@@ -1,15 +1,16 @@
 #ifndef INTERNAL_COMMON_GRAPHICS_H
 #define INTERNAL_COMMON_GRAPHICS_H
 
-#include "glew\glew.h"
-#include "glew\wglew.h"
-
+// DX head file
+#include <d3d11.h>
+#include <dxgi.h>
+#include <D3Dcompiler.h>
 #include <iostream>
 #include <string>
 #include <assert.h>
 
 #include "Util/Print.h"
-
+#include "Internal/Graphics/AccessInternal.h"
 
 
 // Safe delete
