@@ -50,7 +50,6 @@
 // Declaration Macro
 #define CLASS_COMMON_PROTECTED_DECLEARATION(CLASS) \
     protected: \
-        CLASS(); \
         virtual ~CLASS(); \
         CLASS( const CLASS & ){} \
         CLASS& operator=( const CLASS & ){ return *this; }
@@ -68,7 +67,6 @@
 #define CLASS_COMMON_PROTECTED_DEFINITION(CLASS) \
     CLASS::CLASS(){} \
     CLASS::~CLASS(){} \
-
 
 
 

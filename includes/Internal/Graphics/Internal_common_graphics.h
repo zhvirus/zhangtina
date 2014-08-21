@@ -76,4 +76,5 @@ inline bool non_empty_string( const char* const name )
     return true;
 }
 
+
 #endif

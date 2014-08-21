@@ -6,7 +6,8 @@ namespace ZH{
 
         enum E_CLASS_ID{
             E_CID_DEVICE,
-            E_CID_SHADER
+            E_CID_SHADER,
+            E_CID_PROGRAM
 
         };
 
