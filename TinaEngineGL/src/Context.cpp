@@ -49,6 +49,8 @@ namespace ZH{
             }
         }
 
+
+        // Add
         template<class S, class T>
         static bool addCommon( S* pResMap, T* pRes )
         {
