@@ -38,7 +38,7 @@ namespace ZH{
         protected:
             Shader( Context* ctx, SHADER_TYPE type, const char* const pSrc );
             CLASS_COMMON_PROTECTED_DECLEARATION(Shader);
-            friend class ResourceManager;
+            friend class Context;
         };
 
         typedef std::map<unsigned int, Shader*> ShaderMap;
@@ -67,7 +67,7 @@ namespace ZH{
         protected:
             Program( Context* ctx );
             CLASS_COMMON_PROTECTED_DECLEARATION(Program);
-            friend class ResourceManager;
+            friend class Context;
         };
 
         typedef std::map<unsigned int, Program*> ProgramMap;

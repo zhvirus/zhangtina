@@ -12,18 +12,28 @@ namespace ZH{
         class ZH_GRAPHICS_DLL Context
         {
         public:
+            Shader*  createShader( SHADER_TYPE type, const char* const pSrc );
+            Program* createProgram();
 
+
+            bool destroyShader( Shader* );
+            bool destroyProgram( Program* );
 
         private:
             ShaderMap*   m_pShaders;
             ProgramMap*  m_pPrograms;
 
         private:
+            template<class S, class T>
+            bool releaseMapPtr( S*& );
+
             bool addShader( Shader* );
             bool addProgram( Program* );
 
             bool removeShader( Shader* );
             bool removeProgram( Program* );
+
+            void releaseAll();
 
         protected:
             Context();

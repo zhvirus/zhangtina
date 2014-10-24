@@ -3,11 +3,12 @@
 #endif
 #include "Graphics/Context.h"
 #include "Internal/Graphics/Internal_common_graphics.h"
-#include "Graphics/ResourceManager.h"
+#include "Graphics/Shader.h"
 
 
 namespace ZH{
     namespace Graphics{
+
 
         Context::Context():
             m_pShaders(NULL),
@@ -17,38 +18,85 @@ namespace ZH{
             m_pPrograms = new ProgramMap;
         }
 
+
         Context::~Context()
         {
-            // Delete maps
-            SAFE_DELETE( m_pShaders );
-            SAFE_DELETE( m_pPrograms );
-
-            // Release context
+            // Release all resources
+            releaseAll();
         }
 
-        void Context::releaseAllShaders()
+
+        template<class S, class T>
+        bool Context::releaseMapPtr( S*& pResMap )
+        {
+            S::iterator it = pResMap->begin();
+            for(; it != pResMap->end(); ++it){
+                T* pRes = it->second;
+                if ( pRes ){
+                    delete pRes;
+                }
+            }
+
+            delete pResMap;
+            pResMap = NULL;
+            return true;
+        }
+
+
+        void Context::releaseAll()
         {
             // Programs
-            if ( m_pPrograms ){
-                ProgramMap::iterator it = m_pPrograms->begin();
-                for(; it != m_pPrograms->end(); ++it){
-                    Program* prog = it->second;
-                    ResourceManager::destroyProgram( prog );
-                }
-                m_pPrograms->clear();
-            }
+            releaseMapPtr<ProgramMap, Program>( m_pPrograms );
 
             // Shaders
-            if ( m_pShaders ){
-                ShaderMap::iterator it = m_pShaders->begin();
-                for(; it != m_pShaders->end(); ++it){
-                    Shader* shader = it->second;
-                    ResourceManager::destroyShader( shader );
-                }
-                m_pShaders->clear();
-            }
+            releaseMapPtr<ShaderMap, Shader>( m_pShaders );
         }
 
+
+        Shader* Context::createShader( SHADER_TYPE type, const char* const pSrc )
+        {
+            ASSERT_NOT_NULL_RET_NULL(pSrc);
+
+            Shader* pShader = new Shader( this, type, pSrc );
+            if ( !addShader(pShader) ){
+                delete pShader;
+                return NULL;
+            }
+
+            return pShader;
+        }
+
+        Program* Context::createProgram()
+        {
+            Program* pProg = new Program( this );
+            if ( !addProgram(pProg) ){
+                delete pProg;
+                return NULL;
+            }
+
+            return pProg;
+        }
+
+
+        bool Context::destroyShader( Shader* shader )
+        {
+            ASSERT_NOT_NULL_RET_FALSE(shader);
+
+            removeShader( shader );
+
+            delete shader;
+            return true;
+        }
+
+        bool Context::destroyProgram( Program* prog )
+        {
+            ASSERT_NOT_NULL_RET_FALSE(prog);
+
+            removeProgram( prog );
+
+            delete prog;
+            return true;
+        }
 
         // Add
         template<class S, class T>
@@ -66,7 +114,6 @@ namespace ZH{
             return true;
         }
 
-
         bool Context::addShader( Shader* pShader )
         {
             return addCommon<ShaderMap, Shader>( m_pShaders, pShader );
@@ -77,6 +124,34 @@ namespace ZH{
             return addCommon<ProgramMap, Program>( m_pPrograms, pProgram );
         }
 
+        // Remove
+        template<class S, class T>
+        static bool removeCommon( S* pResMap, T* pRes )
+        {
+            ASSERT_NOT_NULL_RET_FALSE( pResMap );
+            ASSERT_NOT_NULL_RET_FALSE( pRes );
+
+            S::iterator it = pResMap->find( pRes->name() );
+
+            if ( it == pResMap->end() ){
+                assert(false);
+                return false;
+            }
+
+            pResMap->erase(it);
+
+            return true;
+        }
+
+        bool Context::removeProgram( Program* pProgram )
+        {
+            return removeCommon<ProgramMap, Program>( m_pPrograms, pProgram );
+        }
+
+        bool Context::removeShader( Shader* pShader )
+        {
+            return removeCommon<ShaderMap, Shader>( m_pShaders, pShader );
+        }
 
     }
 }
