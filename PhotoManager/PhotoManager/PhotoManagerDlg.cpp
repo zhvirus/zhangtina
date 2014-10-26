@@ -6,6 +6,8 @@
 #include "PhotoManager.h"
 #include "PhotoManagerDlg.h"
 #include "afxdialogex.h"
+#include "Util/File.h"
+#include "Strsafe.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -51,13 +53,15 @@ CPhotoManagerDlg::CPhotoManagerDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CPhotoManagerDlg::IDD, pParent),
     m_srcPath(""),
     m_dstPath("")
+    , m_output2(_T(""))
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
 
 void CPhotoManagerDlg::DoDataExchange(CDataExchange* pDX)
 {
-	CDialogEx::DoDataExchange(pDX);
+    CDialogEx::DoDataExchange(pDX);
+    DDX_Text(pDX, IDC_EDIT4, m_output2);
 }
 
 BEGIN_MESSAGE_MAP(CPhotoManagerDlg, CDialogEx)
@@ -171,13 +175,50 @@ void CPhotoManagerDlg::OnBnClickedButton2()
 {
     CFolderPickerDialog dlgFile(L"C:/");
     if (IDOK == dlgFile.DoModal()){
-        m_srcPath = dlgFile.GetPathName();
+        m_dstPath = dlgFile.GetPathName();
     }
-    this->GetDlgItem(IDC_EDIT2)->SetWindowTextW(m_srcPath);
+    this->GetDlgItem(IDC_EDIT2)->SetWindowTextW(m_dstPath);
 }
 
+void CPhotoManagerDlg::print(wchar_t* msg)
+{
+    m_output2 += msg;
+    UpdateData(false);
+}
 
 void CPhotoManagerDlg::OnBnClickedOk()
 {
+    // Check source directory
+    if (ZH::UTIL::File::exist(m_srcPath.GetBuffer())){
+        print(L"源照片目录存在 - 正常！\r\n");
+    }
+    else{
+        print(L"源照片目录不存在 - 错误！\r\n");
+        return;
+    }
 
+    // Check dest directory
+    if (ZH::UTIL::File::exist(m_dstPath.GetBuffer())){
+        print(L"目的照片目录存在 - 正常！\r\n");
+    }
+    else{
+        print(L"目的照片目录不存在 - 错误！\r\n");
+        return;
+    }
+
+    // Disable button
+    //GetDlgItem(IDOK)->EnableWindow(false);
+
+    // Collect files
+    std::vector<std::wstring> files;
+    ZH::UTIL::File::collect_files( m_srcPath.GetBuffer(), "", files, false);
+    //unsigned int image_count = (unsigned int)files.size();
+    //wchar_t message[512];
+    //StringCbPrintf(message, 512, L"共发现 %d 张图片\r\n", image_count);
+    //print(message);
+
+
+
+    // Enable button
+    //GetDlgItem(IDOK)->EnableWindow(true);
 }
