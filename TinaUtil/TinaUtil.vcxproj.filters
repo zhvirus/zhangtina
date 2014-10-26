@@ -33,12 +33,18 @@
     <ClInclude Include="..\includes\Util\Cache.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\includes\Util\File.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Print.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Console.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\File.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TinaWidget", "TinaWidget\TinaWidget.vcxproj", "{0291C57A-6130-4CE5-A645-8F7A42C4DD11}"
 	ProjectSection(ProjectDependencies) = postProject
 		{728AC6FB-AE2D-4F52-A568-013A198DC37E} = {728AC6FB-AE2D-4F52-A568-013A198DC37E}
@@ -129,6 +131,7 @@ Global
 		{284D7B13-42DB-4EE7-9271-EECA18D813DC}.Debug|Win32.ActiveCfg = Debug|Win32
 		{284D7B13-42DB-4EE7-9271-EECA18D813DC}.Debug|Win32.Build.0 = Debug|Win32
 		{284D7B13-42DB-4EE7-9271-EECA18D813DC}.Debug|x64.ActiveCfg = Debug|x64
+		{284D7B13-42DB-4EE7-9271-EECA18D813DC}.Debug|x64.Build.0 = Debug|x64
 		{284D7B13-42DB-4EE7-9271-EECA18D813DC}.Release|Mixed Platforms.ActiveCfg = Release|Win32
 		{284D7B13-42DB-4EE7-9271-EECA18D813DC}.Release|Mixed Platforms.Build.0 = Release|Win32
 		{284D7B13-42DB-4EE7-9271-EECA18D813DC}.Release|Win32.ActiveCfg = Release|Win32

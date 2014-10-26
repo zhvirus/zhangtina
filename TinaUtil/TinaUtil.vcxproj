@@ -86,12 +86,13 @@
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)includes</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)includes;..\..\boost_1_56_0</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies);libboost_filesystem-vc120-mt-gd-1_56.lib;libboost_regex-vc120-mt-gd-1_56.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\boost_1_56_0\lib\debug\x86</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -99,12 +100,13 @@
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)includes</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)includes;..\..\boost_1_56_0</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies);libboost_filesystem-vc120-mt-gd-1_56.lib;libboost_regex-vc120-mt-gd-1_56.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\boost_1_56_0\lib\debug\x64</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -114,14 +116,15 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)includes</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)includes;..\..\boost_1_56_0</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies);libboost_filesystem-vc120-mt-1_56.lib;libboost_regex-vc120-mt-1_56.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\boost_1_56_0\lib\release\x86</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -131,14 +134,15 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)includes</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)includes;..\..\boost_1_56_0</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies);libboost_filesystem-vc120-mt-1_56.lib;libboost_regex-vc120-mt-1_56.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\boost_1_56_0\lib\release\x64</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -146,10 +150,12 @@
     <ClInclude Include="..\includes\Util\Array.h" />
     <ClInclude Include="..\includes\Util\Cache.h" />
     <ClInclude Include="..\includes\Util\Console.h" />
+    <ClInclude Include="..\includes\Util\File.h" />
     <ClInclude Include="..\includes\Util\Print.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Console.cpp" />
+    <ClCompile Include="src\File.cpp" />
     <ClCompile Include="src\Print.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
