@@ -190,19 +190,19 @@ void CPhotoManagerDlg::OnBnClickedOk()
 {
     // Check source directory
     if (ZH::UTIL::File::exist(m_srcPath.GetBuffer())){
-        print(L"源照片目录存在 - 正常！\r\n");
+        print(L"Source folder exist. - OK\r\n");
     }
     else{
-        print(L"源照片目录不存在 - 错误！\r\n");
+        print(L"Source folder does not exist! - error\r\n");
         return;
     }
 
     // Check dest directory
     if (ZH::UTIL::File::exist(m_dstPath.GetBuffer())){
-        print(L"目的照片目录存在 - 正常！\r\n");
+        print(L"Dst folder exist. - OK\r\n");
     }
     else{
-        print(L"目的照片目录不存在 - 错误！\r\n");
+        print(L"Dst folder does not exist! - error\r\n");
         return;
     }
 
@@ -212,10 +212,10 @@ void CPhotoManagerDlg::OnBnClickedOk()
     // Collect files
     std::vector<std::wstring> files;
     ZH::UTIL::File::collect_files( m_srcPath.GetBuffer(), "", files, false);
-    //unsigned int image_count = (unsigned int)files.size();
-    //wchar_t message[512];
-    //StringCbPrintf(message, 512, L"共发现 %d 张图片\r\n", image_count);
-    //print(message);
+    unsigned int image_count = (unsigned int)files.size();
+    wchar_t message[512];
+    StringCbPrintf(message, 512, L"Total detected image count: %d\r\n", image_count);
+    print(message);
 
 
 
