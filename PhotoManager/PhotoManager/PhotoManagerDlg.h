@@ -33,6 +33,7 @@ protected:
     DECLARE_MESSAGE_MAP()
 
     void print(wchar_t* msg);
+    void print(char* msg);
 public:
     afx_msg void OnBnClickedButton1();
     afx_msg void OnBnClickedButton2();

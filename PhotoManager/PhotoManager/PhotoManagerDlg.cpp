@@ -187,6 +187,12 @@ void CPhotoManagerDlg::print(wchar_t* msg)
     UpdateData(false);
 }
 
+void CPhotoManagerDlg::print(char* msg)
+{
+    m_output2 += msg;
+    UpdateData(false);
+}
+
 void CPhotoManagerDlg::OnBnClickedOk()
 {
     // Check source directory
@@ -222,11 +228,19 @@ void CPhotoManagerDlg::OnBnClickedOk()
 
     // Foreach image check its created date
     unsigned int index = 0;
+    const unsigned int MAX_TIME_STR_LEN = 100;
+    char time_str[MAX_TIME_STR_LEN];
     std::vector<std::wstring>::const_iterator cIt = files->begin();
     for (; cIt != files->end(); ++cIt){
         StringCbPrintf(message, 512, L"\r\n[%d/%d]\r\nProcessing file %s\r\n", index, image_count, cIt->c_str());
         print(message);
 
+        if (!ZH::UTIL::File::getPhotoTakenTime(*cIt, time_str, MAX_TIME_STR_LEN)){
+            print(L"Get photo taken time failed!\r\n");
+            continue;
+        }
+
+        print((char*)time_str);
 
 
 

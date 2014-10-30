@@ -29,6 +29,8 @@ namespace ZH {
 
             static bool deleteFile(const std::wstring&);
 
+            static bool getPhotoTakenTime(const std::wstring& image_name, char* oTime, const unsigned int max_char_len);
+
 
         };
     }
