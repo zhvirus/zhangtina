@@ -87,7 +87,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>..\includes;..\..\boost_1_56_0</AdditionalIncludeDirectories>
-      <TreatWarningAsError>true</TreatWarningAsError>
+      <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -117,7 +117,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>..\includes;..\..\boost_1_56_0</AdditionalIncludeDirectories>
-      <TreatWarningAsError>true</TreatWarningAsError>
+      <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -135,7 +135,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>..\includes;..\..\boost_1_56_0</AdditionalIncludeDirectories>
-      <TreatWarningAsError>true</TreatWarningAsError>
+      <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -151,11 +151,13 @@
     <ClInclude Include="..\includes\Util\Cache.h" />
     <ClInclude Include="..\includes\Util\Console.h" />
     <ClInclude Include="..\includes\Util\File.h" />
+    <ClInclude Include="..\includes\Util\ModuleFree.h" />
     <ClInclude Include="..\includes\Util\Print.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Console.cpp" />
     <ClCompile Include="src\File.cpp" />
+    <ClCompile Include="src\ModuleFree.cpp" />
     <ClCompile Include="src\Print.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -7,6 +7,7 @@
 #include "PhotoManagerDlg.h"
 #include "afxdialogex.h"
 #include "Util/File.h"
+#include "Util/ModuleFree.h"
 #include "Strsafe.h"
 
 #ifdef _DEBUG
@@ -189,7 +190,8 @@ void CPhotoManagerDlg::print(wchar_t* msg)
 void CPhotoManagerDlg::OnBnClickedOk()
 {
     // Check source directory
-    if (ZH::UTIL::File::exist(m_srcPath.GetBuffer())){
+    const std::wstring srcFolder(m_srcPath.GetBuffer());
+    if (ZH::UTIL::File::exist(srcFolder)){
         print(L"Source folder exist. - OK\r\n");
     }
     else{
@@ -198,7 +200,8 @@ void CPhotoManagerDlg::OnBnClickedOk()
     }
 
     // Check dest directory
-    if (ZH::UTIL::File::exist(m_dstPath.GetBuffer())){
+    const std::wstring dstFolder(m_dstPath.GetBuffer());
+    if (ZH::UTIL::File::exist(dstFolder)){
         print(L"Dst folder exist. - OK\r\n");
     }
     else{
@@ -207,18 +210,31 @@ void CPhotoManagerDlg::OnBnClickedOk()
     }
 
     // Disable button
-    //GetDlgItem(IDOK)->EnableWindow(false);
+    GetDlgItem(IDOK)->EnableWindow(false);
 
     // Collect files
-    std::vector<std::wstring> files;
-    ZH::UTIL::File::collect_files( m_srcPath.GetBuffer(), "", files, false);
-    unsigned int image_count = (unsigned int)files.size();
+    std::vector<std::wstring>* files = NULL;
+    ZH::UTIL::File::collect_files(srcFolder, L"\.(jpg|jpeg|png|bmp)$", files, true);
+    unsigned int image_count = (unsigned int)files->size();
     wchar_t message[512];
     StringCbPrintf(message, 512, L"Total detected image count: %d\r\n", image_count);
     print(message);
 
+    // Foreach image check its created date
+    unsigned int index = 0;
+    std::vector<std::wstring>::const_iterator cIt = files->begin();
+    for (; cIt != files->end(); ++cIt){
+        StringCbPrintf(message, 512, L"\r\n[%d/%d]\r\nProcessing file %s\r\n", index, image_count, cIt->c_str());
+        print(message);
 
+
+
+
+        index++;
+    }
+
+    ZH::UTIL::FreeVector(files);
 
     // Enable button
-    //GetDlgItem(IDOK)->EnableWindow(true);
+    GetDlgItem(IDOK)->EnableWindow(true);
 }

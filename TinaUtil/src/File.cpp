@@ -5,16 +5,10 @@
 #include "Util/File.h"
 #include <iostream>
 #include "boost/filesystem.hpp"
+#include <boost/regex.hpp>
 
 namespace ZH{
     namespace UTIL{
-
-        // Exist
-        bool File::exist(const std::string& file)
-        {
-            boost::filesystem::path boost_file(file);
-            return boost::filesystem::exists(boost_file);
-        }
 
         bool File::exist(const std::wstring& file)
         {
@@ -22,25 +16,10 @@ namespace ZH{
             return boost::filesystem::exists(boost_file);
         }
 
-
-        // Is directory
-        bool File::isDir(const std::string& file)
-        {
-            boost::filesystem::path boost_file(file);
-            return boost::filesystem::is_directory(boost_file);
-        }
-
         bool File::isDir(const std::wstring& file)
         {
             boost::filesystem::path boost_file(file);
             return boost::filesystem::is_directory(boost_file);
-        }
-
-        // Is file, not dir
-        bool File::isFile(const std::string& file)
-        {
-            boost::filesystem::path boost_file(file);
-            return boost::filesystem::is_regular(boost_file);
         }
 
         bool File::isFile(const std::wstring& file)
@@ -53,7 +32,7 @@ namespace ZH{
         // Collect files
         static void collect_files_helper(
             const boost::filesystem::path& path,
-            const std::string& regex,
+            const boost::wregex& regex,
             std::vector<std::wstring>& files,
             bool recursive )
         {
@@ -66,15 +45,18 @@ namespace ZH{
                 }
 
                 if (boost::filesystem::is_regular_file(*it)){
-                    files.push_back(it->path().c_str());
+                    std::wstring file_name(it->path().c_str());
+                    if (boost::regex_search(file_name, regex)){
+                        files.push_back(file_name);
+                    }
                 }
             }
         }
 
         bool File::collect_files(
             const std::wstring& dir,
-            const std::string& regex,
-            std::vector<std::wstring>& files,
+            const std::wstring& regex,
+            std::vector<std::wstring>*& files,
             bool recursive/* = false*/)
         {
             if (!exist(dir) || !isDir(dir)){
@@ -82,18 +64,12 @@ namespace ZH{
                 return false;
             }
 
+            files = new std::vector<std::wstring>();
+
             boost::filesystem::path boost_dir(dir);
-            collect_files_helper(boost_dir, regex, files, recursive);
+            boost::wregex regex_boost(regex, boost::regex::perl | boost::regex::icase);
+            collect_files_helper(boost_dir, regex_boost, *files, recursive);
             return true;
-        }
-
-
-        // basename, like "aaa.txt"
-        std::string File::basename(const std::string& /*file*/)
-        {
-
-            // TODO
-            return "";
         }
 
         std::wstring File::basename(const std::wstring& /*file*/)
@@ -101,18 +77,6 @@ namespace ZH{
 
             // TODO
             return L"";
-        }
-
-
-        // File size
-        int File::fileSize(const std::string& file)
-        {
-            boost::filesystem::path boost_file(file);
-            if (!boost::filesystem::is_regular_file(boost_file)){
-                std::cerr << "File '" << file << "' is not a regular file, get file size failed!" << std::endl;
-                return -1;
-            }
-            return (int)boost::filesystem::file_size(boost_file);
         }
 
         int File::fileSize(const std::wstring& file)
@@ -125,26 +89,8 @@ namespace ZH{
             return (int)boost::filesystem::file_size(boost_file);
         }
 
-
-        // Copy file
-        bool File::copyFile(const std::string& /*src*/, const std::string& /*dst*/)
-        {
-
-            // TODO
-            return true;
-        }
         bool File::copyFile(const std::wstring& /*src*/, const std::wstring& /*dst*/)
         {
-
-            // TODO
-            return true;
-        }
-
-
-        // Make dir
-        bool File::mkdir(const std::string& /*file*/)
-        {
-
 
             // TODO
             return true;
@@ -158,16 +104,6 @@ namespace ZH{
             return true;
         }
 
-
-        // Delete file
-        bool File::deleteFile(const std::string& /*file*/)
-        {
-
-
-
-            // TODO
-            return true;
-        }
 
         bool File::deleteFile(const std::wstring& /*file*/)
         {
