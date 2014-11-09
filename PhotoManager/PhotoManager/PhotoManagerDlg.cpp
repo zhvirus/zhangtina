@@ -107,6 +107,10 @@ BOOL CPhotoManagerDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 
 	// TODO: Add extra initialization here
+    m_srcPath = theApp.GetProfileString(L"PhotoManager", L"source_dir");
+    m_dstPath = theApp.GetProfileString(L"PhotoManager", L"dst_dir");
+    this->GetDlgItem(IDC_EDIT1)->SetWindowTextW(m_srcPath);
+    this->GetDlgItem(IDC_EDIT2)->SetWindowTextW(m_dstPath);
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
@@ -167,6 +171,7 @@ void CPhotoManagerDlg::OnBnClickedButton1()
     CFolderPickerDialog dlgFile(L"C:/");
     if (IDOK == dlgFile.DoModal()){
         m_srcPath = dlgFile.GetPathName();
+        theApp.WriteProfileString(L"PhotoManager", L"source_dir", m_srcPath);
     }
     this->GetDlgItem(IDC_EDIT1)->SetWindowTextW(m_srcPath);
 }
@@ -177,6 +182,7 @@ void CPhotoManagerDlg::OnBnClickedButton2()
     CFolderPickerDialog dlgFile(L"C:/");
     if (IDOK == dlgFile.DoModal()){
         m_dstPath = dlgFile.GetPathName();
+        theApp.WriteProfileString(L"PhotoManager", L"dst_dir", m_dstPath);
     }
     this->GetDlgItem(IDC_EDIT2)->SetWindowTextW(m_dstPath);
 }
@@ -195,60 +201,84 @@ void CPhotoManagerDlg::print(char* msg)
 
 void CPhotoManagerDlg::OnBnClickedOk()
 {
+    // clear messages
+    m_output2 = L"";
+
     // Check source directory
     const std::wstring srcFolder(m_srcPath.GetBuffer());
-    if (ZH::UTIL::File::exist(srcFolder)){
-        print(L"Source folder exist. - OK\r\n");
-    }
-    else{
-        print(L"Source folder does not exist! - error\r\n");
+    if (!ZH::UTIL::File::exist(srcFolder)){
+        print(L"照片源目录不存在，请别乱搞! - error\r\n");
         return;
     }
 
     // Check dest directory
     const std::wstring dstFolder(m_dstPath.GetBuffer());
-    if (ZH::UTIL::File::exist(dstFolder)){
-        print(L"Dst folder exist. - OK\r\n");
-    }
-    else{
-        print(L"Dst folder does not exist! - error\r\n");
+    if (!ZH::UTIL::File::exist(dstFolder)){
+        print(L"照片目标目录不存在，请别乱搞! - error\r\n");
         return;
     }
 
     // Disable button
     GetDlgItem(IDOK)->EnableWindow(false);
 
-    // Collect files
-    std::vector<std::wstring>* files = NULL;
-    ZH::UTIL::File::collect_files(srcFolder, L"\.(jpg|jpeg|png|bmp)$", files, true);
-    unsigned int image_count = (unsigned int)files->size();
+    // Collect image files
+    print(L"正在帮亲查找照片...");
+    std::vector<std::wstring>* files_image = NULL;
+    ZH::UTIL::File::collect_files(srcFolder, L"\\.(jpg|jpeg|JPG|JPEG)$", files_image, true);
+    unsigned int image_count = (unsigned int)files_image->size();
     wchar_t message[512];
-    StringCbPrintf(message, 512, L"Total detected image count: %d\r\n", image_count);
+    StringCbPrintf(message, 512, L"一共帮亲找到 %d 张照片\r\n", image_count);
+    print(message);
+
+    // Collect video files
+    print(L"正在帮亲查找录像...");
+    std::vector<std::wstring>* files_video = NULL;
+    ZH::UTIL::File::collect_files(srcFolder, L"\\.(MOV|AVI|avi|mp4|MP4)$", files_video, true);
+    unsigned int video_count = (unsigned int)files_video->size();
+    StringCbPrintf(message, 512, L"一共帮亲找到 %d 个视频\r\n", video_count);
     print(message);
 
     // Foreach image check its created date
-    unsigned int index = 0;
+    int index = -1;
     const unsigned int MAX_TIME_STR_LEN = 100;
-    char time_str[MAX_TIME_STR_LEN];
-    std::vector<std::wstring>::const_iterator cIt = files->begin();
-    for (; cIt != files->end(); ++cIt){
-        StringCbPrintf(message, 512, L"\r\n[%d/%d]\r\nProcessing file %s\r\n", index, image_count, cIt->c_str());
+    wchar_t time_str[MAX_TIME_STR_LEN];
+    std::vector<std::wstring>::const_iterator cIt = files_image->begin();
+    for (; cIt != files_image->end(); ++cIt){
+        index++;
+        StringCbPrintf(message, 512, L"\r\n[%d/%d]\r\n处理照片： %s ...\r\n", index, image_count, cIt->c_str());
         print(message);
 
-        if (!ZH::UTIL::File::getPhotoTakenTime(*cIt, time_str, MAX_TIME_STR_LEN)){
-            print(L"Get photo taken time failed!\r\n");
+        unsigned int y = 0;
+        unsigned int m = 0;
+        unsigned int d = 0;
+        if (!ZH::UTIL::File::getPhotoTakenTime(*cIt, y, m, d)){
+            print(L"拍摄时间: 查询不到，这不是照片，而是图片!\r\n");
+            process_image_video(*cIt, 0, 0, 0);
             continue;
         }
 
-        print((char*)time_str);
-
-
-
-        index++;
+        StringCbPrintf(time_str, MAX_TIME_STR_LEN, L"拍摄时间: %d 年 %d 月 %d 日", y, m, d);
+        process_image_video(*cIt, y, m, d);
+        print((wchar_t*)time_str);
     }
 
-    ZH::UTIL::FreeVector(files);
+    ZH::UTIL::FreeVector(files_image);
+    ZH::UTIL::FreeVector(files_video);
 
     // Enable button
     GetDlgItem(IDOK)->EnableWindow(true);
 }
+
+bool CPhotoManagerDlg::process_image_video(const std::wstring file_name, unsigned int y, unsigned int m, unsigned int d)
+{
+    if (y == 0){
+
+
+
+    }
+
+
+    return true;
+}
+
+

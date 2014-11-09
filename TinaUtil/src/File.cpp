@@ -3,10 +3,12 @@
 #endif
 
 #include "Util/File.h"
+#include "Util/Exif.h"
 #include <iostream>
 #include "boost/filesystem.hpp"
 #include <boost/regex.hpp>
 #include <fstream>
+
 
 namespace ZH{
     namespace UTIL{
@@ -115,32 +117,34 @@ namespace ZH{
             return true;
         }
 
-        bool File::getPhotoTakenTime(const std::wstring& image_name, char* oTime, const unsigned int max_char_len)
+        bool File::getPhotoTakenTime(
+            const std::wstring& image_name, unsigned int& y, unsigned int& m, unsigned int& d)
         {
-            if (!oTime || max_char_len == 0){
-                return false;
-            }
+            // Reset year/month/date
+            y = 0;
+            m = 0;
+            d = 0;
 
-            boost::wregex reg(L"(jpg|jpeg)$");
+            // Check file name
+            boost::wregex reg(L"\.(jpg|jpeg|JPG|JPEG)$");
             if (!boost::regex_search(image_name, reg)){
                 return false;
             }
 
-            std::fstream fin(image_name.c_str(), std::ifstream::in | std::ifstream::binary);
-            if (!fin)
-            {
-                std::cerr << "error in open the JPG FILE" << std::endl;
+            // Check existence
+            if (!exist(image_name)){
                 return false;
             }
 
-            const unsigned int TIMELINE_BEGIN = 13;
-            const unsigned int BASE = 16;
-            const unsigned int offset = TIMELINE_BEGIN * BASE + 4;
-            memset((void*)oTime, 0, sizeof(char)*max_char_len);
-            fin.seekg(offset, std::ifstream::beg);
-            fin.read(oTime, 19);
+            ExifData exifData;
+            if (!Exif::getExifData(exifData, image_name)){
+                return false;
+            }
 
-            fin.close();
+            y = exifData.year;
+            m = exifData.month;
+            d = exifData.day;
+
             return true;
         }
 

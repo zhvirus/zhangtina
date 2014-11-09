@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include <string>
+
 
 // CPhotoManagerDlg dialog
 class CPhotoManagerDlg : public CDialogEx
@@ -34,6 +36,7 @@ protected:
 
     void print(wchar_t* msg);
     void print(char* msg);
+    bool process_image_video(const std::wstring, unsigned int, unsigned int, unsigned int);
 public:
     afx_msg void OnBnClickedButton1();
     afx_msg void OnBnClickedButton2();
