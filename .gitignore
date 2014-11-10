@@ -79,3 +79,4 @@ x64-debug/TinaEngineGL.lib
 x64-debug/TinaX.lib
 x64-debug/TinaX.lib
 x64-debug/TinaX.lib
+*.lib
