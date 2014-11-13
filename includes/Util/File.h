@@ -20,7 +20,7 @@ namespace ZH {
                 bool recursive = false  // Search recursively ?
                 );
 
-            static std::wstring basename(const std::wstring&);
+            static void basename(const std::wstring&, wchar_t* name);
             static int fileSize(const std::wstring&);
 
             static bool copyFile(const std::wstring& src, const std::wstring& dst);
@@ -31,6 +31,7 @@ namespace ZH {
 
             static bool getPhotoTakenTime(const std::wstring& image_name, unsigned int&, unsigned int&, unsigned int&);
 
+            static bool getLastWriteTime(const std::wstring& file, unsigned int&, unsigned int&, unsigned int&);
 
         };
     }

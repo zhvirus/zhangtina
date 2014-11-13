@@ -14,6 +14,26 @@
 #define new DEBUG_NEW
 #endif
 
+class summary
+{
+public:
+    summary():
+        image_total(0),
+        image_skipped(0),
+        image_copied(0),
+        video_total(0),
+        video_skipped(0),
+        video_copied(0)
+    {}
+    unsigned int image_total;
+    unsigned int image_skipped;
+    unsigned int image_copied;
+    unsigned int video_total;
+    unsigned int video_skipped;
+    unsigned int video_copied;
+};
+
+summary SUM;
 
 // CAboutDlg dialog used for App About
 
@@ -55,6 +75,7 @@ CPhotoManagerDlg::CPhotoManagerDlg(CWnd* pParent /*=NULL*/)
     m_srcPath(""),
     m_dstPath("")
     , m_output2(_T(""))
+    , m_summary(_T(""))
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -63,6 +84,7 @@ void CPhotoManagerDlg::DoDataExchange(CDataExchange* pDX)
 {
     CDialogEx::DoDataExchange(pDX);
     DDX_Text(pDX, IDC_EDIT4, m_output2);
+    DDX_Text(pDX, IDC_EDIT3, m_summary);
 }
 
 BEGIN_MESSAGE_MAP(CPhotoManagerDlg, CDialogEx)
@@ -228,6 +250,7 @@ void CPhotoManagerDlg::OnBnClickedOk()
     unsigned int image_count = (unsigned int)files_image->size();
     wchar_t message[512];
     StringCbPrintf(message, 512, L"一共帮亲找到 %d 张照片\r\n", image_count);
+    SUM.image_total = image_count;
     print(message);
 
     // Collect video files
@@ -236,6 +259,7 @@ void CPhotoManagerDlg::OnBnClickedOk()
     ZH::UTIL::File::collect_files(srcFolder, L"\\.(MOV|AVI|avi|mp4|MP4)$", files_video, true);
     unsigned int video_count = (unsigned int)files_video->size();
     StringCbPrintf(message, 512, L"一共帮亲找到 %d 个视频\r\n", video_count);
+    SUM.video_total = video_count;
     print(message);
 
     // Foreach image check its created date
@@ -253,13 +277,27 @@ void CPhotoManagerDlg::OnBnClickedOk()
         unsigned int d = 0;
         if (!ZH::UTIL::File::getPhotoTakenTime(*cIt, y, m, d)){
             print(L"拍摄时间: 查询不到，这不是照片，而是图片!\r\n");
-            process_image_video(*cIt, 0, 0, 0);
+            process_image_video(*cIt, 0, 0, 0, true);
             continue;
         }
 
-        StringCbPrintf(time_str, MAX_TIME_STR_LEN, L"拍摄时间: %d 年 %d 月 %d 日", y, m, d);
-        process_image_video(*cIt, y, m, d);
+        StringCbPrintf(time_str, MAX_TIME_STR_LEN, L"拍摄时间: %d 年 %d 月 %d 日\r\n", y, m, d);
+        process_image_video(*cIt, y, m, d, true);
         print((wchar_t*)time_str);
+    }
+
+    print(L"~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n");
+    print(L"~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n");
+
+    // Foreach video check its created date
+    index = -1;
+    cIt = files_video->begin();
+    for (; cIt != files_video->end(); ++cIt){
+        index++;
+        StringCbPrintf(message, 512, L"\r\n[%d/%d]\r\n处理视频： %s ...\r\n", index, video_count, cIt->c_str());
+        print(message);
+
+        process_image_video(*cIt, 0, 0, 0, false);
     }
 
     ZH::UTIL::FreeVector(files_image);
@@ -267,14 +305,102 @@ void CPhotoManagerDlg::OnBnClickedOk()
 
     // Enable button
     GetDlgItem(IDOK)->EnableWindow(true);
+
+
+    // Print Summary
+    wchar_t summary_str[10000];
+    StringCbPrintf(summary_str, 10000,
+        L"一共发现照片张数：     %d\r\n"
+        L"忽略已备份张数:        %d\r\n"
+        L"复制照片张数:          %d\r\n\r\n"
+        L"一共发现视频个数：     %d\r\n"
+        L"忽略已备份视频个数:    %d\r\n"
+        L"复制视频个数:          %d\r\n"
+        , SUM.image_total, SUM.image_skipped, SUM.image_copied,
+          SUM.video_total, SUM.video_skipped, SUM.video_copied);
+
+    m_summary = summary_str;
+    UpdateData(false);
+
+    SUM.image_total = 0;
+    SUM.image_copied = 0;
+    SUM.image_skipped = 0;
+    SUM.video_total = 0;
+    SUM.video_skipped = 0;
+    SUM.video_copied = 0;
 }
 
-bool CPhotoManagerDlg::process_image_video(const std::wstring file_name, unsigned int y, unsigned int m, unsigned int d)
+bool CPhotoManagerDlg::process_image_video(const std::wstring file_name, unsigned int y, unsigned int m, unsigned int d, bool isImage)
 {
     if (y == 0){
+        ZH::UTIL::File::getLastWriteTime(file_name, y, m, d);
+    }
 
+    // dst dir name
+    wchar_t dst_dir[4096];
+    StringCbPrintf(dst_dir, 4096, L"%s/%d年%d月/%d", m_dstPath.GetString(), y, m, d);
 
+    // create target folder if it doesn't exist
+    wchar_t message[4096];
+    if (!ZH::UTIL::File::exist(dst_dir)){
+        StringCbPrintf(message, 4096, L"创建目录： %s\r\n", dst_dir);
+        print(message);
+        if (!ZH::UTIL::File::mkdir(dst_dir)){
+            print(L"创建失败！！！\r\n");
+            return false;
+        }
+        else{
+            print(L"创建成功。\r\n");
+        }
+    }
 
+    // dst file name
+    wchar_t basename[4096];
+    ZH::UTIL::File::basename(file_name, basename);
+    wchar_t dst_file[4096];
+    StringCbPrintf(dst_file, 4096, L"%s\/%s", dst_dir, basename);
+
+    if (ZH::UTIL::File::exist(dst_file)){
+        if (ZH::UTIL::File::fileSize(file_name) == ZH::UTIL::File::fileSize(dst_file)){
+            StringCbPrintf(message, 4096, L"忽略已备份图片： %s\r\n", dst_file);
+            print(message);
+            if (isImage){
+                SUM.image_skipped++;
+            }
+            else{
+                SUM.video_skipped++;
+            }
+            return true;
+        }
+
+        // same file name, but different size, we need to rename it.
+        unsigned int index = 0;
+        wchar_t new_dst_file[4096];
+        StringCbPrintf(new_dst_file, 4096, L"%s/%d_%s", dst_dir, index, basename);
+        while (ZH::UTIL::File::exist(new_dst_file)){
+            StringCbPrintf(new_dst_file, 4096, L"%s/%d_%s", dst_dir, ++index, basename);
+        }
+        StringCbPrintf(dst_file, 4096, L"%s", new_dst_file);
+        StringCbPrintf(message, 4096, L"同名目标文件存在，改名为： %s\r\n", dst_file);
+        print(message);
+    }
+
+    //assert(!ZH::UTIL::File::exist(dst_file));
+
+    // copy file
+    StringCbPrintf(message, 4096, L"复制文件: %s 到 %s\r\n", file_name.c_str(), dst_file);
+    print(message);
+    if (ZH::UTIL::File::copyFile(file_name.c_str(), dst_file)){
+        print(L"复制成功\r\n");
+        if (isImage){
+            SUM.image_copied++;
+        }
+        else{
+            SUM.video_copied++;
+        }
+    }
+    else{
+        print(L"复制失败\r\n");
     }
 
 

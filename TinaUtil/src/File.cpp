@@ -8,7 +8,7 @@
 #include "boost/filesystem.hpp"
 #include <boost/regex.hpp>
 #include <fstream>
-
+#include <string>
 
 namespace ZH{
     namespace UTIL{
@@ -75,11 +75,18 @@ namespace ZH{
             return true;
         }
 
-        std::wstring File::basename(const std::wstring& /*file*/)
+        void File::basename(const std::wstring& file, wchar_t* name)
         {
+            boost::wregex reg(L"([^\\\\\\\/]+)$",
+                boost::wregex::icase | boost::regex::perl);
 
-            // TODO
-            return L"";
+            boost::wsmatch m;
+            if (!boost::regex_search(file, m, reg)){
+                assert(false);
+                return;
+            }
+
+            wcsncpy_s(name, 4096, m[1].str().c_str(), m[1].length());
         }
 
         int File::fileSize(const std::wstring& file)
@@ -92,29 +99,45 @@ namespace ZH{
             return (int)boost::filesystem::file_size(boost_file);
         }
 
-        bool File::copyFile(const std::wstring& /*src*/, const std::wstring& /*dst*/)
+        bool File::copyFile(const std::wstring& src, const std::wstring& dst)
         {
+            if (!exist(src))
+            {
+                return false;
+            }
 
-            // TODO
-            return true;
+            if (exist(dst))
+            {
+                return false;
+            }
+
+            boost::filesystem::copy_file(src, dst);
+
+            return exist(dst);
         }
 
-        bool File::mkdir(const std::wstring& /*file*/)
+        bool File::mkdir(const std::wstring& dir)
         {
+            if (exist(dir)){
+                return true;
+            }
 
+            boost::filesystem::create_directories(dir);
 
-            // TODO
-            return true;
+            return exist(dir);
         }
 
 
-        bool File::deleteFile(const std::wstring& /*file*/)
+        bool File::deleteFile(const std::wstring& file)
         {
+            if (!exist(file))
+            {
+                return false;
+            }
 
+            boost::filesystem::remove_all(file);
 
-
-            // TODO
-            return true;
+            return !exist(file);
         }
 
         bool File::getPhotoTakenTime(
@@ -144,6 +167,20 @@ namespace ZH{
             y = exifData.year;
             m = exifData.month;
             d = exifData.day;
+
+            return true;
+        }
+
+
+        bool File::getLastWriteTime(const std::wstring& file, unsigned int& y, unsigned int& m, unsigned int& d)
+        {
+            std::time_t time = boost::filesystem::last_write_time(file);
+            struct tm tm;
+            localtime_s(&tm, &time);
+
+            y = tm.tm_year+1900;
+            m = tm.tm_mon+1;
+            d = tm.tm_mday;
 
             return true;
         }

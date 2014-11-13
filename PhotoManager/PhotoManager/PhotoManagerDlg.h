@@ -36,10 +36,11 @@ protected:
 
     void print(wchar_t* msg);
     void print(char* msg);
-    bool process_image_video(const std::wstring, unsigned int, unsigned int, unsigned int);
+    bool process_image_video(const std::wstring, unsigned int, unsigned int, unsigned int, bool);
 public:
     afx_msg void OnBnClickedButton1();
     afx_msg void OnBnClickedButton2();
     afx_msg void OnBnClickedOk();
     CString m_output2;
+    CString m_summary;
 };
