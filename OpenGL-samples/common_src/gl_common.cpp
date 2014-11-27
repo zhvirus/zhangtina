@@ -12,6 +12,11 @@ namespace TEST_COM
     void peek_gl_errors( int line )
     {
         GLenum err_code = glGetError();
+        if (err_code == 0){
+            std::cout << "(Line: " <<std::dec<< line << ") No error" << std::endl;
+            return;
+        }
+        
         while (err_code != 0){
             char* err_msg = (char*)glewGetErrorString(err_code);
             std::cout << "(Line: "<<line<<") GL ERROR :" << err_msg <<"( 0x"<<std::hex<<err_code<<")"<<std::endl;

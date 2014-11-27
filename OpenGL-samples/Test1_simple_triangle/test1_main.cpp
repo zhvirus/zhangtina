@@ -1,13 +1,11 @@
 // opengl-1.cpp : Defines the entry point for the console application.
 //
-
-#include "stdafx.h"
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <iostream>
 
-#include <GL/glew.h>
+#include <glew.h>
 #include <GL/freeglut.h>
 #define KEY_ESCAPE 27
 

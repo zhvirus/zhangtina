@@ -14,11 +14,11 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
     </Filter>
     <Filter Include="common">
-      <UniqueIdentifier>{218c708d-627c-427a-8cf1-981e674c9b2f}</UniqueIdentifier>
+      <UniqueIdentifier>{6689a607-0041-40c8-ab87-922cb1faf83b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="test2_main.cpp">
+    <ClCompile Include="Test3_GetProgramBinary.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\common_src\gl_common.cpp">
