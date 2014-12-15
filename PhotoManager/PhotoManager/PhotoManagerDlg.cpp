@@ -8,32 +8,14 @@
 #include "afxdialogex.h"
 #include "Util/File.h"
 #include "Util/ModuleFree.h"
+#include "Util/Thread.h"
 #include "Strsafe.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
-class summary
-{
-public:
-    summary():
-        image_total(0),
-        image_skipped(0),
-        image_copied(0),
-        video_total(0),
-        video_skipped(0),
-        video_copied(0)
-    {}
-    unsigned int image_total;
-    unsigned int image_skipped;
-    unsigned int image_copied;
-    unsigned int video_total;
-    unsigned int video_skipped;
-    unsigned int video_copied;
-};
 
-summary SUM;
 
 // CAboutDlg dialog used for App About
 
@@ -76,6 +58,7 @@ CPhotoManagerDlg::CPhotoManagerDlg(CWnd* pParent /*=NULL*/)
     m_dstPath("")
     , m_output2(_T(""))
     , m_summary(_T(""))
+    , m_active_output(_T(""))
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -85,6 +68,8 @@ void CPhotoManagerDlg::DoDataExchange(CDataExchange* pDX)
     CDialogEx::DoDataExchange(pDX);
     DDX_Text(pDX, IDC_EDIT4, m_output2);
     DDX_Text(pDX, IDC_EDIT3, m_summary);
+    DDX_Control(pDX, IDC_PROGRESS1, m_progress);
+    DDX_Text(pDX, IDC_STATIC_ACTIVITY, m_active_output);
 }
 
 BEGIN_MESSAGE_MAP(CPhotoManagerDlg, CDialogEx)
@@ -221,91 +206,110 @@ void CPhotoManagerDlg::print(char* msg)
     UpdateData(false);
 }
 
-void CPhotoManagerDlg::OnBnClickedOk()
+void CPhotoManagerDlg::print_active(wchar_t* msg)
 {
+    m_active_output = msg;
+    this->GetDlgItem(IDC_STATIC_ACTIVITY)->UpdateData(false);
+}
+
+unsigned int __stdcall doWork(void* param)
+{
+    CPhotoManagerDlg* pDlg = (CPhotoManagerDlg*)param;
+
     // clear messages
-    m_output2 = L"";
+    pDlg->m_output2 = L"";
+
+    summary SUM;
 
     // Check source directory
-    const std::wstring srcFolder(m_srcPath.GetBuffer());
+    const std::wstring srcFolder(pDlg->m_srcPath.GetBuffer());
     if (!ZH::UTIL::File::exist(srcFolder)){
-        print(L"照片源目录不存在，请别乱搞! - error\r\n");
-        return;
+        pDlg->print(L"照片源目录不存在，请别乱搞! - error\r\n");
+        return 1;
     }
 
     // Check dest directory
-    const std::wstring dstFolder(m_dstPath.GetBuffer());
+    const std::wstring dstFolder(pDlg->m_dstPath.GetBuffer());
     if (!ZH::UTIL::File::exist(dstFolder)){
-        print(L"照片目标目录不存在，请别乱搞! - error\r\n");
-        return;
+        pDlg->print(L"照片目标目录不存在，请别乱搞! - error\r\n");
+        return 1;
     }
 
     // Disable button
-    GetDlgItem(IDOK)->EnableWindow(false);
+    pDlg->GetDlgItem(IDOK)->EnableWindow(false);
+    pDlg->GetDlgItem(IDC_BUTTON1)->EnableWindow(false);
+    pDlg->GetDlgItem(IDC_BUTTON2)->EnableWindow(false);
 
     // Collect image files
-    print(L"正在帮亲查找照片...");
+    pDlg->print(L"正在帮亲查找照片...");
     std::vector<std::wstring>* files_image = NULL;
     ZH::UTIL::File::collect_files(srcFolder, L"\\.(jpg|jpeg|JPG|JPEG)$", files_image, true);
     unsigned int image_count = (unsigned int)files_image->size();
     wchar_t message[512];
     StringCbPrintf(message, 512, L"一共帮亲找到 %d 张照片\r\n", image_count);
     SUM.image_total = image_count;
-    print(message);
+    pDlg->print(message);
 
     // Collect video files
-    print(L"正在帮亲查找录像...");
+    pDlg->print(L"正在帮亲查找录像...");
     std::vector<std::wstring>* files_video = NULL;
     ZH::UTIL::File::collect_files(srcFolder, L"\\.(MOV|AVI|avi|mp4|MP4)$", files_video, true);
     unsigned int video_count = (unsigned int)files_video->size();
     StringCbPrintf(message, 512, L"一共帮亲找到 %d 个视频\r\n", video_count);
     SUM.video_total = video_count;
-    print(message);
+    pDlg->print(message);
+
+    pDlg->m_progress.SetRange(0, video_count + image_count-1);
+    pDlg->m_progress.SetStep(1);
 
     // Foreach image check its created date
-    int index = -1;
+    int image_index = -1;
     const unsigned int MAX_TIME_STR_LEN = 100;
     wchar_t time_str[MAX_TIME_STR_LEN];
     std::vector<std::wstring>::const_iterator cIt = files_image->begin();
     for (; cIt != files_image->end(); ++cIt){
-        index++;
-        StringCbPrintf(message, 512, L"\r\n[%d/%d]\r\n处理照片： %s ...\r\n", index, image_count, cIt->c_str());
-        print(message);
+        pDlg->m_progress.SetPos(++image_index);
+        StringCbPrintf(message, 512, L"\r\n[%d/%d]\r\n处理照片： %s ...\r\n", image_index, image_count, cIt->c_str());
+        pDlg->print(message);
 
         unsigned int y = 0;
         unsigned int m = 0;
         unsigned int d = 0;
         if (!ZH::UTIL::File::getPhotoTakenTime(*cIt, y, m, d)){
-            print(L"拍摄时间: 查询不到，这不是照片，而是图片!\r\n");
-            process_image_video(*cIt, 0, 0, 0, true);
+            pDlg->print(L"拍摄时间: 查询不到，这不是照片，而是图片!\r\n");
+            pDlg->process_image_video(*cIt, 0, 0, 0, SUM, true);
             continue;
         }
 
         StringCbPrintf(time_str, MAX_TIME_STR_LEN, L"拍摄时间: %d 年 %d 月 %d 日\r\n", y, m, d);
-        process_image_video(*cIt, y, m, d, true);
-        print((wchar_t*)time_str);
+        pDlg->process_image_video(*cIt, y, m, d, SUM, true);
+        pDlg->print((wchar_t*)time_str);
     }
 
-    print(L"~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n");
-    print(L"~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n");
+    pDlg->print(L"~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n");
+    pDlg->print(L"~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n");
 
     // Foreach video check its created date
-    index = -1;
+    int video_index = -1;
     cIt = files_video->begin();
     for (; cIt != files_video->end(); ++cIt){
-        index++;
-        StringCbPrintf(message, 512, L"\r\n[%d/%d]\r\n处理视频： %s ...\r\n", index, video_count, cIt->c_str());
-        print(message);
+        video_index++;
+        pDlg->m_progress.SetPos(image_index+video_index);
+        StringCbPrintf(message, 512, L"\r\n[%d/%d]\r\n处理视频： %s ...\r\n", video_index, video_count, cIt->c_str());
+        pDlg->print(message);
 
-        process_image_video(*cIt, 0, 0, 0, false);
+        pDlg->process_image_video(*cIt, 0, 0, 0, SUM, false);
     }
+
+    pDlg->print_active(L"亲！ 全部帮你整理好了哦！~请看右上角的 [处理结果] ^_^！");
 
     ZH::UTIL::FreeVector(files_image);
     ZH::UTIL::FreeVector(files_video);
 
     // Enable button
-    GetDlgItem(IDOK)->EnableWindow(true);
-
+    pDlg->GetDlgItem(IDOK)->EnableWindow(true);
+    pDlg->GetDlgItem(IDC_BUTTON1)->EnableWindow(true);
+    pDlg->GetDlgItem(IDC_BUTTON2)->EnableWindow(true);
 
     // Print Summary
     wchar_t summary_str[10000];
@@ -317,20 +321,21 @@ void CPhotoManagerDlg::OnBnClickedOk()
         L"忽略已备份视频个数:    %d\r\n"
         L"复制视频个数:          %d\r\n"
         , SUM.image_total, SUM.image_skipped, SUM.image_copied,
-          SUM.video_total, SUM.video_skipped, SUM.video_copied);
+        SUM.video_total, SUM.video_skipped, SUM.video_copied);
 
-    m_summary = summary_str;
-    UpdateData(false);
+    pDlg->m_summary = summary_str;
+    pDlg->UpdateData(false);
 
-    SUM.image_total = 0;
-    SUM.image_copied = 0;
-    SUM.image_skipped = 0;
-    SUM.video_total = 0;
-    SUM.video_skipped = 0;
-    SUM.video_copied = 0;
+    return 0;
 }
 
-bool CPhotoManagerDlg::process_image_video(const std::wstring file_name, unsigned int y, unsigned int m, unsigned int d, bool isImage)
+void CPhotoManagerDlg::OnBnClickedOk()
+{
+    ZH::UTIL::Thread::runSingleThread((ZH::UTIL::ThreadFunc)doWork, (void*)this, false);
+
+}
+
+bool CPhotoManagerDlg::process_image_video(const std::wstring file_name, unsigned int y, unsigned int m, unsigned int d, summary& SUM, bool isImage)
 {
     if (y == 0){
         ZH::UTIL::File::getLastWriteTime(file_name, y, m, d);
@@ -345,6 +350,7 @@ bool CPhotoManagerDlg::process_image_video(const std::wstring file_name, unsigne
     if (!ZH::UTIL::File::exist(dst_dir)){
         StringCbPrintf(message, 4096, L"创建目录： %s\r\n", dst_dir);
         print(message);
+        print_active(message);
         if (!ZH::UTIL::File::mkdir(dst_dir)){
             print(L"创建失败！！！\r\n");
             return false;
@@ -364,6 +370,10 @@ bool CPhotoManagerDlg::process_image_video(const std::wstring file_name, unsigne
         if (ZH::UTIL::File::fileSize(file_name) == ZH::UTIL::File::fileSize(dst_file)){
             StringCbPrintf(message, 4096, L"忽略已备份图片： %s\r\n", dst_file);
             print(message);
+
+            StringCbPrintf(message, 4096, L"[忽略已备份]： %s\r\n", dst_file);
+            print_active(message);
+
             if (isImage){
                 SUM.image_skipped++;
             }
@@ -383,13 +393,19 @@ bool CPhotoManagerDlg::process_image_video(const std::wstring file_name, unsigne
         StringCbPrintf(dst_file, 4096, L"%s", new_dst_file);
         StringCbPrintf(message, 4096, L"同名目标文件存在，改名为： %s\r\n", dst_file);
         print(message);
+
+        StringCbPrintf(message, 4096, L"[名字冲突，改名]： %s\r\n", dst_file);
+        print_active(message);
     }
 
     //assert(!ZH::UTIL::File::exist(dst_file));
 
     // copy file
-    StringCbPrintf(message, 4096, L"复制文件: %s 到 %s\r\n", file_name.c_str(), dst_file);
+    const int file_size = ZH::UTIL::File::fileSize(file_name);
+    StringCbPrintf(message, 4096, L"复制文件: %s        ======>        %s        文件大小: %d byte\r\n", file_name.c_str(), dst_file, file_size);
     print(message);
+    print_active(message);
+
     if (ZH::UTIL::File::copyFile(file_name.c_str(), dst_file)){
         print(L"复制成功\r\n");
         if (isImage){

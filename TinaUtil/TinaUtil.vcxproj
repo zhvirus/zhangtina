@@ -174,6 +174,7 @@
     <ClInclude Include="..\includes\Util\File.h" />
     <ClInclude Include="..\includes\Util\ModuleFree.h" />
     <ClInclude Include="..\includes\Util\Print.h" />
+    <ClInclude Include="..\includes\Util\Thread.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Console.cpp" />
@@ -181,6 +182,7 @@
     <ClCompile Include="src\File.cpp" />
     <ClCompile Include="src\ModuleFree.cpp" />
     <ClCompile Include="src\Print.cpp" />
+    <ClCompile Include="src\Thread.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
