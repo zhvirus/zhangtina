@@ -1,5 +1,7 @@
-// Test2_texture_unpack_pixel.cpp : Defines the entry point for the console application.
+// Test4_texture_write_read.cpp : Defines the entry point for the console application.
 //
+
+#include "stdafx.h"
 
 #include <string.h>
 #include <stdlib.h>
@@ -9,6 +11,8 @@
 #include "../common_src/gl_common.h"
 #include <glew.h>
 #include <GL/freeglut.h>
+#include "textureUtils.h"
+
 #define KEY_ESCAPE 27
 
 #define DEBUG_GL_ERRORS TEST_COM::peek_gl_errors(__LINE__);
@@ -22,6 +26,14 @@ GLint location2 = 0;
 
 GLuint texture = 0;
 
+char* pGlobalData = NULL;
+unsigned int dataSize = 0;
+
+void* pData = NULL;
+
+int times = 0;
+
+ApicTextureSnapshot sn;
 
 void display()
 {
@@ -30,6 +42,44 @@ void display()
 
     glBindVertexArray(vertexArray[0]);
     glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+
+    if (times == 0)
+    {
+        sn.TakeSnapshot(GL_TEXTURE_2D, texture, 0, 0, 0, 500, 500);
+    }
+
+    //if (times % 2 == 0)
+    {
+        if (times == 1){
+            glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+            glPixelStorei(GL_PACK_ALIGNMENT, 1);
+            glBindBuffer(GL_PIXEL_UNPACK_BUFFER, 0);
+            glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
+
+            glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
+            glReadBuffer(GL_BACK);
+            glReadPixels(0, 0, 300, 200, GL_RGBA, GL_UNSIGNED_BYTE, (void*)pGlobalData);
+        }
+        if (times == 2)
+        {
+
+            glBindTexture(GL_TEXTURE_2D, texture);
+            glTexSubImage2D(GL_TEXTURE_2D, 0, 100, 100, 300, 200, GL_RGBA, GL_UNSIGNED_BYTE, pGlobalData);
+
+        }
+        if (times == 3)
+        {
+            sn.RestoreSnapshot();
+
+        }
+    }
+    //else
+    //{
+      //  sn.RestoreSnapshot();
+    //}
+
+    times++;
+
 
     glutSwapBuffers();
 }
@@ -44,7 +94,7 @@ void initialize()
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
 
-    glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
+    glClearColor(0.3f, 0.7f, 0.3f, 1.0f);
 
     DEBUG_GL_ERRORS;
 
@@ -88,7 +138,7 @@ void initialize()
             "layout (location=0) out vec4 fColor;\n"
             "void main(){\n"
             "    vec4 texdata = texture(tex1, vs_tex_coord);\n"
-            "    fColor = texdata.bgra;\n"
+            "    fColor = texdata.rgba;\n"
             "}\n"
             ;
         glShaderSource(PS, 1, &psSource, NULL);
@@ -134,13 +184,14 @@ void initialize()
     // Prepare data
     GLfloat vertices[] = {
         -0.8f, -0.8f, -0.3f, 1.0f,
-         0.8f, -0.8f, -0.3f, 1.0f,
-         0.8f, 0.8f, -0.3f, 1.0f,
+        0.8f, -0.8f, -0.3f, 1.0f,
+        0.8f, 0.8f, -0.3f, 1.0f,
         -0.8f, 0.8f, -0.3f, 1.0f,
-        0.0f, 1.0f,
-        1.0f, 1.0f,
+
+        0.0f, 0.0f,
         1.0f, 0.0f,
-        0.0f, 0.0f
+        1.0f, 1.0f,
+        0.0f, 1.0f
     };
 
 
@@ -169,8 +220,8 @@ void initialize()
     glEnableVertexAttribArray(1);
 
     // prepare texture
-    void* pData = NULL;
-    unsigned int w=0, h=0, s=0;
+
+    unsigned int w = 0, h = 0, s = 0;
     TEST_COM::image::instance().read_image(L"../res/512_512.jpg",
         pData, w, h, s);
 
@@ -182,16 +233,17 @@ void initialize()
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-    DEBUG_GL_ERRORS;
-    glTexStorage2D(GL_TEXTURE_2D, 10, GL_COMPRESSED_RGBA_ASTC_12x12_KHR, w, h);
+    glBindBuffer(GL_PIXEL_UNPACK_BUFFER, 0);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_BGR,GL_UNSIGNED_BYTE, NULL);
+    //glTexStorage2D(GL_TEXTURE_2D, 10, GL_COMPRESSED_RGBA_ASTC_12x12_KHR, w, h);
     //glTexStorage2D(GL_TEXTURE_2D, 10, GL_COMPRESSED_SRGB_ALPHA_S3TC_DXT5_EXT, w, h);  
-    DEBUG_GL_ERRORS;
+
 
     // Gen GL_PIXEL_UNPACK_BUFFER buffer
-    GLuint bb;
-    glGenBuffers(1, &bb); // => objects = { 1 }
-    glBindBuffer(GL_PIXEL_UNPACK_BUFFER, bb);
-    glBufferData(GL_PIXEL_UNPACK_BUFFER, w*h*s, pData, GL_STATIC_DRAW);
+    //GLuint bb;
+    //glGenBuffers(1, &bb); // => objects = { 1 }
+    //glBindBuffer(GL_PIXEL_UNPACK_BUFFER, bb);
+    //glBufferData(GL_PIXEL_UNPACK_BUFFER, w*h*s, pData, GL_STATIC_DRAW);
 
     DEBUG_GL_ERRORS;
     //void* data = glMapBuffer(GL_PIXEL_UNPACK_BUFFER, GL_READ_ONLY);
@@ -202,7 +254,7 @@ void initialize()
 
     DEBUG_GL_ERRORS;
 
-    glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, w, h, GL_RGB, GL_UNSIGNED_BYTE, (GLvoid*)0);
+    glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, w, h, GL_BGR, GL_UNSIGNED_BYTE, pData);
 
 
 
@@ -213,9 +265,14 @@ void initialize()
     glUniform1i(tex1_loc, 0);
 
 
-    delete pData;
+    //delete pData;
 
-    //
+    // initialize test codes
+    dataSize = width * height * 4;
+    pGlobalData = new char[dataSize];
+    memset(pGlobalData, 0, dataSize);
+
+
 
 }
 

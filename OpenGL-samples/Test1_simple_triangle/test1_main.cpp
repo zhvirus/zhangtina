@@ -13,8 +13,7 @@
 GLsizei width = 800;
 GLsizei height = 600;
 GLuint vertexArray[2];
-GLint location = 0;
-GLint location2 = 0;
+GLint location_color1 = -1;
 
 float r = 0.0f;
 float g = 0.0f;
@@ -54,12 +53,40 @@ void display()
     //glLoadIdentity();
     updateRGB();
 
-    glUniform4f(location, r, g, b, 1);
+    glUniform4f(location_color1, r, g, b, 1);
 
     glBindVertexArray(vertexArray[0]);
     glDrawArrays( GL_TRIANGLES, 0, 6);
 
+    GLenum err;
+    while (true)
+    {
+        err = glGetError();
+        if (err == GL_NONE)
+        {
+            break;
+        }
+    }
+
+    char* pData = new char[width*height * 4];
+    memset((void*)pData, 0, width*height * 4);
+
+    glReadPixels(0, 0, width, height,
+        GL_BGRA,
+        GL_UNSIGNED_BYTE, pData);
+
+    while (true)
+    {
+        err = glGetError();
+        if (err == GL_NONE)
+        {
+            break;
+        }
+    }
+
     glutSwapBuffers();
+
+
 }
 
 
@@ -79,11 +106,11 @@ void initialize ()
 
     GLfloat vertices[] ={
         0.5f, 0.1f, -0.3f,
-        -0.5f, 0.1f, -0.3f,
-        0.0f, 0.5f, -0.3f,
-        0.5f, -0.1f, -0.3f,
+        0.0f, 0.1f, -0.3f,
+        0.5f, 0.5f, -0.3f,
+        0.0f, -0.1f, -0.3f,
         -0.5f, -0.1f, -0.3f,
-        0.0f, -0.5f, -0.3f,
+        -0.5f, -0.5f, -0.3f,
     };
 
 
@@ -127,11 +154,18 @@ void initialize ()
         GLuint PS  = glCreateShader( GL_FRAGMENT_SHADER );
         const GLchar* psSource =
             "#version 430 core\n"
-            "uniform vec4 user_color;\n"
-            "uniform vec4 user_color2;\n"
+            "uniform vec4 user_color1;\n"
+            "layout (std140) uniform MoreColor1\n"
+            "{\n"
+            "   vec4  user_color2;\n"
+            "};\n"
+            "layout (std140) uniform MoreColor2\n"
+            "{\n"
+            "   vec4  user_color3;\n"
+            "};\n"
             "out vec4 fColor;\n"
             "void main(){\n"
-            "    fColor = user_color+user_color2;\n"
+            "    fColor = 0.33f * (user_color1+user_color2+user_color3);\n"
             "}\n"
             ;
         glShaderSource(PS, 1, &psSource, NULL);
@@ -175,8 +209,62 @@ void initialize ()
     glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, 0, 0);
     glEnableVertexAttribArray( 0 );
 
-    location = glGetProgramResourceLocation(program, GL_UNIFORM, "user_color");
-    location2 = glGetProgramResourceLocation(program, GL_UNIFORM, "user_color2");
+    location_color1 = glGetUniformLocation(program, "user_color1");
+
+    GLuint index1 = glGetUniformBlockIndex(program, "MoreColor1");
+    GLuint index2 = glGetUniformBlockIndex(program, "MoreColor2");
+
+    char name1[100];
+    glGetActiveUniformBlockName(program, index1, 100, NULL, name1);
+    char name2[100];
+    glGetActiveUniformBlockName(program, index2, 100, NULL, name2);
+
+    glUniformBlockBinding(program, 0, 1);
+    glUniformBlockBinding(program, 1, 2);
+
+    GLint oldReadFramebuffer = 0;
+    GLint oldDrawFramebuffer = 0;
+    GLint oldReadBuffer = GL_NONE;
+    GLint oldDrawBuffer = GL_NONE;
+
+    glGetIntegerv(GL_READ_FRAMEBUFFER_BINDING, &oldReadFramebuffer);
+    glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING, &oldDrawFramebuffer);
+    glGetIntegerv(GL_READ_BUFFER, &oldReadBuffer);
+    glGetIntegerv(GL_DRAW_BUFFER, &oldDrawBuffer);
+    GLint value;
+    glGetFramebufferAttachmentParameteriv(GL_DRAW_FRAMEBUFFER, GL_BACK_LEFT, GL_FRAMEBUFFER_ATTACHMENT_RED_SIZE, &value);
+    glGetFramebufferAttachmentParameteriv(GL_DRAW_FRAMEBUFFER, GL_BACK_LEFT, GL_FRAMEBUFFER_ATTACHMENT_GREEN_SIZE, &value);
+    glGetFramebufferAttachmentParameteriv(GL_DRAW_FRAMEBUFFER, GL_BACK_LEFT, GL_FRAMEBUFFER_ATTACHMENT_BLUE_SIZE, &value);
+    glGetFramebufferAttachmentParameteriv(GL_DRAW_FRAMEBUFFER, GL_BACK_LEFT, GL_FRAMEBUFFER_ATTACHMENT_ALPHA_SIZE, &value);
+    glGetFramebufferAttachmentParameteriv(GL_DRAW_FRAMEBUFFER, GL_BACK_LEFT, GL_FRAMEBUFFER_ATTACHMENT_DEPTH_SIZE, &value);
+    glGetFramebufferAttachmentParameteriv(GL_DRAW_FRAMEBUFFER, GL_BACK_LEFT, GL_FRAMEBUFFER_ATTACHMENT_STENCIL_SIZE, &value);
+    glGetFramebufferAttachmentParameteriv(GL_DRAW_FRAMEBUFFER, GL_BACK_LEFT, GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE, &value);
+
+    GLenum err;
+    while (true)
+    {
+        err = glGetError();
+        if (err == GL_NONE)
+        {
+            break;
+        }
+    }
+
+    char* pData = new char[width*height * 4];
+    memset((void*)pData, 0, width*height * 4);
+
+    glReadPixels(0, 0, width, height,
+        GL_BGRA,
+        GL_UNSIGNED_BYTE, pData);
+
+    while (true)
+    {
+        err = glGetError();
+        if (err == GL_NONE)
+        {
+            break;
+        }
+    }
 }
 
 

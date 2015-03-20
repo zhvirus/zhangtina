@@ -13,7 +13,7 @@ namespace TEST_COM{
     public:
         static image& instance() { static image img; return img; }
         void read_image(const std::wstring& filename, void*& pData,
-            unsigned int& w, unsigned int& h, unsigned int& elemSizeInBytes);
+            unsigned int& w, unsigned int& h, unsigned int& elemSizeInBytes, bool low2top = true);
 
     private:
         ULONG_PTR gdiplusToken;

@@ -38,7 +38,7 @@ namespace TEST_COM
     }
 
     void image::read_image(const std::wstring& filename, void*& pData,
-        unsigned int& w, unsigned int& h, unsigned int& elemSizeInBytes )
+        unsigned int& w, unsigned int& h, unsigned int& elemSizeInBytes, bool low2top)
     {
         //Image 
         Bitmap img(filename.c_str());
@@ -57,11 +57,24 @@ namespace TEST_COM
 
         unsigned int destStride = w*elemSizeInBytes;
         unsigned int srcStride  = data.Stride;
-        for (unsigned int ih = 0; ih < h; ++ih){
-            memcpy(
-                (void*)((char*)pData + destStride*ih),
-                (void*)((char*)pSrcData + srcStride*ih),
-                destStride);
+
+        if (low2top)
+        {
+            for (unsigned int ih = 0; ih < h; ++ih){
+                memcpy(
+                    (void*)((char*)pData + destStride*(h-1-ih)),
+                    (void*)((char*)pSrcData + srcStride*ih),
+                    destStride);
+            }
+        }
+        else
+        {
+            for (unsigned int ih = 0; ih < h; ++ih){
+                memcpy(
+                    (void*)((char*)pData + destStride*ih),
+                    (void*)((char*)pSrcData + srcStride*ih),
+                    destStride);
+            }
         }
 
         img.UnlockBits(&data);

@@ -9,6 +9,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test2_texture_unpack_pixel"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test3_GetProgramBinary", "Test3_GetProgramBinary\Test3_GetProgramBinary.vcxproj", "{862763F8-786D-43C8-8E42-EAC73D7910B3}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test4_texture_write_read", "Test4_texture_write_read\Test4_texture_write_read.vcxproj", "{4FBC5065-38CF-4A0F-B19D-F9B7F4AA552E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test5_DrawCall", "Test5_DrawCall\Test5_DrawCall.vcxproj", "{0E8FA189-1A03-4BDE-B39F-607B47314244}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -27,6 +31,14 @@ Global
 		{862763F8-786D-43C8-8E42-EAC73D7910B3}.Debug|Win32.Build.0 = Debug|Win32
 		{862763F8-786D-43C8-8E42-EAC73D7910B3}.Release|Win32.ActiveCfg = Release|Win32
 		{862763F8-786D-43C8-8E42-EAC73D7910B3}.Release|Win32.Build.0 = Release|Win32
+		{4FBC5065-38CF-4A0F-B19D-F9B7F4AA552E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4FBC5065-38CF-4A0F-B19D-F9B7F4AA552E}.Debug|Win32.Build.0 = Debug|Win32
+		{4FBC5065-38CF-4A0F-B19D-F9B7F4AA552E}.Release|Win32.ActiveCfg = Release|Win32
+		{4FBC5065-38CF-4A0F-B19D-F9B7F4AA552E}.Release|Win32.Build.0 = Release|Win32
+		{0E8FA189-1A03-4BDE-B39F-607B47314244}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0E8FA189-1A03-4BDE-B39F-607B47314244}.Debug|Win32.Build.0 = Debug|Win32
+		{0E8FA189-1A03-4BDE-B39F-607B47314244}.Release|Win32.ActiveCfg = Release|Win32
+		{0E8FA189-1A03-4BDE-B39F-607B47314244}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,52 +1,93 @@
-// Test2_texture_unpack_pixel.cpp : Defines the entry point for the console application.
-//
 
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <iostream>
-
 #include "../common_src/gl_common.h"
 #include <glew.h>
 #include <GL/freeglut.h>
 #define KEY_ESCAPE 27
 
-#define DEBUG_GL_ERRORS TEST_COM::peek_gl_errors(__LINE__);
+int majorVersion = 4;
+int minorVersion = 4;
+GLsizei width    = 800;
+GLsizei height   = 600;
 
-
-GLsizei width = 800;
-GLsizei height = 600;
 GLuint vertexArray[2];
-GLint location = 0;
-GLint location2 = 0;
+GLint location_color1 = -1;
 
-GLuint texture = 0;
-
+#define DEBUG_GL_ERRORS TEST_COM::peek_gl_errors(__LINE__);
 
 void display()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
+    glUniform4f(location_color1, 0.5, 0.5, 1, 1);
+
     glBindVertexArray(vertexArray[0]);
-    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+    //glBindVertexArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+    glDrawArrays(GL_TRIANGLES, 0, 6);
+
+    //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    //char offset = 3 * sizeof(GLushort);
+    //glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_SHORT, (void*)offset);
+
+    glPointSize(5);
+    glUniform4f(location_color1, 0.0, 1.0, 1, 1);
+    glDrawArrays(GL_POINTS, 0, 6);
 
     glutSwapBuffers();
+
+
 }
 
 
 void initialize()
 {
-    DEBUG_GL_ERRORS;
     glViewport(0, 0, width, height);
 
     glClearDepth(1.0f);
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
 
-    glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
+    glClearColor(0.3f, 0.3f, 0.0f, 1.0f);
 
-    DEBUG_GL_ERRORS;
+    // Prepare data
+    glGenVertexArrays(1, vertexArray);
+    glBindVertexArray(vertexArray[0]);
+
+    GLfloat vertices[] = {
+        0.5f, 0.1f, -0.3f,
+        0.0f, 0.1f, -0.3f,
+        0.5f, 0.5f, -0.3f,
+        0.0f, -0.1f, -0.3f,
+        -0.5f, -0.1f, -0.3f,
+        -0.5f, -0.5f, -0.3f,
+    };
+
+    GLushort index_array[]=
+    {
+        0,1,2,3,4,5
+    };
+
+    // GL_ARRAY_BUFFER
+    GLuint buffer;
+    glGenBuffers(1, &buffer);
+    glBindBuffer(GL_ARRAY_BUFFER, buffer);
+    size_t size = sizeof(vertices);
+    glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
+
+    // GL_ELEMENT_ARRAY_BUFFER
+    GLuint element_arr_buffer;
+    glGenBuffers(1, &element_arr_buffer);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, element_arr_buffer);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(index_array), index_array, GL_STATIC_DRAW);
+
+
 
     GLuint program = glCreateProgram();
     {
@@ -54,11 +95,8 @@ void initialize()
         const GLchar* vsSource =
             "#version 440 core\n"
             "layout( location=0 ) in vec4 vPosition;\n"
-            "layout( location=1 ) in vec2 vTexCoord;\n"
-            "out vec2 vs_tex_coord;\n"
             "void main(){\n"
             "    gl_Position = vPosition;\n"
-            "    vs_tex_coord = vTexCoord;\n"
             "}\n"
             ;
         glShaderSource(VS, 1, &vsSource, NULL);
@@ -83,12 +121,10 @@ void initialize()
         GLuint PS = glCreateShader(GL_FRAGMENT_SHADER);
         const GLchar* psSource =
             "#version 440 core\n"
-            "uniform sampler2D tex1;\n"
-            "in vec2 vs_tex_coord;\n"
-            "layout (location=0) out vec4 fColor;\n"
+            "uniform vec4 user_color1;\n"
+            "out vec4 fColor;\n"
             "void main(){\n"
-            "    vec4 texdata = texture(tex1, vs_tex_coord);\n"
-            "    fColor = texdata.bgra;\n"
+            "    fColor = user_color1;\n"
             "}\n"
             ;
         glShaderSource(PS, 1, &psSource, NULL);
@@ -129,94 +165,21 @@ void initialize()
     }
 
     glUseProgram(program);
+    //glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
-
-    // Prepare data
-    GLfloat vertices[] = {
-        -0.8f, -0.8f, -0.3f, 1.0f,
-         0.8f, -0.8f, -0.3f, 1.0f,
-         0.8f, 0.8f, -0.3f, 1.0f,
-        -0.8f, 0.8f, -0.3f, 1.0f,
-        0.0f, 1.0f,
-        1.0f, 1.0f,
-        1.0f, 0.0f,
-        0.0f, 0.0f
-    };
-
-
-    GLuint buffer;
-    glGenBuffers(1, &buffer);
-    glBindBuffer(GL_ARRAY_BUFFER, buffer);
-
-    DEBUG_GL_ERRORS;
-
-    size_t size = sizeof(vertices);
-    glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
-
-    DEBUG_GL_ERRORS;
-
-    glGenVertexArrays(1, vertexArray);
-    glBindVertexArray(vertexArray[0]);
-
-    DEBUG_GL_ERRORS;
-
-    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, (GLvoid*)0);
     glEnableVertexAttribArray(0);
 
-    DEBUG_GL_ERRORS;
+    glVertexAttribFormat(0x00000000, 3, GL_FLOAT, 0, 0x00000000);
 
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (GLvoid*)(16 * sizeof(float)));
-    glEnableVertexAttribArray(1);
+    glVertexAttribBinding(0x00000000, 0x00000000);
 
-    // prepare texture
-    void* pData = NULL;
-    unsigned int w=0, h=0, s=0;
-    TEST_COM::image::instance().read_image(L"../res/512_512.jpg",
-        pData, w, h, s);
-
-    DEBUG_GL_ERRORS;
-
-    glGenTextures(1, &texture);
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texture);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-    DEBUG_GL_ERRORS;
-    glTexStorage2D(GL_TEXTURE_2D, 10, GL_COMPRESSED_RGBA_ASTC_12x12_KHR, w, h);
-    //glTexStorage2D(GL_TEXTURE_2D, 10, GL_COMPRESSED_SRGB_ALPHA_S3TC_DXT5_EXT, w, h);  
-    DEBUG_GL_ERRORS;
-
-    // Gen GL_PIXEL_UNPACK_BUFFER buffer
-    GLuint bb;
-    glGenBuffers(1, &bb); // => objects = { 1 }
-    glBindBuffer(GL_PIXEL_UNPACK_BUFFER, bb);
-    glBufferData(GL_PIXEL_UNPACK_BUFFER, w*h*s, pData, GL_STATIC_DRAW);
-
-    DEBUG_GL_ERRORS;
-    //void* data = glMapBuffer(GL_PIXEL_UNPACK_BUFFER, GL_READ_ONLY);
-    //DEBUG_GL_ERRORS;
-    //glUnmapBuffer(GL_PIXEL_UNPACK_BUFFER);
-
-    //glPushClientAttrib(GL_CLIENT_PIXEL_STORE_BIT);
-
-    DEBUG_GL_ERRORS;
-
-    glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, w, h, GL_RGB, GL_UNSIGNED_BYTE, (GLvoid*)0);
-
-
-
-    //glTexImage2D(GL_TEXTURE_2D, 0, GL_COMPRESSED_RGB, w, h, 0, GL_RGB, GL_UNSIGNED_BYTE, pData);
-    DEBUG_GL_ERRORS;
-
-    GLint tex1_loc = glGetUniformLocation(program, "tex1");
-    glUniform1i(tex1_loc, 0);
-
-
-    delete pData;
-
-    //
-
+    const GLuint arrBuffer = vertexArray[0];
+    const GLintptr offset = 0;
+    const GLsizei stride = 12;
+    glBindVertexBuffers(0, 1, &arrBuffer, &offset, &stride);
+    //glBindVertexBuffer(0, arrBuffer, offset, stride);
+    
+    location_color1 = glGetUniformLocation(program, "user_color1");
 }
 
 
@@ -233,32 +196,27 @@ void keyboard(unsigned char key, int mousePositionX, int mousePositionY)
     }
 }
 
-
-int main(int argc, char* argv[])
+int main(int argc, char **argv)
 {
     // initialize and run program
     glutInit(&argc, argv);
-
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
-
-    int majorVersion = 4;
-    int minorVersion = 4;
 
     glutInitContextVersion(majorVersion, minorVersion);
     glutInitContextProfile(GLUT_CORE_PROFILE);
+
     glutInitWindowSize(width, height);
-
-
-    glutCreateWindow("Test1_simple_triangle");
+    glutCreateWindow("Test5_simple_draw");
     glewExperimental = GL_TRUE;
     glewInit();
 
     const char* a = (const char*)glGetString(GL_VERSION);
     const char* b = (const char*)glGetString(GL_VENDOR);
+
     std::cout << "GL_VERSION: " << a << std::endl;
     std::cout << "GL_VENDOR:  " << b << std::endl;
 
-    DEBUG_GL_ERRORS;
+
 
     glutDisplayFunc(display);
     glutIdleFunc(display);
@@ -267,4 +225,3 @@ int main(int argc, char* argv[])
     glutMainLoop();
     return 0;
 }
-
