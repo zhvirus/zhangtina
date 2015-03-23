@@ -77,7 +77,7 @@ namespace ZH{
 
         void File::basename(const std::wstring& file, wchar_t* name)
         {
-            boost::wregex reg(L"([^\\\\\\\/]+)$",
+            boost::wregex reg(L"([^\\\\\\/]+)$",
                 boost::wregex::icase | boost::regex::perl);
 
             boost::wsmatch m;
@@ -149,7 +149,7 @@ namespace ZH{
             d = 0;
 
             // Check file name
-            boost::wregex reg(L"\.(jpg|jpeg|JPG|JPEG)$");
+            boost::wregex reg(L"\\.(jpg|jpeg|JPG|JPEG)$");
             if (!boost::regex_search(image_name, reg)){
                 return false;
             }

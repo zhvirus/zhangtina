@@ -1,8 +1,8 @@
 #ifndef INTERNAL_COMMON_GRAPHICS_H
 #define INTERNAL_COMMON_GRAPHICS_H
 
-#include "glew\glew.h"
-#include "glew\wglew.h"
+#include "GL\glew.h"
+#include "GL\wglew.h"
 
 #include <iostream>
 #include <string>

@@ -86,13 +86,13 @@
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../includes;../../3dparty/include;../../3dparty/include/exiv2-0.24</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/includes;$(SolutionDir)/../3dparty/glew/include;$(SolutionDir)/../3dparty/boost;$(SolutionDir)/../3dparty/exiv2/include</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>%(AdditionalDependencies);exiv2sd.lib;xmpsdk.lib;libexpat.lib;zlib1d.lib;libboost_filesystem-vc120-mt-gd-1_56.lib;libboost_regex-vc120-mt-gd-1_56.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../../3dparty/libs/boost_1_56_0/Win32/debug;../../3dparty/libs/exiv2/Win32/debug</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies);exiv2d.lib;xmpsdk.lib;libexpat.lib;zlib1d.lib;libboost_filesystem-vc120-mt-gd-1_56.lib;libboost_regex-vc120-mt-gd-1_56.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)/../3dparty/boost/lib/debug/x86;../../3dparty/exiv2/lib/debug/x86</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -100,13 +100,14 @@
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../includes;../../3dparty/include;../../3dparty/include/exiv2-0.24</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/includes;$(SolutionDir)/../3dparty/glew/include;$(SolutionDir)/../3dparty/boost;$(SolutionDir)/../3dparty/exiv2/include</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>%(AdditionalDependencies);exiv2sd.lib;xmpsdk.lib;libexpat.lib;zlib1d.lib;libboost_filesystem-vc120-mt-gd-1_56.lib;libboost_regex-vc120-mt-gd-1_56.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../../3dparty/libs/boost_1_56_0/x64/debug;../../3dparty/libs/exiv2/x64/debug</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies);exiv2d.lib;xmpsdk.lib;;libexpat.lib;zlib1d.lib;libboost_filesystem-vc120-mt-gd-1_56.lib;libboost_regex-vc120-mt-gd-1_56.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)/../3dparty/boost/lib/debug/x64;../../3dparty/exiv2/lib/debug/x64</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -116,7 +117,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../includes;../../3dparty/include;../../3dparty/include/exiv2-0.24</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/includes;$(SolutionDir)/../3dparty/glew/include;$(SolutionDir)/../3dparty/boost;$(SolutionDir)/../3dparty/exiv2/include</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
@@ -124,8 +125,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>%(AdditionalDependencies);exiv2s.lib;xmpsdk.lib;libexpat.lib;zlib1.lib;libboost_filesystem-vc120-mt-1_56.lib;libboost_regex-vc120-mt-1_56.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../../3dparty/libs/boost_1_56_0/Win32/release;../../3dparty/libs/exiv2/Win32/release</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies);exiv2.lib;xmpsdk.lib;libexpat.lib;zlib1.lib;libboost_filesystem-vc120-mt-1_56.lib;libboost_regex-vc120-mt-1_56.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)/../3dparty/boost/lib/release/x86;../../3dparty/exiv2/lib/release/x86</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -135,15 +136,15 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../includes;../../3dparty/include;../../3dparty/include/exiv2-0.24</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/includes;$(SolutionDir)/../3dparty/glew/include;$(SolutionDir)/../3dparty/boost;$(SolutionDir)/../3dparty/exiv2/include</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>%(AdditionalDependencies);exiv2s.lib;xmpsdk.lib;libexpat.lib;zlib1.lib;libboost_filesystem-vc120-mt-1_56.lib;libboost_regex-vc120-mt-1_56.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../../3dparty/libs/boost_1_56_0/x64/release;../../3dparty/libs/exiv2/x64/release</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies);exiv2.lib;xmpsdk.lib;libexpat.lib;zlib1.lib;libboost_filesystem-vc120-mt-1_56.lib;libboost_regex-vc120-mt-1_56.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)/../3dparty/boost/lib/release/x64;../../3dparty/exiv2/lib/release/x64</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
