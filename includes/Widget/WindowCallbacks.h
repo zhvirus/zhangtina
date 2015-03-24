@@ -10,12 +10,12 @@ namespace ZH{
         class ZH_WIDGET_DLL WindowCallbacks
         {
         public:
-            typedef void    (*LPRESHAPE)        (int,int);                  // Window resize
-            typedef void    (*LPKEYBOARD)       (unsigned char,int, int);   // Keyboard Input
-            typedef void    (*LPSPECIALKEYBOARD)(int,int ,int);             // 12 special key input
-            typedef void    (*LPMOUSE)          (int,int,int,int);          // LMB, RMB or MMB, pressed/Released, 6 events
-            typedef void    (*LPMOTION)         (int,int);                  // Mouse moved with at least one mouse button is pressed
-            typedef void    (*LPPASSIVEMOTION)  (int,int);                  // Mouse moved without any mouse button being pressed
+            typedef void    (*LPRESHAPE)        (int, int);                  // Window resize
+            typedef void    (*LPKEYBOARD)       (unsigned char, int, int);   // Keyboard Input
+            typedef void    (*LPSPECIALKEYBOARD)(int, int ,int);             // 12 special key input
+            typedef void    (*LPMOUSE)          (int, int, int, int);          // LMB, RMB or MMB, pressed/Released, 6 events
+            typedef void    (*LPMOTION)         (int, int, int);             // Mouse moved with at least one mouse button is pressed
+            typedef void    (*LPPASSIVEMOTION)  (int, int);                  // Mouse moved without any mouse button being pressed
             typedef void    (*LPRENDER)();
 
             WindowCallbacks();

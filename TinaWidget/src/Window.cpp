@@ -4,103 +4,173 @@
 #include "Widget/Window.h"
 #include "Widget/WidgetCommonDefine.h"
 #include "Internal/Common/Internal_common.h"
+#include <map>
 
 namespace ZH{
     namespace Widgets{
 
         WindowsInfo::WindowsInfo():
-            fWndHandle( NULL ),
-            fStartPosX( 0 ),
-            fStartPosY( 0 ),
-            fWidth( 0 ),
-            fHeight( 0 )
+            m_winHandle( NULL ),
+            m_startPosX( 0 ),
+            m_startPosY( 0 ),
+            m_width( 0 ),
+            m_height( 0 )
         {}
-
 
         //======================================
         // Static area for Window
         //======================================
-        Window* Window::fWindowPtr = NULL;
+
+        // Window map
+        static std::map<HWND, Window*> sWindowMap;
+
+        static Window* GetWindowFromMap(HWND hwnd)
+        {
+            std::map<HWND, Window*>::iterator it = sWindowMap.find(hwnd);
+            if (it == sWindowMap.end())
+            {
+                return NULL;
+            }
+            return it->second;
+        }
+
+        static void AddWindowToMap(HWND hwnd, Window* window)
+        {
+            sWindowMap.insert(std::make_pair(hwnd, window));
+        }
+
+        static void RemoveWindowFromMap(Window* window)
+        {
+            std::map<HWND, Window*>::iterator it = sWindowMap.begin();
+            for (; it != sWindowMap.end(); ++it)
+            {
+                if (it->second == window)
+                {
+                    sWindowMap.erase(it);
+                    break;
+                }
+            }
+        }
+
+        static void RemoveWindowFromMap(HWND hwnd)
+        {
+            std::map<HWND, Window*>::iterator it = sWindowMap.find(hwnd);
+            if (it != sWindowMap.end())
+            {
+                sWindowMap.erase(it);
+            }
+        }
+
+
+#define KEY(a,b) case a: keypress = b; break;
 
         LRESULT CALLBACK Window::_ZHMsgProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam )
         {
-            switch( msg )
+            Window* pWin = GetWindowFromMap(hWnd);
+
+            switch (msg)
             {
-            case WM_KEYDOWN:
+                case WM_KEYDOWN:
                 {
-                    int keypress    =   -1;
-#define KEY(a,b) case a: keypress = b; break;
-                    switch( wParam )
+                    int keypress = -1;
+                    switch (wParam)
                     {
-                        KEY( VK_F1,     KEY_F1        );
-                        KEY( VK_F2,     KEY_F2        );
-                        KEY( VK_F3,     KEY_F3        );
-                        KEY( VK_F4,     KEY_F4        );
-                        KEY( VK_F5,     KEY_F5        );
-                        KEY( VK_F6,     KEY_F6        );
-                        KEY( VK_F7,     KEY_F7        );
-                        KEY( VK_F8,     KEY_F8        );
-                        KEY( VK_F9,     KEY_F9        );
-                        KEY( VK_F10,    KEY_F10       );
-                        KEY( VK_F11,    KEY_F11       );
-                        KEY( VK_F12,    KEY_F12       );
-                        KEY( VK_PRIOR,  KEY_PAGE_UP   );
-                        KEY( VK_NEXT,   KEY_PAGE_DOWN );
-                        KEY( VK_HOME,   KEY_HOME      );
-                        KEY( VK_END,    KEY_END       );
-                        KEY( VK_LEFT,   KEY_LEFT      );
-                        KEY( VK_UP,     KEY_UP        );
-                        KEY( VK_RIGHT,  KEY_RIGHT     );
-                        KEY( VK_DOWN,   KEY_DOWN      );
-                        KEY( VK_INSERT, KEY_INSERT    );
+                        KEY(VK_F1, KEY_F1);
+                        KEY(VK_F2, KEY_F2);
+                        KEY(VK_F3, KEY_F3);
+                        KEY(VK_F4, KEY_F4);
+                        KEY(VK_F5, KEY_F5);
+                        KEY(VK_F6, KEY_F6);
+                        KEY(VK_F7, KEY_F7);
+                        KEY(VK_F8, KEY_F8);
+                        KEY(VK_F9, KEY_F9);
+                        KEY(VK_F10, KEY_F10);
+                        KEY(VK_F11, KEY_F11);
+                        KEY(VK_F12, KEY_F12);
+                        KEY(VK_PRIOR, KEY_PAGE_UP);
+                        KEY(VK_NEXT, KEY_PAGE_DOWN);
+                        KEY(VK_HOME, KEY_HOME);
+                        KEY(VK_END, KEY_END);
+                        KEY(VK_LEFT, KEY_LEFT);
+                        KEY(VK_UP, KEY_UP);
+                        KEY(VK_RIGHT, KEY_RIGHT);
+                        KEY(VK_DOWN, KEY_DOWN);
+                        KEY(VK_INSERT, KEY_INSERT);
+                        KEY(VK_ESCAPE, KEY_ESCAPE);
                     }
 
-                    if(keypress!=-1)
+                    if (keypress == KEY_ESCAPE)
                     {
-                        //特殊键回调
-                        if( fWindowPtr && fWindowPtr->fCallbacks.fSpecialKeyFuncPtr)
-                            (*(fWindowPtr->fCallbacks.fSpecialKeyFuncPtr))(keypress,fWindowPtr->fCurMouseX,fWindowPtr->fCurMouseY);
+                        PostQuitMessage(0);
+                    }
+
+                    if (keypress != -1)
+                    {
+                        if (pWin && pWin->m_callbacks.fSpecialKeyFuncPtr)
+                        {
+                            if (pWin->m_debug)
+                            {
+                                printf("SpecialKeyBoardFunc(%d, x=%d, y=%d)\n",
+                                    keypress, pWin->m_curMouseX, pWin->m_curMouseY);
+                            }
+
+                            (*(pWin->m_callbacks.fSpecialKeyFuncPtr))(keypress, pWin->m_curMouseX, pWin->m_curMouseY);
+                        }
                     }
                     break;
                 }
 
-            case WM_CHAR:
+                case WM_CHAR:
                 {
-                    //键盘事件回调
-                    if( fWindowPtr && fWindowPtr->fCallbacks.fKeyboardFuncPtr)
-                        (*(fWindowPtr->fCallbacks.fKeyboardFuncPtr))(static_cast<unsigned char>(wParam),fWindowPtr->fCurMouseX,fWindowPtr->fCurMouseY);
+                    if (pWin && pWin->m_callbacks.fKeyboardFuncPtr)
+                    {
+                        if (pWin->m_debug)
+                        {
+                            printf("KeyBoardFunc(%c, x=%d, y=%d)\n", static_cast<unsigned char>(wParam),
+                                pWin->m_curMouseX, pWin->m_curMouseY);
+                        }
 
-                    break;
-                }
-
-            case WM_SIZE:
-                {
-                    if( fWindowPtr ){
-                        fWindowPtr->fWndInfo.fWidth     =   LOWORD(lParam);
-                        fWindowPtr->fWndInfo.fHeight    =   HIWORD(lParam);
-                        //窗口大小改变回调
-                        if( fWindowPtr->fCallbacks.fReShapeFuncPtr)
-                            (*(fWindowPtr->fCallbacks.fReShapeFuncPtr))(fWindowPtr->fWndInfo.fWidth,fWindowPtr->fWndInfo.fHeight);
+                        (*(pWin->m_callbacks.fKeyboardFuncPtr))(static_cast<unsigned char>(wParam), pWin->m_curMouseX, pWin->m_curMouseY);
                     }
                     break;
                 }
 
-            case WM_LBUTTONDOWN:
-            case WM_MBUTTONDOWN:
-            case WM_RBUTTONDOWN:
-            case WM_LBUTTONUP:
-            case WM_MBUTTONUP:
-            case WM_RBUTTONUP:
+                case WM_SIZE:
+                {
+                    if (pWin)
+                    {
+                        pWin->m_winInfo.m_width = LOWORD(lParam);
+                        pWin->m_winInfo.m_height = HIWORD(lParam);
+                        if (pWin->m_callbacks.fReShapeFuncPtr)
+                        {
+                            if (pWin->m_debug)
+                            {
+                                printf("ReShapeFunc(w=%d, h=%d)\n",
+                                    pWin->m_winInfo.m_width, pWin->m_winInfo.m_height);
+                            }
+                            (*(pWin->m_callbacks.fReShapeFuncPtr))(pWin->m_winInfo.m_width, pWin->m_winInfo.m_height);
+                        }
+                    }
+                    break;
+                }
+
+                case WM_LBUTTONDOWN:
+                case WM_MBUTTONDOWN:
+                case WM_RBUTTONDOWN:
+                case WM_LBUTTONUP:
+                case WM_MBUTTONUP:
+                case WM_RBUTTONUP:
                 {
                     bool pressed = true;
                     int button;
 
-                    if( fWindowPtr ){
-                        fWindowPtr->fCurMouseX  =   LOWORD(lParam);
-                        fWindowPtr->fCurMouseY  =   HIWORD(lParam);
+                    if (pWin)
+                    {
+                        pWin->m_curMouseX = LOWORD(lParam);
+                        pWin->m_curMouseY = HIWORD(lParam);
                     }
 
-                    switch( msg )
+                    switch (msg)
                     {
                     case WM_LBUTTONDOWN:
                         pressed = true;
@@ -132,84 +202,128 @@ namespace ZH{
                         break;
                     }
 
-                    if(button!=-1)
+                    if (button != -1)
                     {
-                        int state   =   (pressed==true)?0:1;
-                        if( fWindowPtr && fWindowPtr->fCallbacks.fMouseFuncPtr)
-                            (*(fWindowPtr->fCallbacks.fMouseFuncPtr))(button,state,fWindowPtr->fCurMouseX,fWindowPtr->fCurMouseY);
+                        if (pWin && pWin->m_callbacks.fMouseFuncPtr)
+                        {
+                            if (pWin->m_debug)
+                            {
+                                printf("MouseFunc(button=%d, pressed=%d, x=%d, y=%d)\n",
+                                    button, pressed ? 1 : 0, pWin->m_curMouseX, pWin->m_curMouseY);
+                            }
+                            (*(pWin->m_callbacks.fMouseFuncPtr))(button, pressed ? 1 : 0, pWin->m_curMouseX, pWin->m_curMouseY);
+                        }
 
                     }
 
                     break;
                 }
 
-            case WM_MOUSEMOVE:
+                case WM_MOUSEMOVE:
                 {
-                    //鼠标位置保存
-                    if ( fWindowPtr ){
-                        fWindowPtr->fCurMouseX = LOWORD(lParam);
-                        fWindowPtr->fCurMouseY = HIWORD(lParam);
+                    if (pWin)
+                    {
+                        pWin->m_curMouseX = LOWORD(lParam);
+                        pWin->m_curMouseY = HIWORD(lParam);
                     }
 
-                    if( ( wParam & MK_LBUTTON ) ||
-                        ( wParam & MK_MBUTTON ) ||
-                        ( wParam & MK_RBUTTON ) )
+                    if ((wParam & MK_LBUTTON) ||
+                        (wParam & MK_MBUTTON) ||
+                        (wParam & MK_RBUTTON))
                     {
-                        //在有鼠标键按下时候的鼠标移动，会回调这个函数
-                        if( fWindowPtr && fWindowPtr->fCallbacks.fMotionFuncPtr)
-                            (*(fWindowPtr->fCallbacks.fMotionFuncPtr))( fWindowPtr->fCurMouseX, fWindowPtr->fCurMouseY );
+                        if (pWin && pWin->m_callbacks.fMotionFuncPtr)
+                        {
+                            if (pWin->m_debug)
+                            {
+                                printf("MotionFunc(button=%d, x=%d, y=%d)\n",
+                                    (int)wParam, pWin->m_curMouseX, pWin->m_curMouseY);
+                            }
+                            (*(pWin->m_callbacks.fMotionFuncPtr))((int)wParam, pWin->m_curMouseX, pWin->m_curMouseY);
+                        }
                     }
                     else
                     {
-                        //没有任何鼠标键按下时候的鼠标移动会调用这个函数
-                        if( fWindowPtr && fWindowPtr->fCallbacks.fPassiveMotionFuncPtr )
-                            (*(fWindowPtr->fCallbacks.fPassiveMotionFuncPtr))(fWindowPtr->fCurMouseX,fWindowPtr->fCurMouseY);
+                        if (pWin && pWin->m_callbacks.fPassiveMotionFuncPtr)
+                        {
+                            if (pWin->m_debug)
+                            {
+                                printf("PassiveMotionFunc(x=%d, y=%d)\n",
+                                    pWin->m_curMouseX, pWin->m_curMouseY);
+                            }
+                            (*(pWin->m_callbacks.fPassiveMotionFuncPtr))(pWin->m_curMouseX, pWin->m_curMouseY);
+                        }
                     }
                     break;
                 }
 
-            case WM_DESTROY:
+                case WM_DESTROY:
                 {
-                    PostQuitMessage( 0 );
+                    if (pWin->m_debug)
+                    {
+                        printf("WM_DESTROY\n");
+                    }
+                    PostQuitMessage(0);
                     return 0;
                 }
 
-            case WM_PAINT:
+                case WM_PAINT:
                 {
                     return 0;
                 }
             }
 
-            return DefWindowProc( hWnd, msg, wParam, lParam );
+            return DefWindowProc(hWnd, msg, wParam, lParam);
         }
 
-        Window* Window::CreateZHWindow(
+        Window* Window::Create(
             TCHAR* title,
             unsigned int x,
             unsigned int y,
             unsigned int w,
-            unsigned int h)
+            unsigned int h,
+            bool debug/* = false*/)
         {
-            if ( !fWindowPtr ){
-                fWindowPtr = new Window();
-                fWindowPtr->createWnd(title,x,y,w,h);
+            Window* pWin = new Window(debug);
+            if (!pWin->CreateWinImp(title, x, y, w, h))
+            {
+                delete pWin;
+                return NULL;
             }
 
-            ZH_OUT("Windows Created.");
-            return fWindowPtr;
+            ZH_OUT("A new window created successfully.");
+            return pWin;
         }
 
-        void Window::DestryZHWindow()
+        void Window::Destroy(Window*& pWin)
         {
-            ZH_OUT("Window Destroyed.");
-            delete fWindowPtr;
-            fWindowPtr = NULL;
+            if (!pWin)
+            {
+                return;
+            }
+
+            RemoveWindowFromMap(pWin);
+
+            delete pWin;
+            pWin = NULL;
         }
+
 
         //======================================
         // Non Static area for Window
         //======================================
-        bool Window::createWnd(
+
+        Window::Window(bool debug):
+            m_debug(debug),
+            m_curMouseX(0),
+            m_curMouseY(0)
+        {}
+
+        Window::~Window()
+        {
+            DestroyWindow(m_winInfo.m_winHandle);
+        }
+
+        bool Window::CreateWinImp(
             TCHAR* title,
             unsigned int x,
             unsigned int y,
@@ -221,14 +335,14 @@ namespace ZH{
             wcex.cbSize         = sizeof(WNDCLASSEX); 
             wcex.style          = CS_HREDRAW | CS_VREDRAW; // Window style
             wcex.lpfnWndProc    = (WNDPROC)_ZHMsgProc;     // Window message process function ptr
-            wcex.cbClsExtra     = 0;                       // WNDCLASS后面分派的额外字节，初始化为0
-            wcex.cbWndExtra     = 0;                       // 窗口实例化后分配的额外字节,初始化为0
-            wcex.hInstance      = NULL;                    // 窗口过程的实例句柄
-            wcex.hIcon          = NULL;//LoadIcon(hInstance, (LPCTSTR)IDI_WIN32TEST);//窗口图标句柄
-            wcex.hCursor        = NULL;// LoadCursor(NULL, IDC_ARROW);   //光标句柄
-            wcex.hbrBackground  = (HBRUSH)GetStockObject(BLACK_BRUSH);   //背景刷句柄
-            wcex.lpszMenuName   = NULL;                    //指向窗口菜单名称的字符串指针
-            wcex.lpszClassName  = TEXT("zhanghui");        //一个指向类名称对的字符串指针
+            wcex.cbClsExtra     = 0;                       // 
+            wcex.cbWndExtra     = 0;                       // 
+            wcex.hInstance      = NULL;                    //
+            wcex.hIcon          = NULL;//LoadIcon(hInstance, (LPCTSTR)IDI_WIN32TEST);//A handle to the class icon
+            wcex.hCursor        = NULL;// LoadCursor(NULL, IDC_ARROW);   //A handle to the class cursor
+            wcex.hbrBackground  = (HBRUSH)GetStockObject(BLACK_BRUSH);   //A handle to the class background brush
+            wcex.lpszMenuName   = NULL;                    //
+            wcex.lpszClassName  = TEXT("zhanghui");        //
             wcex.hIconSm        = NULL;//LoadIcon(wcex.hInstance, (LPCTSTR)IDI_SMALL); 
 
             if(!RegisterClassEx(&wcex))
@@ -238,17 +352,17 @@ namespace ZH{
 
             //Create window
             HWND hWnd = CreateWindow(
-                TEXT("zhanghui"),           //已注册窗口类名称 
-                title,                      //指向窗口名称的指针
-                WS_OVERLAPPEDWINDOW,        //窗口风格
-                x,    //窗口位置x坐标
-                y,    //窗口位置y坐标
-                w,    //窗口宽度
-                h,    //窗口高度
-                NULL, //父窗口句柄
-                NULL, //窗口菜单句柄
-                NULL, //应用程序实例句柄
-                NULL  //应用程序数据区指针
+                TEXT("zhanghui"),           //
+                title,                      //
+                WS_OVERLAPPEDWINDOW,        //
+                x,    //
+                y,    //
+                w,    //
+                h,    //
+                NULL, //
+                NULL, //
+                NULL, //
+                NULL  //
                 );
 
             if (!hWnd)
@@ -258,31 +372,33 @@ namespace ZH{
 
             // Record window information
             if ( title ){
-                strcpy_s( fWndInfo.fWndTitle, title );
+                strcpy_s( m_winInfo.m_title, title );
             }else{
-                fWndInfo.fWndTitle[0] = 0;
+                m_winInfo.m_title[0] = 0;
             }
-            fWndInfo.fWndHandle = hWnd;
-            fWndInfo.fStartPosX = x;
-            fWndInfo.fStartPosY = y;
-            fWndInfo.fWidth     = w;
-            fWndInfo.fHeight    = h;
+            m_winInfo.m_winHandle = hWnd;
+            m_winInfo.m_startPosX = x;
+            m_winInfo.m_startPosY = y;
+            m_winInfo.m_width     = w;
+            m_winInfo.m_height    = h;
+
+            AddWindowToMap(hWnd, this);
 
             return true;
         }
 
-        void Window::showWindow()
+        void Window::ShowWindow()
         {
-            if ( !fWndInfo.fWndHandle )
+            if ( !m_winInfo.m_winHandle )
                 return;
 
-            ::ShowWindow( fWndInfo.fWndHandle, SW_SHOW);
-            ::UpdateWindow( fWndInfo.fWndHandle );
+            ::ShowWindow( m_winInfo.m_winHandle, SW_SHOW);
+            ::UpdateWindow( m_winInfo.m_winHandle );
 
             ZH_OUT("Show up window.");
         }
 
-        void Window::enterMsgLoop(){
+        void Window::EnterMsgLoop(){
             // Enter the message loop
             MSG msg; 
             memset(&msg,0,sizeof(msg));
@@ -305,9 +421,8 @@ namespace ZH{
                 }
 
                 // Custom override renderer
-                if ( fCallbacks.fRenderFuncPtr ){
-                    fCallbacks.fRenderFuncPtr();
-                } else{
+                if ( m_callbacks.fRenderFuncPtr ){
+                    m_callbacks.fRenderFuncPtr();
                 }
             }
         }

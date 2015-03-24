@@ -25,7 +25,8 @@ namespace ZH{
             KEY_PAGE_DOWN   =   0x0069,
             KEY_HOME        =   0x006A,
             KEY_END         =   0x006B,
-            KEY_INSERT      =   0x006C
+            KEY_INSERT      =   0x006C,
+            KEY_ESCAPE      =   0x006D
         };
 
         enum MOUSE_BUTTON_CODES{

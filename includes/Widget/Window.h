@@ -13,59 +13,59 @@ namespace ZH{
         public:
             WindowsInfo();
             ~WindowsInfo(){}
-            HWND         fWndHandle;
-            unsigned int fStartPosX;
-            unsigned int fStartPosY;
-            unsigned int fWidth;
-            unsigned int fHeight;
-            TCHAR        fWndTitle[100];
+            HWND         m_winHandle;
+            unsigned int m_startPosX;
+            unsigned int m_startPosY;
+            unsigned int m_width;
+            unsigned int m_height;
+            TCHAR        m_title[100];
         };
 
         class ZH_WIDGET_DLL Window
         {
         public:
-            static Window* CreateZHWindow(
+            static Window* Create(
                 TCHAR* title,
                 unsigned int x,
                 unsigned int y,
                 unsigned int w,
-                unsigned int h);
+                unsigned int h,
+                bool debug=false);
 
-            static void DestryZHWindow();
+            static void Destroy(Window*& window);
 
-            static Window* GetWindow(){ return fWindowPtr; }
+            void ShowWindow();
+            void EnterMsgLoop();
 
-        public:
-            void showWindow();
-            void enterMsgLoop();
-            WindowsInfo* getWndInfo(){ return &fWndInfo; }
-            void registerWindowResizeFunc( WindowCallbacks::LPRESHAPE funcPtr ){
-                fCallbacks.fReShapeFuncPtr = funcPtr;
+            WindowsInfo* GetWinInfo(){ return &m_winInfo; }
+
+            void RegisterWindowResizeFunc( WindowCallbacks::LPRESHAPE funcPtr ){
+                m_callbacks.fReShapeFuncPtr = funcPtr;
             }
-            void registerKeyboardFunc( WindowCallbacks::LPKEYBOARD funcPtr ){
-                fCallbacks.fKeyboardFuncPtr = funcPtr;
+            void RegisterKeyboardFunc( WindowCallbacks::LPKEYBOARD funcPtr ){
+                m_callbacks.fKeyboardFuncPtr = funcPtr;
             }
-            void registerSpecialKeyboardFunc( WindowCallbacks::LPSPECIALKEYBOARD funcPtr ){
-                fCallbacks.fSpecialKeyFuncPtr = funcPtr;
+            void RegisterSpecialKeyboardFunc( WindowCallbacks::LPSPECIALKEYBOARD funcPtr ){
+                m_callbacks.fSpecialKeyFuncPtr = funcPtr;
             }
-            void registerMousePressReleaseFunc( WindowCallbacks::LPMOUSE funcPtr ){
-                fCallbacks.fMouseFuncPtr = funcPtr;
+            void RegisterMousePressReleaseFunc( WindowCallbacks::LPMOUSE funcPtr ){
+                m_callbacks.fMouseFuncPtr = funcPtr;
             }
-            void registerMouseMoveWithButtonPressedFunc( WindowCallbacks::LPMOTION funcPtr ){
-                fCallbacks.fMotionFuncPtr = funcPtr;
+            void RegisterMouseMoveWithButtonPressedFunc( WindowCallbacks::LPMOTION funcPtr ){
+                m_callbacks.fMotionFuncPtr = funcPtr;
             }
-            void registerMouseMoveFunc( WindowCallbacks::LPPASSIVEMOTION funcPtr ){
-                fCallbacks.fPassiveMotionFuncPtr = funcPtr;
+            void RegisterMouseMoveFunc( WindowCallbacks::LPPASSIVEMOTION funcPtr ){
+                m_callbacks.fPassiveMotionFuncPtr = funcPtr;
             }
-            void registerRenderFunc( WindowCallbacks::LPRENDER funcPtr ){
-                fCallbacks.fRenderFuncPtr = funcPtr;
+            void RegisterRenderFunc( WindowCallbacks::LPRENDER funcPtr ){
+                m_callbacks.fRenderFuncPtr = funcPtr;
             }
         private:
-            Window(){}
-            virtual ~Window(){}
-            static Window* fWindowPtr;
-            static LRESULT CALLBACK _ZHMsgProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam );
-            bool createWnd(
+            static LRESULT CALLBACK _ZHMsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+            Window(bool debug);
+            virtual ~Window();
+
+            bool CreateWinImp(
                 TCHAR* title,
                 unsigned int x,
                 unsigned int y,
@@ -73,14 +73,17 @@ namespace ZH{
                 unsigned int h);
 
             // Windows information
-            WindowsInfo fWndInfo;
+            WindowsInfo m_winInfo;
 
             // Callbacks
-            WindowCallbacks fCallbacks;
+            WindowCallbacks m_callbacks;
 
             // Current mouse position
-            int fCurMouseX;
-            int fCurMouseY;
+            int m_curMouseX;
+            int m_curMouseY;
+
+            // if print some debug info
+            bool m_debug;
         };
     }
 

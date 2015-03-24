@@ -20,14 +20,14 @@ namespace ZH{
         {
             // Create a dummy window for initializing glew
             ZH::Widgets::Window* pDummyWnd =
-                ZH::Widgets::Window::CreateZHWindow("Dummy",0,0,10,10);
+                ZH::Widgets::Window::Create("Dummy",0,0,10,10);
             if ( !pDummyWnd ){
                 ZH::Util::ENG_ERR("Create dummy window failed!\n");
                 return false;
             }
             ZH::Widgets::WindowsInfo* pDummyWinInfo =
-                pDummyWnd->getWndInfo();
-            HDC hDummyDC = GetDC( pDummyWinInfo->fWndHandle );
+                pDummyWnd->GetWinInfo();
+            HDC hDummyDC = GetDC( pDummyWinInfo->m_winHandle );
             if ( !hDummyDC ){
                 ZH::Util::ENG_ERR("Get dummy window DC failed!\n");
                 return false;
@@ -93,7 +93,7 @@ namespace ZH{
             // Clean up dummy resources
             wglMakeCurrent(NULL, NULL);
             wglDeleteContext( dummy_hglrc );
-            ZH::Widgets::Window::DestryZHWindow();
+            ZH::Widgets::Window::Destroy(pDummyWnd);
 
             return true;
         }
@@ -124,7 +124,7 @@ namespace ZH{
             }
 
             // Get windows device context
-            HDC hDC = GetDC( winInfo.fWndHandle );
+            HDC hDC = GetDC( winInfo.m_winHandle );
 
 
             int nPixelFormat=-1;
