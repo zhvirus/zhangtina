@@ -9,13 +9,18 @@
 #include <iostream>
 
 #include "../common_src/gl_common.h"
-#include <glew.h>
+#include "GL/glew.h"
 #include <GL/freeglut.h>
 #include "textureUtils.h"
 
 #define KEY_ESCAPE 27
 
 #define DEBUG_GL_ERRORS TEST_COM::peek_gl_errors(__LINE__);
+
+// FBO
+GLuint fbo = 0;
+GLuint render_col = 0;
+GLuint render_ds = 0;
 
 
 GLsizei width = 800;
@@ -39,44 +44,53 @@ void display()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    if (times > 2)
+    {
+        sn.RestoreSnapshot();
+        glClear(GL_COLOR_BUFFER_BIT);
+    }
 
+    glBindTexture(GL_TEXTURE_2D, texture);
     glBindVertexArray(vertexArray[0]);
-    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+
+    if (times < 2){
+        glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+    }
 
     if (times == 0)
     {
-        sn.TakeSnapshot(GL_TEXTURE_2D, texture, 0, 0, 0, 500, 500);
+        sn.TakeSnapshot(GL_TEXTURE_2D, render_ds, 0, 0, 0, width, height);
     }
 
-    //if (times % 2 == 0)
-    {
-        if (times == 1){
-            glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-            glPixelStorei(GL_PACK_ALIGNMENT, 1);
-            glBindBuffer(GL_PIXEL_UNPACK_BUFFER, 0);
-            glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
-
-            glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
-            glReadBuffer(GL_BACK);
-            glReadPixels(0, 0, 300, 200, GL_RGBA, GL_UNSIGNED_BYTE, (void*)pGlobalData);
-        }
-        if (times == 2)
-        {
-
-            glBindTexture(GL_TEXTURE_2D, texture);
-            glTexSubImage2D(GL_TEXTURE_2D, 0, 100, 100, 300, 200, GL_RGBA, GL_UNSIGNED_BYTE, pGlobalData);
-
-        }
-        if (times == 3)
-        {
-            sn.RestoreSnapshot();
-
-        }
-    }
-    //else
+    ////if (times % 2 == 0)
     //{
-      //  sn.RestoreSnapshot();
+    //    if (times == 1){
+    //        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    //        glPixelStorei(GL_PACK_ALIGNMENT, 1);
+    //        glBindBuffer(GL_PIXEL_UNPACK_BUFFER, 0);
+    //        glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
+
+    //        glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
+    //        glReadBuffer(GL_BACK);
+    //        glReadPixels(0, 0, 300, 200, GL_RGBA, GL_UNSIGNED_BYTE, (void*)pGlobalData);
+    //    }
+    //    if (times == 2)
+    //    {
+
+    //        glBindTexture(GL_TEXTURE_2D, texture);
+    //        glTexSubImage2D(GL_TEXTURE_2D, 0, 100, 100, 300, 200, GL_RGBA, GL_UNSIGNED_BYTE, pGlobalData);
+
+    //    }
+    //    if (times == 3)
+    //    {
+    //        sn.RestoreSnapshot();
+
+    //    }
     //}
+    ////else
+    ////{
+    //  //  sn.RestoreSnapshot();
+    ////}
 
     times++;
 
@@ -185,8 +199,8 @@ void initialize()
     GLfloat vertices[] = {
         -0.8f, -0.8f, -0.3f, 1.0f,
         0.8f, -0.8f, -0.3f, 1.0f,
-        0.8f, 0.8f, -0.3f, 1.0f,
-        -0.8f, 0.8f, -0.3f, 1.0f,
+        0.8f, 0.8f, -1.3f, 1.0f,
+        -0.8f, 0.8f, -1.3f, 1.0f,
 
         0.0f, 0.0f,
         1.0f, 0.0f,
@@ -268,12 +282,30 @@ void initialize()
     //delete pData;
 
     // initialize test codes
-    dataSize = width * height * 4;
-    pGlobalData = new char[dataSize];
-    memset(pGlobalData, 0, dataSize);
+    //dataSize = width * height * 4;
+    //pGlobalData = new char[dataSize];
+    //memset(pGlobalData, 0, dataSize);
+
+    DEBUG_GL_ERRORS;
+    // FBO staff
+    glGenTextures(1, &render_col);
+    glBindTexture(GL_TEXTURE_2D, render_col);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+
+    glGenTextures(1, &render_ds);
+    glBindTexture(GL_TEXTURE_2D, render_ds);
+//    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_STENCIL, width, height, 0, GL_DEPTH_STENCIL, GL_UNSIGNED_INT_24_8, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, width, height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
 
 
+    glGenFramebuffers(1, &fbo);
+    glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, render_col, 0);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, render_ds, 0);
+    //glFramebufferTexture2D(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_TEXTURE_2D, render_ds, 0);
 
+    //glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    DEBUG_GL_ERRORS;
 }
 
 

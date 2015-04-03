@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <iostream>
 #include "../common_src/gl_common.h"
-#include <glew.h>
+#include "GL/glew.h"
 #include <GL/freeglut.h>
 #define KEY_ESCAPE 27
 

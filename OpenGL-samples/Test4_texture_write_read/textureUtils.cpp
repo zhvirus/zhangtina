@@ -122,17 +122,17 @@ void PixelWriteStateHelper::RestoreSnapshot() const
     //GL_UNPACK_LSB_FIRST  // false, non-GLES, how to deal ?
 }
 
-bool GetTextureSize2D(GLenum target, GLuint texture, GLint level, GLint* w, GLint* h)
+bool GetTextureInfo2D(GLenum target, GLuint texture, GLint level, GLint* w, GLint* h, GLint* fmt)
 {
     // Sanity check
-    if (!w || !h || !glIsTexture(texture))
+    if (!glIsTexture(texture))
     {
         return false;
     }
 
     if (!ApicTextureSnapshot::IsTextureTargetSupported(target))
     {
-        printf("ERROR: GetTextureSize2D(target=0x%x) - unsupported target!\n",
+        printf("ERROR: GetTextureInfo2D(target=0x%x) - unsupported target!\n",
             target);
         return false;
     }
@@ -152,24 +152,31 @@ bool GetTextureSize2D(GLenum target, GLuint texture, GLint level, GLint* w, GLin
     glGetIntegerv(texTargetQuery, &oldTexBinding);
     glBindTexture(texTargetBinding, texture);
 
-    glGetTexLevelParameteriv(target, level, GL_TEXTURE_WIDTH, w);
-    glGetTexLevelParameteriv(target, level, GL_TEXTURE_HEIGHT, h);
+    if (w)
+    {
+        glGetTexLevelParameteriv(target, level, GL_TEXTURE_WIDTH, w);
+    }
+
+    if (h)
+    {
+        glGetTexLevelParameteriv(target, level, GL_TEXTURE_HEIGHT, h);
+    }
+
+    if (fmt)
+    {
+        glGetTexLevelParameteriv(target, level, GL_TEXTURE_INTERNAL_FORMAT, fmt);
+    }
 
     glBindTexture(texTargetBinding, oldTexBinding);
 
     if (PeekGLErrors(true))
     {
         printf("WARNING - GL error detected after "
-            "GetTextureSize2D(texture=%u)\n",
+            "GetTextureInfo2D(texture=%u)\n",
             texture);
     }
 
-    if (*w > 0 && *h > 0)
-    {
-        return true;
-    }
-
-    return false;
+    return true;
 }
 
 bool ReadTexture2D(GLenum target, GLuint texture, GLint level,
@@ -215,9 +222,10 @@ bool ReadTexture2D(GLenum target, GLuint texture, GLint level,
 
     GLint texWidth = 0;
     GLint texHeight = 0;
-    if (!GetTextureSize2D(target, texture, level, &texWidth, &texHeight))
+    GLint texFmt = 0;
+    if (!GetTextureInfo2D(target, texture, level, &texWidth, &texHeight, &texFmt))
     {
-        printf("ERROR: ReadTexture2D(texture=%u) - get texture size failed!\n",
+        printf("ERROR: ReadTexture2D(texture=%u) - get texture size&format failed!\n",
             texture);
         return false;
     }
@@ -256,45 +264,58 @@ bool ReadTexture2D(GLenum target, GLuint texture, GLint level,
     GLuint newReadFB = 0;
     glGenFramebuffers(1, &newReadFB);
     glBindFramebuffer(GL_READ_FRAMEBUFFER, newReadFB);
-    glFramebufferTexture2D(GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
-        target, texture, level);
-    glReadBuffer(GL_COLOR_ATTACHMENT0);
 
+    GLint readFmt = GL_RGBA;
+    GLint readType = GL_UNSIGNED_BYTE;
+
+    if (texFmt == GL_DEPTH_COMPONENT)
+    {
+        glFramebufferTexture2D(GL_READ_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,
+            target, texture, level);
+        glReadBuffer(GL_NONE);
+        readFmt  = GL_DEPTH_COMPONENT;
+        readType = GL_FLOAT;
+    }
+    else if (texFmt == GL_DEPTH_STENCIL)
+    {
+        glFramebufferTexture2D(GL_READ_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT,
+            target, texture, level);
+        glReadBuffer(GL_NONE);
+
+        readFmt = GL_DEPTH_STENCIL;
+        readType = GL_UNSIGNED_INT_24_8;
+    }
+    else
+    {
+        glFramebufferTexture2D(GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
+            target, texture, level);
+        glReadBuffer(GL_COLOR_ATTACHMENT0);
+    }
+
+    PeekGLErrors(true);
+
+    GLenum ret = glCheckFramebufferStatus(GL_READ_FRAMEBUFFER);
+    if (ret != GL_FRAMEBUFFER_COMPLETE)
+    {
+        printf("Not complete!\n");
+    }
 
     // Read pixels
-    // glReadPixels reads from the low-left, but this function
-    // treats (x,y) as top-left.
-    // Also the later restore function like glTexImageSubData2D()
-    // also use top-left.
     *data = new char[4 * w*h];
-    glReadPixels(x, y, w, h, ApicTextureSnapshot::m_sFormat,
-        ApicTextureSnapshot::m_sType, *data);
+    glReadPixels(x, y, w, h, readFmt,
+        readType, *data);
 
-    // Flip data in vertical
-    //if (h >= 2)
-    //{
-    //    assert(ApicTextureSnapshot::m_sFormat == GL_RGBA);
-    //    assert(ApicTextureSnapshot::m_sType == GL_UNSIGNED_BYTE);
-    //    const int lineStride = w * 4;
-    //    char* pTempLine = new char[lineStride];
-    //    const int loopLines = h / 2;
-    //    for (int line = 0; line < loopLines; ++line)
-    //    {
-    //        const int swapline = h - line - 1;
-    //        void* ptr1 = (void*)((char*)(*data) + line*lineStride);
-    //        void* ptr2 = (void*)((char*)(*data) + swapline*lineStride);
-    //        memcpy(pTempLine, ptr1, lineStride);
-    //        memcpy(ptr1, ptr2, lineStride);
-    //        memcpy(ptr2, pTempLine, lineStride);
-    //    }
-    //    delete[]pTempLine;
-    //}
+    PeekGLErrors(true);
 
     // Restore texture binding
     glBindTexture(texTargetBinding, oldTexBinding);
 
+    PeekGLErrors(true);
+
     // Restore pixel read related states
     readStateHelper.RestoreSnapshot();
+
+    PeekGLErrors(true);
 
     // Delete auxiliary frame buffer
     glDeleteFramebuffers(1, &newReadFB);
@@ -312,6 +333,7 @@ bool ReadTexture2D(GLenum target, GLuint texture, GLint level,
 
 
 ApicTextureSnapshot::ApicTextureSnapshot(void) :
+    m_internalFmt(0),
     m_pClientData(NULL)
 {
     Reset();
@@ -324,6 +346,7 @@ ApicTextureSnapshot::~ApicTextureSnapshot(void)
 
 void ApicTextureSnapshot::Reset(void)
 {
+    m_internalFmt = 0;
     m_textureTarget = GL_TEXTURE_2D;
     m_texture = 0;
     m_level = 0;
@@ -360,7 +383,8 @@ bool ApicTextureSnapshot::TakeSnapshot(
 {
     GLint width = 0;
     GLint height = 0;
-    if (!GetTextureSize2D(target, texture, level, &width, &height))
+    GLint fmt = 0;
+    if (!GetTextureInfo2D(target, texture, level, &width, &height, &fmt))
     {
         printf("ERROR - TakeSnapshot(texture=%u): Failed to get texture size!\n",
             texture);
@@ -393,6 +417,17 @@ bool ApicTextureSnapshot::TakeSnapshot(
     // Reset
     Reset();
 
+    // 
+    GLint width = 0;
+    GLint height = 0;
+    GLint fmt = 0;
+    if (!GetTextureInfo2D(target, texture, level, &width, &height, &fmt))
+    {
+        printf("ERROR - TakeSnapshot(texture=%u): Failed to get texture size!\n",
+            texture);
+        return false;
+    }
+
     // Read texture to client memory
     if (!ReadTexture2D(target, texture, level, x, y, w, h, (void**)&m_pClientData))
     {
@@ -420,6 +455,7 @@ bool ApicTextureSnapshot::TakeSnapshot(
         m_y = y;
         m_w = w;
         m_h = h;
+        m_internalFmt = fmt;
         assert(m_pClientData);
     }
 
@@ -490,8 +526,25 @@ bool ApicTextureSnapshot::RestoreSnapshot(void)
         glGetIntegerv(texTargetQuery, &oldTexBinding);
         glBindTexture(texTargetBinding, m_texture);
 
+
+
+        // fix me
+        GLint readFmt = GL_RGBA;
+        GLint readType = GL_UNSIGNED_BYTE;
+
+        if (m_internalFmt == GL_DEPTH_COMPONENT)
+        {
+            readFmt = GL_DEPTH_COMPONENT;
+            readType = GL_FLOAT;
+        }
+        else if (m_internalFmt == GL_DEPTH_STENCIL)
+        {
+            readFmt = GL_DEPTH_STENCIL;
+            readType = GL_UNSIGNED_INT_24_8;
+        }
+
         glTexSubImage2D(m_textureTarget, m_level, m_x, m_y,
-            m_w, m_h, m_sFormat, m_sType, m_pClientData);
+            m_w, m_h, readFmt, readType, m_pClientData);
 
         glBindTexture(texTargetBinding, oldTexBinding);
 

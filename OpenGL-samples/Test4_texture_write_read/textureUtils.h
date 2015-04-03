@@ -4,7 +4,8 @@
 
 #include <GL/glew.h>
 
-bool GetTextureSize2D(GLenum target, GLuint texture, GLint level, GLint* w, GLint* h);
+bool GetTextureInfo2D(GLenum target, GLuint texture, GLint level,
+    GLint* w, GLint* h, GLint* fmt);
 
 bool ReadTexture2D(GLenum target, GLuint texture, GLuint level,
     GLint x, GLint y, GLint w, GLint h, void** data);
@@ -95,6 +96,7 @@ private:
     GLint  m_y;
     GLsizei m_w;
     GLsizei m_h;
+    GLint m_internalFmt;
 
     /**
     * Buffer name of snapshotted target.
