@@ -206,7 +206,7 @@ int main(int argc, char **argv)
     glutInitContextProfile(GLUT_CORE_PROFILE);
 
     glutInitWindowSize(width, height);
-    glutCreateWindow("Test5_simple_draw");
+    glutCreateWindow("Test6_ZBC");
     glewExperimental = GL_TRUE;
     glewInit();
 
@@ -215,8 +215,6 @@ int main(int argc, char **argv)
 
     std::cout << "GL_VERSION: " << a << std::endl;
     std::cout << "GL_VENDOR:  " << b << std::endl;
-
-
 
     glutDisplayFunc(display);
     glutIdleFunc(display);
