@@ -68,6 +68,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)\x86-debug\</OutDir>
     <IntDir>x86-debug\</IntDir>
+    <CustomBuildAfterTargets>
+    </CustomBuildAfterTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)\x86-release\</OutDir>
@@ -94,6 +96,13 @@
       <AdditionalDependencies>%(AdditionalDependencies);exiv2d.lib;xmpsdk.lib;libexpat.lib;zlib1d.lib;libboost_filesystem-vc120-mt-gd-1_56.lib;libboost_regex-vc120-mt-gd-1_56.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)/../3dparty/boost/lib/debug/x86;../../3dparty/exiv2/lib/debug/x86</AdditionalLibraryDirectories>
     </Link>
+    <CustomBuildStep>
+      <Command>
+      </Command>
+    </CustomBuildStep>
+    <PostBuildEvent>
+      <Command>copy $(SolutionDir)\..\3dparty\exiv2\lib\debug\x86\*.dll $(SolutionDir)\x86-debug\</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -109,6 +118,9 @@
       <AdditionalDependencies>%(AdditionalDependencies);exiv2d.lib;xmpsdk.lib;;libexpat.lib;zlib1d.lib;libboost_filesystem-vc120-mt-gd-1_56.lib;libboost_regex-vc120-mt-gd-1_56.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)/../3dparty/boost/lib/debug/x64;../../3dparty/exiv2/lib/debug/x64</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>copy $(SolutionDir)\..\3dparty\exiv2\lib\debug\x64\*.dll $(SolutionDir)\x64-debug\</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -128,6 +140,9 @@
       <AdditionalDependencies>%(AdditionalDependencies);exiv2.lib;xmpsdk.lib;libexpat.lib;zlib1.lib;libboost_filesystem-vc120-mt-1_56.lib;libboost_regex-vc120-mt-1_56.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)/../3dparty/boost/lib/release/x86;../../3dparty/exiv2/lib/release/x86</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>copy $(SolutionDir)\..\3dparty\exiv2\lib\release\x86\*.dll $(SolutionDir)\x86-release\</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -146,6 +161,9 @@
       <AdditionalDependencies>%(AdditionalDependencies);exiv2.lib;xmpsdk.lib;libexpat.lib;zlib1.lib;libboost_filesystem-vc120-mt-1_56.lib;libboost_regex-vc120-mt-1_56.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)/../3dparty/boost/lib/release/x64;../../3dparty/exiv2/lib/release/x64</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>copy $(SolutionDir)\..\3dparty\exiv2\lib\release\x64\*.dll $(SolutionDir)\x64-release\</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\includes\Common\ZHSTD.h" />

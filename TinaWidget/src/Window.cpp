@@ -345,9 +345,13 @@ namespace ZH{
             wcex.lpszClassName  = TEXT("zhanghui");        //
             wcex.hIconSm        = NULL;//LoadIcon(wcex.hInstance, (LPCTSTR)IDI_SMALL); 
 
-            if(!RegisterClassEx(&wcex))
+            static bool registered = false;
+            if (!registered && !RegisterClassEx(&wcex))
             {
                 return false;
+            }
+            else{
+                registered = true;
             }
 
             //Create window

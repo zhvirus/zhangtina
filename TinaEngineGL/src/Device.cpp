@@ -271,5 +271,15 @@ namespace ZH{
             return true;
         }
 
+        void Device::clear()
+        {
+            { glClearColor(0.5f, 0.9f, 0.5f, 1.0f); glClear(GL_COLOR_BUFFER_BIT); }
+        }
+
+        void Device::present(const ZH::Widgets::WindowsInfo& winInfo)
+        {
+            SwapBuffers(GetDC(winInfo.m_winHandle));
+        }
+
     }
 }

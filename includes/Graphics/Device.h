@@ -30,6 +30,9 @@ namespace ZH{
             virtual bool start( const ZH::Widgets::WindowsInfo& );
             virtual bool shutdown();
 
+            void clear();
+            void present(const ZH::Widgets::WindowsInfo& winInfo);
+
         private:
             DEVICE_STATUS m_status;
         private:

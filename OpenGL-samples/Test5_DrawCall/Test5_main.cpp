@@ -165,7 +165,7 @@ void initialize()
     }
 
     glUseProgram(program);
-    //glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
     glEnableVertexAttribArray(0);
 
@@ -180,6 +180,26 @@ void initialize()
     //glBindVertexBuffer(0, arrBuffer, offset, stride);
     
     location_color1 = glGetUniformLocation(program, "user_color1");
+
+    // test codes
+    {
+        GLint binding = 0;
+        GLuint new_buffers[] = { 0, 0 };
+        glGenBuffers(2, &new_buffers[0]);
+
+        glBindBuffer(GL_TRANSFORM_FEEDBACK_BUFFER, new_buffers[0]);
+        glGetIntegerv(GL_TRANSFORM_FEEDBACK_BUFFER_BINDING, &binding);
+
+        glBindBufferBase(GL_TRANSFORM_FEEDBACK_BUFFER, 1, new_buffers[1]);
+        glGetIntegerv(GL_TRANSFORM_FEEDBACK_BUFFER_BINDING, &binding);
+        glGetIntegeri_v(GL_TRANSFORM_FEEDBACK_BUFFER_BINDING, 1, &binding);
+
+        glBeginTransformFeedback(GL_NONE);
+        glEndTransformFeedback();
+
+    }
+
+
 }
 
 
