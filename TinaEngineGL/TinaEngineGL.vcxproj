@@ -170,19 +170,23 @@
     <ClCompile Include="src\Context.cpp" />
     <ClCompile Include="src\Debug.cpp" />
     <ClCompile Include="src\Device.cpp" />
+    <ClCompile Include="src\IndexBuffer.cpp" />
     <ClCompile Include="src\Name.cpp" />
     <ClCompile Include="src\Resource.cpp" />
     <ClCompile Include="src\ResourceManager.cpp" />
     <ClCompile Include="src\Shader.cpp" />
+    <ClCompile Include="src\VertexBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\includes\Graphics\ClassIdentifier.h" />
     <ClInclude Include="..\includes\Graphics\Context.h" />
     <ClInclude Include="..\includes\Graphics\Device.h" />
+    <ClInclude Include="..\includes\Graphics\IndexBuffer.h" />
     <ClInclude Include="..\includes\Graphics\Name.h" />
     <ClInclude Include="..\includes\Graphics\Resource.h" />
     <ClInclude Include="..\includes\Graphics\ResourceManager.h" />
     <ClInclude Include="..\includes\Graphics\Shader.h" />
+    <ClInclude Include="..\includes\Graphics\VertexBuffer.h" />
     <ClInclude Include="..\includes\Internal\Graphics\Debug.h" />
     <ClInclude Include="..\includes\Internal\Graphics\Internal_common_graphics.h" />
   </ItemGroup>

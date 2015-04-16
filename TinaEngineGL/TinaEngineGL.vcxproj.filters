@@ -35,6 +35,12 @@
     <ClCompile Include="src\Resource.cpp">
       <Filter>CPP</Filter>
     </ClCompile>
+    <ClCompile Include="src\IndexBuffer.cpp">
+      <Filter>CPP</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VertexBuffer.cpp">
+      <Filter>CPP</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\includes\Internal\Graphics\Internal_common_graphics.h">
@@ -62,6 +68,12 @@
       <Filter>H</Filter>
     </ClInclude>
     <ClInclude Include="..\includes\Graphics\Resource.h">
+      <Filter>H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\Graphics\IndexBuffer.h">
+      <Filter>H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\Graphics\VertexBuffer.h">
       <Filter>H</Filter>
     </ClInclude>
   </ItemGroup>

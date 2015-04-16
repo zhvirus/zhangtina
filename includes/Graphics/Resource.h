@@ -26,6 +26,15 @@ namespace ZH{
 
             CLASS_COMMON_PROTECTED_DECLEARATION(Resource);
         };
+
+        class ZH_GRAPHICS_DLL Buffer : public Resource
+        {
+        public:
+            Buffer(Context* ctx);
+            Buffer(){}
+
+            CLASS_COMMON_PROTECTED_DECLEARATION(Buffer);
+        };
     }
 }
 

@@ -71,8 +71,6 @@ namespace ZH{
         };
 
         typedef std::map<unsigned int, Program*> ProgramMap;
-
-
     }
 }
 #endif

@@ -20,6 +20,7 @@ namespace ZH{
         }
 
 
-
+        Buffer::Buffer( Context* ctx ): Resource(ctx){}
+        Buffer::~Buffer(){}
     }
 }
