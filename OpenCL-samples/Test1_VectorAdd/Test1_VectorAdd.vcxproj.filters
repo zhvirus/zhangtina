@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="H">
+      <UniqueIdentifier>{0b42ea69-a862-47c2-90be-6716e3ebce04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CPP">
+      <UniqueIdentifier>{4b5544cf-c0d2-43fc-8529-30bfded3b6cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CL">
+      <UniqueIdentifier>{a168b7b2-13e0-44b6-b15a-51297860f07c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>CPP</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="vectorAdd.cl">
+      <Filter>CL</Filter>
+    </None>
+  </ItemGroup>
+</Project>
