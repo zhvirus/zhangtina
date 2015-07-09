@@ -50,6 +50,12 @@ namespace ZH{
             return float3(t-v.x, t-v.y, t-v.z);
         }
 
+        float3 operator - (const float3& v)
+        {
+            return float3( -v.x, -v.y, -v.z );
+        }
+
+
         // *
         float3 operator * ( const float* const t, const float3& v)
         {

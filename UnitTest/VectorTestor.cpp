@@ -312,6 +312,10 @@ namespace ZH{
                 printResult(VALUE_EQUAL<float>(mm12b.x,7.0f) && VALUE_EQUAL<float>(mm12b.y,9.5f) && VALUE_EQUAL<float>(mm12b.z,-4.0f),68);
                 printResult(VALUE_EQUAL<float>(mm12c.x,-7.0f) && VALUE_EQUAL<float>(mm12c.y,-9.5f) && VALUE_EQUAL<float>(mm12c.z,4.0f) ,69);
                 printResult(VALUE_EQUAL<float>(mm12d.x,-7.0f) && VALUE_EQUAL<float>(mm12d.y,-9.0f) && VALUE_EQUAL<float>(mm12d.z,-3.0f) ,70);
+
+                float3 tt(1, -2, 3);
+                float3 tt_minus = -tt;
+                printResult(VALUE_EQUAL<float>(tt_minus.x, -tt.x) && VALUE_EQUAL<float>(tt_minus.y, -tt.y) && VALUE_EQUAL<float>(tt_minus.z, -tt.z), 170);
             }
 
             // *

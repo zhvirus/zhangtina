@@ -73,6 +73,7 @@ namespace ZH{
         // -
         ZH_MATH_DLL float3 operator - ( const float* const, const float3& );
         ZH_MATH_DLL float3 operator - ( const float&, const float3& );
+        ZH_MATH_DLL float3 operator - ( const float3& );
         // *
         ZH_MATH_DLL float3 operator * ( const float* const, const float3& );
         ZH_MATH_DLL float3 operator * ( const float&, const float3& );

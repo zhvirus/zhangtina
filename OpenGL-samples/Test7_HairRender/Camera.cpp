@@ -11,8 +11,8 @@
 
 
 Camera::Camera() :
-m_pos(10.0f, 10.0f, 10.0f),
-m_lookDir(-1.0f, -1.0f, -1.0f),
+m_pos(0.0f, 0.0f, 3.0f),
+m_lookDir(0.0f, 0.0f, -1.0f),
 m_upDir(0.0f, 1.0f, 0.0f),
 m_viewMatDirtyFlag(true),
 m_projMatDirtyFlag(true)
@@ -54,16 +54,26 @@ void Camera::updateViewMat()
 
     // OpenGL RH
     ZH::Math::float3 zaxis = m_lookDir.normalize();
-    ZH::Math::float3 xaxis = m_upDir.cross(zaxis).normalize();
-    ZH::Math::float3 yaxis = zaxis.cross(xaxis);
+    ZH::Math::float3 xaxis = zaxis.cross(m_upDir).normalize();
+    ZH::Math::float3 yaxis = xaxis.cross(zaxis);
 
     float viewMat[] = {
-        xaxis.x, yaxis.x, -zaxis.x, 0.0f,
-        xaxis.y, yaxis.y, -zaxis.y, 0.0f,
-        xaxis.z, yaxis.z, -zaxis.z, 0.0f,
-        -xaxis.dot(m_pos), -yaxis.dot(m_pos), -zaxis.dot(m_pos), 1.0f
+        xaxis.x, xaxis.y, xaxis.z, -xaxis.dot(m_pos),
+        yaxis.x, yaxis.y, yaxis.z, -yaxis.dot(m_pos),
+        -zaxis.x, -zaxis.y, -zaxis.z, -zaxis.dot(m_pos),
+        0.0f, 0.0f, 0.0f, 1.0f
     };
     m_viewMat = viewMat;
+
+    {
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
+        gluLookAt(m_pos.x, m_pos.y, m_pos.z, 0, 0, 0, 0, 1, 0);
+        float model[16];
+        glGetFloatv(GL_MODELVIEW_MATRIX, model);
+        glLoadIdentity();
+        //m_viewMat = model;
+    }
 
     m_viewMatDirtyFlag = false;
 }
@@ -92,7 +102,7 @@ CameraPersp::CameraPersp() :
 m_fovy(ZH::Math::PI / 3.0f),
 m_aspect(1.0f),
 m_nearZ(0.1f),
-m_farZ(50000.0f)
+m_farZ(5000.0f)
 {
 }
 
@@ -118,18 +128,27 @@ void CameraPersp::updateProjMat()
     if (!m_projMatDirtyFlag)
         return;
 
-    // Learned from 'D3DXMatrixPerspectiveFovLH'
-    const float yScale = 1.0f / tan(m_fovy / 2);
-    const float xScale = yScale / m_aspect;
+    const float half_h = m_nearZ * tan(m_fovy / 2);
+    const float half_w = half_h * m_aspect;
 
     float projMat[] = {
-        xScale, 0.0f, 0.0f, 0.0f,
-        0.0f, yScale, 0.0f, 0.0f,
-        0.0f, 0.0f, m_farZ / (m_farZ - m_nearZ), 1.0f,
-        0.0f, 0.0f, -m_nearZ*m_farZ / (m_farZ - m_nearZ), 0.0f
+        m_nearZ / half_w, 0.0f, 0.0f, 0.0f,
+        0.0f, m_nearZ/half_h, 0.0f, 0.0f,
+        0.0f, 0.0f, (m_farZ + m_nearZ) / (m_nearZ - m_farZ), 2 * m_nearZ*m_farZ / (m_farZ - m_nearZ),
+        0.0f, 0.0f, -1.0f, 0.0f
     };
-
     m_projMat = projMat;
+
+    {
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        gluPerspective(m_fovy, m_aspect, m_nearZ, m_farZ);
+        float proj[16];
+        glGetFloatv(GL_PROJECTION_MATRIX, proj);
+        glLoadIdentity();
+        //m_projMat = proj;
+    }
+
 
     m_projMatDirtyFlag = false;
 }

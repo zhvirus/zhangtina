@@ -10,7 +10,12 @@ bool GeomHairRender::build_geometry()
 
     GLfloat vertices[] = {
         0.0f, 0.0f, 0.0f,
-        0.0f, 100.0f, 0.0f
+        -0.5f, 0.0f, 0.0f,
+        0.5f, 0.0f, 0.0f,
+        0.0f, -0.5f, 0.0f,
+        0.0f, 0.5f, 0.0f,
+        0.0f, 0.0f, -0.5f,
+        0.0f, 0.0f, 0.5f
     };
 
     // GL_ARRAY_BUFFER
@@ -20,9 +25,9 @@ bool GeomHairRender::build_geometry()
     size_t size = sizeof(vertices);
     glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
 
-    GLushort index_array[] =
+    GLuint index_array[] =
     {
-        0, 1
+1,2,4
     };
 
     // GL_ELEMENT_ARRAY_BUFFER
@@ -47,13 +52,14 @@ bool GeomHairRender::build_shaders()
         GLuint VS = glCreateShader(GL_VERTEX_SHADER);
         const GLchar* vsSource =
             "#version 440 core\n"
-            "layout( row_major ) uniform;\n"
+            "layout( shared, row_major ) uniform;\n"
             "uniform Matrices {\n"
-            "   mat4 modelViewProj;\n"
+            "   mat4 modelView;\n"
+            "   mat4 proj;\n"
             "};\n"
             "layout( location=0 ) in vec4 vPosition;\n"
             "void main(){\n"
-            "    gl_Position = modelViewProj * vPosition;\n"
+            "    gl_Position = proj*modelView*vPosition;\n"
             "}\n"
             ;
         glShaderSource(VS, 1, &vsSource, NULL);
@@ -166,18 +172,23 @@ void GeomHairRender::render(CameraPersp& cam)
 {
     // ps color
     glUseProgram(m_program);
-    glUniform4f(m_psSolidColorLoc, 0.0, 0.5, 0.0, 1);
+    glUniform4f(m_psSolidColorLoc, 0.0, 1.0, 0.0, 1);
 
     // vs matrix
-    ZH::Math::matrix4x4_f viewMat = cam.projMatrix();
-    ZH::Math::matrix4x4_f projMat = cam.viewMatrix();
-    ZH::Math::matrix4x4_f viewProj = viewMat*projMat;
-    memcpy(m_matUboBuffer, (void*)viewProj.v, sizeof(float) * 16);
+
+    ZH::Math::matrix4x4_f viewMat = cam.viewMatrix();
+    ZH::Math::matrix4x4_f projMat = cam.projMatrix();
+
+    //viewMat = ZH::Math::matrix4x4_f::IDENTITY;
+    //projMat = ZH::Math::matrix4x4_f::IDENTITY;
+
+    memcpy(m_matUboBuffer, (void*)viewMat.v, sizeof(float) * 16);
+    memcpy((void*)((float*)m_matUboBuffer + 16), (void*)(projMat.v), sizeof(float) * 16);
 
     glBindBuffer(GL_UNIFORM_BUFFER, m_matUbo);
     glBufferSubData(GL_UNIFORM_BUFFER, 0, m_matUboSize, m_matUboBuffer);
 
     glBindVertexArray(m_vertexArray);
-    glDrawElements(GL_LINES, 2, GL_UNSIGNED_SHORT, NULL);
+    glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, NULL);
 }
 

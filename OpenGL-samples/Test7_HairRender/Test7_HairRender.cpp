@@ -23,6 +23,8 @@ void display()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    glViewport(0, 0, width, height);
+    glClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
     pRender->render(gCamera);
 
     glutSwapBuffers();
@@ -42,6 +44,13 @@ void initialize()
     glClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
 
     pRender->initialize();
+}
+
+void reshape(int w, int h)
+{
+    gCamera.aspect((float)w / (float)h);
+    glViewport(0, 0, w, h);
+
 }
 
 
@@ -65,7 +74,7 @@ int _tmain(int argc, char* argv[])
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
 
     glutInitContextVersion(majorVersion, minorVersion);
-    glutInitContextProfile(GLUT_CORE_PROFILE);
+    glutInitContextProfile(GLUT_COMPATIBILITY_PROFILE/*GLUT_CORE_PROFILE*/);
 
     glutInitWindowSize(width, height);
     glutCreateWindow("Test7_HairRender");
@@ -81,6 +90,7 @@ int _tmain(int argc, char* argv[])
     glutDisplayFunc(display);
     glutIdleFunc(display);
     glutKeyboardFunc(keyboard);
+    glutReshapeFunc(reshape);
     initialize();
     glutMainLoop();
     return 0;
