@@ -43,7 +43,7 @@
       <Filter>H</Filter>
     </ClInclude>
     <ClInclude Include="..\includes\Util\Thread.h">
-      <Filter>Header Files</Filter>
+      <Filter>H</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -63,7 +63,7 @@
       <Filter>CPP</Filter>
     </ClCompile>
     <ClCompile Include="src\Thread.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>CPP</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
