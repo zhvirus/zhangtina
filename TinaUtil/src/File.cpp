@@ -75,7 +75,13 @@ namespace ZH{
             return true;
         }
 
-        void File::basename(const std::wstring& file, wchar_t* name)
+        void File::remove_preTag(std::wstring& name)
+        {
+            boost::wregex reg(L"\\[.*\\]_*", boost::wregex::icase | boost::regex::perl);
+            name = boost::regex_replace(name, reg, "", boost::match_default | boost::format_all);
+        }
+
+        void File::basename(const std::wstring& file, std::wstring& name)
         {
             boost::wregex reg(L"([^\\\\\\/]+)$",
                 boost::wregex::icase | boost::regex::perl);
@@ -86,7 +92,7 @@ namespace ZH{
                 return;
             }
 
-            wcsncpy_s(name, 4096, m[1].str().c_str(), m[1].length());
+            name = m[1].str();
         }
 
         int File::fileSize(const std::wstring& file)
@@ -140,13 +146,19 @@ namespace ZH{
             return !exist(file);
         }
 
-        bool File::getPhotoTakenTime(
-            const std::wstring& image_name, unsigned int& y, unsigned int& m, unsigned int& d)
+        bool File::getPhotoTakenInfo(
+            const std::wstring& image_name,
+            std::wstring& device_name,
+            unsigned int& y, unsigned int& m, unsigned int& d,
+            unsigned int& h, unsigned int& min, unsigned int& s)
         {
             // Reset year/month/date
             y = 0;
             m = 0;
             d = 0;
+            h = 0;
+            min = 0;
+            s = 0;
 
             // Check file name
             boost::wregex reg(L"\\.(jpg|jpeg|JPG|JPEG)$");
@@ -167,6 +179,11 @@ namespace ZH{
             y = exifData.year;
             m = exifData.month;
             d = exifData.day;
+            h = exifData.hour;
+            min = exifData.min;
+            s = exifData.sec;
+
+            device_name = exifData.device;
 
             return true;
         }

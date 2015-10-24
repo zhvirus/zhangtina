@@ -15,6 +15,10 @@ namespace ZH {
             unsigned int year;
             unsigned int month;
             unsigned int day;
+            unsigned int hour;
+            unsigned int min;
+            unsigned int sec;
+            wchar_t device[50];
         };
 
 

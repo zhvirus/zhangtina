@@ -224,14 +224,14 @@ unsigned int __stdcall doWork(void* param)
     // Check source directory
     const std::wstring srcFolder(pDlg->m_srcPath.GetBuffer());
     if (!ZH::UTIL::File::exist(srcFolder)){
-        pDlg->print(L"照片源目录不存在，请别乱搞! - error\r\n");
+        pDlg->print(L"照片源目录不存在!! 请别乱搞啊, 亲! - error\r\n");
         return 1;
     }
 
     // Check dest directory
     const std::wstring dstFolder(pDlg->m_dstPath.GetBuffer());
     if (!ZH::UTIL::File::exist(dstFolder)){
-        pDlg->print(L"照片目标目录不存在，请别乱搞! - error\r\n");
+        pDlg->print(L"照片目标目录不存在!! 请别乱搞啊, 亲! - error\r\n");
         return 1;
     }
 
@@ -275,15 +275,38 @@ unsigned int __stdcall doWork(void* param)
         unsigned int y = 0;
         unsigned int m = 0;
         unsigned int d = 0;
-        if (!ZH::UTIL::File::getPhotoTakenTime(*cIt, y, m, d)){
-            pDlg->print(L"拍摄时间: 查询不到，这不是照片，而是图片!\r\n");
-            pDlg->process_image_video(*cIt, 0, 0, 0, SUM, true);
-            continue;
+        unsigned int h = 0;
+        unsigned int min = 0;
+        unsigned int s = 0;
+        std::wstring device;
+        if (!ZH::UTIL::File::getPhotoTakenInfo(*cIt, device, y, m, d, h, min, s)){
+            pDlg->print(L"拍摄时间: 查询不到,这不是照片,而是图片!\r\n");
+            pDlg->process_image_video(*cIt, L"", 0, 0, 0, 0, 0, 0, SUM, true);
+        }
+        else{
+            StringCbPrintf(time_str, MAX_TIME_STR_LEN, L"拍摄时间: %d 年 %d 月 %d 日\r\n", y, m, d);
+            pDlg->process_image_video(*cIt, device, y, m, d, h, min, s, SUM, true);
+            pDlg->print((wchar_t*)time_str);
         }
 
-        StringCbPrintf(time_str, MAX_TIME_STR_LEN, L"拍摄时间: %d 年 %d 月 %d 日\r\n", y, m, d);
-        pDlg->process_image_video(*cIt, y, m, d, SUM, true);
-        pDlg->print((wchar_t*)time_str);
+        // Print Summary
+        {
+            wchar_t summary_str[10000];
+            StringCbPrintf(summary_str, 10000,
+                L"一共发现照片张数:      %d\r\n"
+                L"忽略已备份张数:        %d\r\n"
+                L"复制照片张数:          %d\r\n"
+                L"复制照片文件大小:      %.3f MB\r\n\r\n"
+                L"一共发现视频个数:      %d\r\n"
+                L"忽略已备份视频个数:    %d\r\n"
+                L"复制视频个数:          %d\r\n"
+                L"复制视频文件大小:      %.3f MB\r\n"
+                , SUM.image_total, SUM.image_skipped, SUM.image_copied, SUM.image_file_size / 1000000.0f,
+                SUM.video_total, SUM.video_skipped, SUM.video_copied, SUM.video_file_size / 1000000.0f);
+
+            pDlg->m_summary = summary_str;
+            pDlg->UpdateData(false);
+        }
     }
 
     pDlg->print(L"~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n");
@@ -298,7 +321,26 @@ unsigned int __stdcall doWork(void* param)
         StringCbPrintf(message, 512, L"\r\n[%d/%d]\r\n处理视频： %s ...\r\n", video_index, video_count, cIt->c_str());
         pDlg->print(message);
 
-        pDlg->process_image_video(*cIt, 0, 0, 0, SUM, false);
+        pDlg->process_image_video(*cIt, L"", 0, 0, 0, 0, 0, 0, SUM, false);
+
+        // Print Summary
+        {
+            wchar_t summary_str[10000];
+            StringCbPrintf(summary_str, 10000,
+                L"一共发现照片张数:      %d\r\n"
+                L"忽略已备份张数:        %d\r\n"
+                L"复制照片张数:          %d\r\n"
+                L"复制照片文件大小:      %.3f MB\r\n\r\n"
+                L"一共发现视频个数:      %d\r\n"
+                L"忽略已备份视频个数:    %d\r\n"
+                L"复制视频个数:          %d\r\n"
+                L"复制视频文件大小:      %.3f MB\r\n"
+                , SUM.image_total, SUM.image_skipped, SUM.image_copied, SUM.image_file_size / 1000000.0f,
+                SUM.video_total, SUM.video_skipped, SUM.video_copied, SUM.video_file_size / 1000000.0f);
+
+            pDlg->m_summary = summary_str;
+            pDlg->UpdateData(false);
+        }
     }
 
     pDlg->print_active(L"亲！ 全部帮你整理好了哦！~请看右上角的 [处理结果] ^_^！");
@@ -311,21 +353,6 @@ unsigned int __stdcall doWork(void* param)
     pDlg->GetDlgItem(IDC_BUTTON1)->EnableWindow(true);
     pDlg->GetDlgItem(IDC_BUTTON2)->EnableWindow(true);
 
-    // Print Summary
-    wchar_t summary_str[10000];
-    StringCbPrintf(summary_str, 10000,
-        L"一共发现照片张数：     %d\r\n"
-        L"忽略已备份张数:        %d\r\n"
-        L"复制照片张数:          %d\r\n\r\n"
-        L"一共发现视频个数：     %d\r\n"
-        L"忽略已备份视频个数:    %d\r\n"
-        L"复制视频个数:          %d\r\n"
-        , SUM.image_total, SUM.image_skipped, SUM.image_copied,
-        SUM.video_total, SUM.video_skipped, SUM.video_copied);
-
-    pDlg->m_summary = summary_str;
-    pDlg->UpdateData(false);
-
     return 0;
 }
 
@@ -335,7 +362,16 @@ void CPhotoManagerDlg::OnBnClickedOk()
 
 }
 
-bool CPhotoManagerDlg::process_image_video(const std::wstring file_name, unsigned int y, unsigned int m, unsigned int d, summary& SUM, bool isImage)
+bool CPhotoManagerDlg::process_image_video(
+    const std::wstring& file_name,
+    const std::wstring& device_name,
+    unsigned int y,
+    unsigned int m,
+    unsigned int d,
+    unsigned int h,
+    unsigned int min,
+    unsigned int s,
+    summary& SUM, bool isImage)
 {
     if (y == 0){
         ZH::UTIL::File::getLastWriteTime(file_name, y, m, d);
@@ -362,9 +398,21 @@ bool CPhotoManagerDlg::process_image_video(const std::wstring file_name, unsigne
 
     // dst file name
     wchar_t basename[4096];
-    ZH::UTIL::File::basename(file_name, basename);
+    {
+        std::wstring tmp;
+        ZH::UTIL::File::basename(file_name, tmp);
+        ZH::UTIL::File::remove_preTag(tmp);
+
+        if (device_name != L""){
+            StringCbPrintf(basename, 4096, L"[%s]_[%02d-%02d-%02d]_%s", device_name.c_str(), h, min, s, tmp.c_str());
+        }
+        else{
+            StringCbPrintf(basename, 4096, L"%s", tmp.c_str());
+        }
+    }
+
     wchar_t dst_file[4096];
-    StringCbPrintf(dst_file, 4096, L"%s\/%s", dst_dir, basename);
+    StringCbPrintf(dst_file, 4096, L"%s\\%s", dst_dir, basename);
 
     if (ZH::UTIL::File::exist(dst_file)){
         if (ZH::UTIL::File::fileSize(file_name) == ZH::UTIL::File::fileSize(dst_file)){
@@ -402,7 +450,7 @@ bool CPhotoManagerDlg::process_image_video(const std::wstring file_name, unsigne
 
     // copy file
     const int file_size = ZH::UTIL::File::fileSize(file_name);
-    StringCbPrintf(message, 4096, L"复制文件: %s        ======>        %s        文件大小: %d byte\r\n", file_name.c_str(), dst_file, file_size);
+    StringCbPrintf(message, 4096, L"复制文件: %s        ======>        %s        文件大小: %.3f MB\r\n", file_name.c_str(), dst_file, (float)file_size/1000000.0f);
     print(message);
     print_active(message);
 
@@ -410,15 +458,16 @@ bool CPhotoManagerDlg::process_image_video(const std::wstring file_name, unsigne
         print(L"复制成功\r\n");
         if (isImage){
             SUM.image_copied++;
+            SUM.image_file_size += file_size;
         }
         else{
             SUM.video_copied++;
+            SUM.video_file_size += file_size;
         }
     }
     else{
         print(L"复制失败\r\n");
     }
-
 
     return true;
 }

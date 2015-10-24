@@ -14,16 +14,20 @@ public:
         image_total(0),
         image_skipped(0),
         image_copied(0),
+        image_file_size(0),
         video_total(0),
         video_skipped(0),
-        video_copied(0)
+        video_copied(0),
+        video_file_size(0)
     {}
     unsigned int image_total;
     unsigned int image_skipped;
     unsigned int image_copied;
+    unsigned int image_file_size;
     unsigned int video_total;
     unsigned int video_skipped;
     unsigned int video_copied;
+    unsigned int video_file_size;
 };
 
 
@@ -59,7 +63,16 @@ public:
     void print(wchar_t* msg);
     void print(char* msg);
     void print_active(wchar_t* msg);
-    bool process_image_video(const std::wstring, unsigned int, unsigned int, unsigned int, summary&, bool);
+    bool process_image_video(
+        const std::wstring& file_name,
+        const std::wstring& device_name,
+        unsigned int y,
+        unsigned int m,
+        unsigned int d,
+        unsigned int h,
+        unsigned int min,
+        unsigned int s,
+        summary& SUM, bool isImage);
     CString m_output2;
     CString m_summary;
     CString m_srcPath;

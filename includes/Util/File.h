@@ -20,7 +20,8 @@ namespace ZH {
                 bool recursive = false  // Search recursively ?
                 );
 
-            static void basename(const std::wstring&, wchar_t* name);
+            static void remove_preTag(std::wstring& name);
+            static void basename(const std::wstring&, std::wstring& name);
             static int fileSize(const std::wstring&);
 
             static bool copyFile(const std::wstring& src, const std::wstring& dst);
@@ -29,7 +30,11 @@ namespace ZH {
 
             static bool deleteFile(const std::wstring&);
 
-            static bool getPhotoTakenTime(const std::wstring& image_name, unsigned int&, unsigned int&, unsigned int&);
+            static bool getPhotoTakenInfo(
+                const std::wstring& image_name,
+                std::wstring& device_name,
+                unsigned int&, unsigned int&, unsigned int&,
+                unsigned int&, unsigned int&, unsigned int&);
 
             static bool getLastWriteTime(const std::wstring& file, unsigned int&, unsigned int&, unsigned int&);
 
