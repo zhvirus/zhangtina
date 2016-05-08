@@ -11,6 +11,7 @@
 #include "Util/Thread.h"
 #include "Strsafe.h"
 #include "time.h"
+#include <sstream>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -221,6 +222,36 @@ void CPhotoManagerDlg::print_active(wchar_t* msg)
     m_active_output = msg;
 }
 
+bool summary::scanFolder(const std::wstring& folder)
+{
+    {
+        imageFiles.clear();
+        videoFiles.clear();
+        unrecognizedFiles.clear();
+    }
+
+    std::vector<std::wstring> allFiles;
+    ZH::UTIL::File::collect_files(folder, L".*", allFiles, true);
+
+    for (auto i = 0U; i < allFiles.size(); ++i){
+        const std::wstring& file = allFiles[i];
+        if (ZH::UTIL::File::fileNameIsImage(file)){
+            imageFiles.push_back(file);
+        }
+        else if (ZH::UTIL::File::fileNameIsVideo(file)){
+            videoFiles.push_back(file);
+        }
+        else{
+            unrecognizedFiles.push_back(file);
+        }
+    }
+
+    image_total = (unsigned int)imageFiles.size();
+    video_total = (unsigned int)videoFiles.size();
+
+    return true;
+}
+
 unsigned int __stdcall doWork(void* param)
 {
     time_t startT = time(0);
@@ -250,34 +281,38 @@ unsigned int __stdcall doWork(void* param)
     pDlg->GetDlgItem(IDC_BUTTON1)->EnableWindow(false);
     pDlg->GetDlgItem(IDC_BUTTON2)->EnableWindow(false);
 
-    // Collect image files
-    pDlg->print(L"正在帮亲查找照片...");
-    std::vector<std::wstring>* files_image = NULL;
-    ZH::UTIL::File::collect_files(srcFolder, L"\\.(jpg|jpeg|JPG|JPEG)$", files_image, true);
-    unsigned int image_count = (unsigned int)files_image->size();
+    // Scan files from the source folder
+    if (!SUM.scanFolder(srcFolder)){
+        pDlg->print(L"扫描分析源文件夹失败! - error\r\n");
+        return 1;
+    }
+
     wchar_t message[512];
-    StringCbPrintf(message, 512, L"一共帮亲找到 %d 张照片\r\n", image_count);
-    SUM.image_total = image_count;
-    pDlg->print(message);
+    {
+        // Echo image files count
+        StringCbPrintf(message, 512, L"一共帮亲找到 %d 张照片\r\n", SUM.image_total);
+        pDlg->print(message);
 
-    // Collect video files
-    pDlg->print(L"正在帮亲查找录像...");
-    std::vector<std::wstring>* files_video = NULL;
-    ZH::UTIL::File::collect_files(srcFolder, L"\\.(MOV|AVI|avi|mp4|MP4)$", files_video, true);
-    unsigned int video_count = (unsigned int)files_video->size();
-    StringCbPrintf(message, 512, L"一共帮亲找到 %d 个视频\r\n", video_count);
-    SUM.video_total = video_count;
-    pDlg->print(message);
+        // Echo video files count
+        StringCbPrintf(message, 512, L"一共帮亲找到 %d 个视频\r\n", SUM.video_total);
+        pDlg->print(message);
 
-    pDlg->m_progress.SetRange(0, video_count + image_count-1);
+        // Echo unrec files count
+        StringCbPrintf(message, 512, L"一共帮亲找到 %d 个未识别文件\r\n", SUM.unrecognizedFiles.size());
+        pDlg->print(message);
+    }
+
+    pDlg->m_progress.SetRange(0, SUM.image_total + SUM.video_total+1);
     pDlg->m_progress.SetStep(1);
+    pDlg->m_progress.SetPos(1);
 
-    // Foreach image check its created date
-    int image_index = -1;
+    // For each image check its created date
+    int image_index = 0;
     const unsigned int MAX_TIME_STR_LEN = 100;
-    std::vector<std::wstring>::const_iterator cIt = files_image->begin();
-    for (; cIt != files_image->end(); ++cIt){
-        pDlg->m_progress.SetPos(++image_index);
+    std::vector<std::wstring>::const_iterator cIt = SUM.imageFiles.begin();
+    for (; cIt != SUM.imageFiles.end(); ++cIt){
+        pDlg->m_progress.SetPos(image_index+2);
+        image_index++;
         //pDlg->m_progress.SetBkColor(RGB(255, 112, 0));
         unsigned int y = 0;
         unsigned int m = 0;
@@ -304,7 +339,7 @@ unsigned int __stdcall doWork(void* param)
                 L"一共发现视频个数:      %d\r\n"
                 L"忽略已备份视频个数:    %d\r\n"
                 L"复制视频个数:          %d\r\n"
-                L"复制视频文件大小:      %.3f MB\r\n"
+                L"复制视频文件大小:      %.3f MB\r\n\r\n"
                 , SUM.image_total, SUM.image_skipped, SUM.image_copied, SUM.image_file_size / 1000000.0f,
                 SUM.video_total, SUM.video_skipped, SUM.video_copied, SUM.video_file_size / 1000000.0f);
 
@@ -315,11 +350,11 @@ unsigned int __stdcall doWork(void* param)
     }
 
     // Foreach video check its created date
-    int video_index = -1;
-    cIt = files_video->begin();
-    for (; cIt != files_video->end(); ++cIt){
+    int video_index = 0;
+    cIt = SUM.videoFiles.begin();
+    for (; cIt != SUM.videoFiles.end(); ++cIt){
+        pDlg->m_progress.SetPos(image_index+2+video_index+1);
         video_index++;
-        pDlg->m_progress.SetPos(image_index+video_index);
 
         pDlg->process_image_video(*cIt, L"", 0, 0, 0, 0, 0, 0, SUM, false);
 
@@ -334,7 +369,7 @@ unsigned int __stdcall doWork(void* param)
                 L"一共发现视频个数:      %d\r\n"
                 L"忽略已备份视频个数:    %d\r\n"
                 L"复制视频个数:          %d\r\n"
-                L"复制视频文件大小:      %.3f MB\r\n"
+                L"复制视频文件大小:      %.3f MB\r\n\r\n"
                 , SUM.image_total, SUM.image_skipped, SUM.image_copied, SUM.image_file_size / 1000000.0f,
                 SUM.video_total, SUM.video_skipped, SUM.video_copied, SUM.video_file_size / 1000000.0f);
 
@@ -344,10 +379,24 @@ unsigned int __stdcall doWork(void* param)
         pDlg->UpdateData(false);
     }
 
-    pDlg->print_active(L"亲！ 全部帮你整理好了哦！~请看右上角的 [处理结果] ^_^！");
+    // Append unrecognized files
+    const unsigned int unrecCount = (unsigned int)SUM.unrecognizedFiles.size();
+    if (unrecCount > 0)
+    {
+        std::wstringstream ss;
+        ss << L"\r\n未识别文件 " << unrecCount << L" 个:\r\n\r\n";
+        for (auto str : SUM.unrecognizedFiles){
+            std::wstring bName;
+            ZH::UTIL::File::basename(str, bName);
+            ss << bName << L"\r\n";
+        }
 
-    ZH::UTIL::FreeVector(files_image);
-    ZH::UTIL::FreeVector(files_video);
+        CString unrec = ss.str().c_str();
+        pDlg->m_summary += unrec;
+        pDlg->UpdateData(false);
+    }
+
+    pDlg->print_active(L"亲！ 全部帮你整理好了哦！~请看右上角的 [处理结果] ^_^！");
 
     // time
     {
@@ -453,6 +502,15 @@ bool CPhotoManagerDlg::process_image_video(
         wchar_t new_dst_file[4096];
         StringCbPrintf(new_dst_file, 4096, L"%s/%d_%s", dst_dir, index, basename);
         while (ZH::UTIL::File::exist(new_dst_file)){
+            if (ZH::UTIL::File::fileSize(file_name) == ZH::UTIL::File::fileSize(new_dst_file)){
+                if (isImage){
+                    SUM.image_skipped++;
+                }
+                else{
+                    SUM.video_skipped++;
+                }
+                return true;
+            }
             StringCbPrintf(new_dst_file, 4096, L"%s/%d_%s", dst_dir, ++index, basename);
         }
         StringCbPrintf(dst_file, 4096, L"%s", new_dst_file);

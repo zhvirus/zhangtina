@@ -10,6 +10,14 @@
 #include <fstream>
 #include <string>
 
+static boost::wregex sImageRE(
+    L"\\.(jpg|jpeg|JPG|JPEG)$",
+    boost::regex::perl | boost::regex::icase);
+
+static boost::wregex sVideoRE(
+    L"\\.(MOV|AVI|avi|mp4|MP4)$",
+    boost::regex::perl | boost::regex::icase);
+
 namespace ZH{
     namespace UTIL{
 
@@ -56,10 +64,20 @@ namespace ZH{
             }
         }
 
+        bool File::fileNameIsImage(const std::wstring& name)
+        {
+            return boost::regex_search(name, sImageRE);
+        }
+
+        bool File::fileNameIsVideo(const std::wstring& name)
+        {
+            return boost::regex_search(name, sVideoRE);
+        }
+
         bool File::collect_files(
             const std::wstring& dir,
             const std::wstring& regex,
-            std::vector<std::wstring>*& files,
+            std::vector<std::wstring>& files,
             bool recursive/* = false*/)
         {
             if (!exist(dir) || !isDir(dir)){
@@ -67,11 +85,11 @@ namespace ZH{
                 return false;
             }
 
-            files = new std::vector<std::wstring>();
+            files.clear();
 
             boost::filesystem::path boost_dir(dir);
             boost::wregex regex_boost(regex, boost::regex::perl | boost::regex::icase);
-            collect_files_helper(boost_dir, regex_boost, *files, recursive);
+            collect_files_helper(boost_dir, regex_boost, files, recursive);
             return true;
         }
 

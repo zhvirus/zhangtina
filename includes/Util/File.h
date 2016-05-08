@@ -13,10 +13,13 @@ namespace ZH {
             static bool isDir(const std::wstring&);
             static bool isFile(const std::wstring&);
 
+            static bool fileNameIsImage(const std::wstring& name);
+            static bool fileNameIsVideo(const std::wstring& name);
+
             static bool collect_files(
                 const std::wstring& dir, // Directory to search file from
                 const std::wstring& regex, // File basename should match this reg expr
-                std::vector<std::wstring>*& files, // Returned string array for searched file names
+                std::vector<std::wstring>& files, // Returned string array for searched file names
                 bool recursive = false  // Search recursively ?
                 );
 

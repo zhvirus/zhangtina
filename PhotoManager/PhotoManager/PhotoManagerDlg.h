@@ -6,6 +6,7 @@
 
 #include <string>
 #include "afxcmn.h"
+#include <vector>
 
 class summary
 {
@@ -28,6 +29,12 @@ public:
     unsigned int video_skipped;
     unsigned int video_copied;
     unsigned int video_file_size;
+
+    std::vector<std::wstring> imageFiles;
+    std::vector<std::wstring> videoFiles;
+    std::vector<std::wstring> unrecognizedFiles;
+
+    bool scanFolder(const std::wstring& folder);
 };
 
 
