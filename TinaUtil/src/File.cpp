@@ -11,7 +11,7 @@
 #include <string>
 
 static boost::wregex sImageRE(
-    L"\\.(jpg|jpeg|JPG|JPEG)$",
+    L"\\.(jpg|jpeg|JPG|JPEG|PNG|png|BMP|bmp)$",
     boost::regex::perl | boost::regex::icase);
 
 static boost::wregex sVideoRE(
