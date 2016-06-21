@@ -1,5 +1,9 @@
 #include <CL/opencl.h>
 #include <iostream>
+#include <stdio.h>
+#include <time.h>
+#include <sys/timeb.h>
+
 
 struct platformInfo
 {
@@ -9,6 +13,13 @@ struct platformInfo
     char VENDOR[100];
     char EXT[100];
     char ICD_SUFFIX[100];
+};
+
+class T{
+private:
+    T(const T&) = delete;
+    T& operator=(const T&) = delete;
+
 };
 
 void main()
@@ -51,6 +62,12 @@ void main()
         clGetDeviceIDs(platforms[0], CL_DEVICE_TYPE_GPU, 1, &device, &num);
     }
 
+    cl_device_id ocl_device_id = device;
+    char vendor_name[100];
+    clGetDeviceInfo(ocl_device_id, CL_DEVICE_VENDOR, sizeof(char) * 100, (void*)(&vendor_name[0]), NULL);
+
+    clGetDeviceInfo(ocl_device_id, CL_DEVICE_VERSION, sizeof(char) * 100, (void*)(&vendor_name[0]), NULL);
+
     // context
     cl_context context = clCreateContext(NULL,
         1,
@@ -63,88 +80,123 @@ void main()
         NULL, NULL);
 
     const unsigned int size = 10000;
-    float* A = new float[size];
-    float* B = new float[size];
-    float* C = new float[size];
+    int* A = new int[size];
+    int* B = new int[size];
+    int* C = new int[size];
     for (unsigned int i = 0; i < size; ++i){
-        A[i] = (float)(i+1);
-        B[i] = (float)(i+1);
-        C[i] = 8;
+        A[i] = i+1;
+        B[i] = i+1;
+        C[i] = 0;
     }
 
     cl_mem buf1 = clCreateBuffer(
-        context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, sizeof(float)*size, A, NULL);
+        context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, sizeof(int)*size, A, NULL);
     cl_mem buf2 = clCreateBuffer(
-        context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, sizeof(float)*size, B, NULL);
+        context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, sizeof(int)*size, B, NULL);
     cl_mem buf3 = clCreateBuffer(
-        context, CL_MEM_WRITE_ONLY, sizeof(float)*size, NULL, NULL);
+        context, CL_MEM_WRITE_ONLY, sizeof(int)*size, NULL, NULL);
 
-    const char* source =
-        "__kernel void vector_add(\n"
-        "       __global const float* a,\n"
-        "       __global const float* b,\n"
-        "       __global float* c,\n"
-        "       const unsigned int count)\n"
-        "{\n"
-        "   const int idx = get_global_id(0);\n"
-        "   if (idx < count){\n"
-        "        c[idx] = a[idx] + b[idx];\n"
-        "    }\n"
-        "}\n";
-    const size_t ss = strlen(source);
+    //const char* source =
+    //    "__kernel void vector_add(\n"
+    //    "       __global const int* a,\n"
+    //    "       __global const int* b,\n"
+    //    "       __global int* c,\n"
+    //    //"       __local int* localA,\n"
+    //    //"       __local int* localB,\n"
+    //    "       const unsigned int count)\n"
+    //    "{\n"
+    //    "   unsigned int global_id = get_global_id(0);\n"
+    //    "   unsigned int global_size = get_global_size(0);\n"
+    //    "   unsigned int group_id = get_group_id(0);\n"
+    //    "   unsigned int local_id = get_local_id(0);\n"
+    //    "   unsigned int local_size = get_local_size(0);\n"
+    //    "   __local int localA[300];\n"
+    //    "   __local int localB[300];\n"
+    //    "   localA[local_id] = a[global_id];\n"
+    //    "   localB[local_id] = b[global_id];\n"
+    //    "   barrier(CLK_LOCAL_MEM_FENCE);\n"
+    //    "   if (global_id < count){\n"
+    //    "        c[global_id] = localA[local_id] + localB[local_id];\n"
+    //    "    }\n"
+    //    "}\n";
+    //const size_t ss = strlen(source);
 
-    cl_program program = clCreateProgramWithSource(
-        context,
-        1,
-        &source,
-        &ss,
-        NULL);
+    //cl_program program = clCreateProgramWithSource(
+    //    context,
+    //    1,
+    //    &source,
+    //    &ss,
+    //    NULL);
 
-    cl_int status = clBuildProgram(program, 1, &device, NULL, NULL, NULL);
-    if (status != 0)
-    {
-        printf("clBuild failed:%d\n", status);
-        char tbuf[0x10000];
-        clGetProgramBuildInfo(program, device, CL_PROGRAM_BUILD_LOG, 0x10000, tbuf, NULL);
-        printf("\n%s\n", tbuf);
-        return;
-    }
-    else
-    {
-        printf("program build successful!\n");
-    }
+    //cl_int status = clBuildProgram(program, 1, &device, NULL, NULL, NULL);
+    //if (status != 0)
+    //{
+    //    printf("clBuild failed:%d\n", status);
+    //    char tbuf[0x10000];
+    //    clGetProgramBuildInfo(program, device, CL_PROGRAM_BUILD_LOG, 0x10000, tbuf, NULL);
+    //    printf("\n%s\n", tbuf);
+    //    return;
+    //}
+    //else
+    //{
+    //    printf("program build successful!\n");
+    //}
 
-    // create kernel
-    cl_kernel kernel = clCreateKernel(program, "vector_add", NULL);
-    status = clSetKernelArg(kernel, 0, sizeof(cl_mem), (void*)&buf1);
-    status = clSetKernelArg(kernel, 1, sizeof(cl_mem), (void*)&buf2);
-    status = clSetKernelArg(kernel, 2, sizeof(cl_mem), (void*)&buf3);
-    status = clSetKernelArg(kernel, 3, sizeof(unsigned int), (void*)&size);
+    //// create kernel
+    //cl_kernel kernel = clCreateKernel(program, "vector_add", NULL);
+    //status = clSetKernelArg(kernel, 0, sizeof(cl_mem), (void*)&buf1);
+    //status = clSetKernelArg(kernel, 1, sizeof(cl_mem), (void*)&buf2);
+    //status = clSetKernelArg(kernel, 2, sizeof(cl_mem), (void*)&buf3);
+    //status = clSetKernelArg(kernel, 3, sizeof(unsigned int), (void*)&size);
 
-    // launch kernel
-    cl_event ev;
-    size_t global_work_size[] = {100};
-    status = clEnqueueNDRangeKernel(
-        queue, kernel,
-        1,
-        NULL,
-        &global_work_size[0],
-        NULL,
-        0, NULL, &ev
-        );
+    //time_t rawtime;
+    //time(&rawtime);
+    //struct tm timeinfo;
+    //localtime_s(&timeinfo, &rawtime);
 
-    clEnqueueReadBuffer(
-        queue, buf3,
-        true,
-        0, sizeof(float)*size,
-        (void*)C,
-        1,
-        &ev,
-        NULL
-        );
+    //// launch kernel
+    //cl_event ev;
+    //size_t global_work_size[] = {size};
+    //status = clEnqueueNDRangeKernel(
+    //    queue, kernel,
+    //    1,
+    //    NULL,
+    //    &global_work_size[0],
+    //    NULL,
+    //    0, NULL, &ev
+    //    );
 
-    clFinish(queue);
+    //clFinish(queue);
 
+
+    ////
+
+    //clEnqueueReadBuffer(
+    //    queue, buf3,
+    //    true,
+    //    0, sizeof(int)*size,
+    //    (void*)C,
+    //    1,
+    //    &ev,
+    //    NULL
+    //    );
+
+    //bool error = false;
+    //for (unsigned int i = 0; i < size; ++i){
+    //    if (A[i] + B[i] != C[i]){
+    //        error = true;
+    //        break;
+    //    }
+    //}
+
+    //if (error){
+    //    printf("\n\nWrong result!\n");
+    //}
+    //else{
+    //    printf("\n\n correct!\n");
+    //}
+
+    //printf("\ntime cost: %d\n", time3);
 
 
 }
