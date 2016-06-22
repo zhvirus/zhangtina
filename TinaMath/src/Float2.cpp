@@ -320,7 +320,7 @@ namespace ZH{
 
         float float2::length() const
         {
-            return sqrt( (float)(x * x + y * y) );
+            return (float)sqrt(x * x + y * y);
         }
 
 

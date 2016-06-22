@@ -1,23 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TinaWidget", "TinaWidget\TinaWidget.vcxproj", "{0291C57A-6130-4CE5-A645-8F7A42C4DD11}"
-	ProjectSection(ProjectDependencies) = postProject
-		{728AC6FB-AE2D-4F52-A568-013A198DC37E} = {728AC6FB-AE2D-4F52-A568-013A198DC37E}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TinaMath", "TinaMath\TinaMath.vcxproj", "{303AFDA7-1F72-4D80-BFF1-1CC86BCB939D}"
-	ProjectSection(ProjectDependencies) = postProject
-		{728AC6FB-AE2D-4F52-A568-013A198DC37E} = {728AC6FB-AE2D-4F52-A568-013A198DC37E}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTest", "UnitTest\UnitTest.vcxproj", "{77CA8AFF-9F3D-477B-9C8D-0BE960B8D162}"
 	ProjectSection(ProjectDependencies) = postProject
 		{0291C57A-6130-4CE5-A645-8F7A42C4DD11} = {0291C57A-6130-4CE5-A645-8F7A42C4DD11}
 		{303AFDA7-1F72-4D80-BFF1-1CC86BCB939D} = {303AFDA7-1F72-4D80-BFF1-1CC86BCB939D}
-		{728AC6FB-AE2D-4F52-A568-013A198DC37E} = {728AC6FB-AE2D-4F52-A568-013A198DC37E}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TinaUtil", "TinaUtil\TinaUtil.vcxproj", "{728AC6FB-AE2D-4F52-A568-013A198DC37E}"

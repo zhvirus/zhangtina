@@ -214,90 +214,92 @@ namespace ZH{
 
             // length
             {
-                float2 a(3.0f,4.0f);
-                printResult(VALUE_EQUAL<double>(a.length(),5.0f) ,46);
+                float2 aa(3.0f,4.0f);
+                printResult(VALUE_EQUAL<double>(aa.length(),5.0f) ,46);
             }
 
             // squared length
             {
-                float2 a(3.0f,4.0f);
-                printResult(VALUE_EQUAL<double>(a.squaredLength(),25.0f) ,47);
+                float2 aa(3.0f,4.0f);
+                printResult(VALUE_EQUAL<double>(aa.squaredLength(),25.0f) ,47);
             }
 
             // dot product
             {
-                float2 a(3.0f,4.0f);
-                float2 b(10.0f, 5.0f);
-                double c = a.dot(b);
-                printResult(VALUE_EQUAL<double>(c,50.0f) ,48);
+                float2 aa(3.0f,4.0f);
+                float2 bb(10.0f, 5.0f);
+                double cc = aa.dot(bb);
+                printResult(VALUE_EQUAL<double>(cc,50.0f) ,48);
             }
 
         }
 
         void VectorTestor::testVector3()
         {
-            std::cout<<"\n\n\nTesting 'Vector3'..."<<std::endl;
+            std::cout << "\n\n\nTesting 'Vector3'..." << std::endl;
 
-            // Vector3();
-            float3 a;
-            printResult(VALUE_EQUAL<float>(a.x,0.0f) && VALUE_EQUAL<float>(a.y,0.0f) && VALUE_EQUAL<float>(a.z,0.0f),49);
+            {
+                // Vector3();
+                float3 a;
+                printResult(VALUE_EQUAL<float>(a.x, 0.0f) && VALUE_EQUAL<float>(a.y, 0.0f) && VALUE_EQUAL<float>(a.z, 0.0f), 49);
 
-            // Member data
-            a.x = 1; a.y = 2; a.z = 3;
-            printResult(VALUE_EQUAL<float>(a.x,1.0f) && VALUE_EQUAL<float>(a.y,2.0f) && VALUE_EQUAL<float>(a.z,3.0f),50);
+                // Member data
+                a.x = 1; a.y = 2; a.z = 3;
+                printResult(VALUE_EQUAL<float>(a.x, 1.0f) && VALUE_EQUAL<float>(a.y, 2.0f) && VALUE_EQUAL<float>(a.z, 3.0f), 50);
 
-            // Vector3( T a, T b, T c);
-            float3 b(6,3,1);
-            printResult(VALUE_EQUAL<float>(b.x,6.0f) && VALUE_EQUAL<float>(b.y,3.0f) && VALUE_EQUAL<float>(b.z,1.0f),51);
+                // Vector3( T a, T b, T c);
+                float3 b(6, 3, 1);
+                printResult(VALUE_EQUAL<float>(b.x, 6.0f) && VALUE_EQUAL<float>(b.y, 3.0f) && VALUE_EQUAL<float>(b.z, 1.0f), 51);
 
-            // Vector3( const Vector3& v );
-            float3 c(a);
-            printResult(VALUE_EQUAL<float>(c.x,1.0f) && VALUE_EQUAL<float>(c.y,2.0f) && VALUE_EQUAL<float>(c.z,3.0f),52);
+                // Vector3( const Vector3& v );
+                float3 c(a);
+                printResult(VALUE_EQUAL<float>(c.x, 1.0f) && VALUE_EQUAL<float>(c.y, 2.0f) && VALUE_EQUAL<float>(c.z, 3.0f), 52);
 
-            // T& operator [] ( unsigned int idx );
-            c[0] = 19; c[1] = 82; c[2] = -2.5f;
-            printResult(VALUE_EQUAL<float>(c.x,19.0f) && VALUE_EQUAL<float>(c.y,82.0f) && VALUE_EQUAL<float>(c.z, -2.5f),53);
+                // T& operator [] ( unsigned int idx );
+                c[0] = 19; c[1] = 82; c[2] = -2.5f;
+                printResult(VALUE_EQUAL<float>(c.x, 19.0f) && VALUE_EQUAL<float>(c.y, 82.0f) && VALUE_EQUAL<float>(c.z, -2.5f), 53);
 
-            // Member data
-            float singlef = c.y;
-            printResult(VALUE_EQUAL<float>(singlef,82.0f),54);
+                // Member data
+                float singlef = c.y;
+                printResult(VALUE_EQUAL<float>(singlef, 82.0f), 54);
 
-            // T operator [] ( unsigned int idx )const;
-            singlef = c[2];
-            printResult(VALUE_EQUAL<float>(singlef,-2.5f),55);
+                // T operator [] ( unsigned int idx )const;
+                singlef = c[2];
+                printResult(VALUE_EQUAL<float>(singlef, -2.5f), 55);
 
-            // Vector3& operator = ( const Vector3& v );
-            c = a;
-            printResult(VALUE_EQUAL<float>(c.x,1.0f) && VALUE_EQUAL<float>(c[1],2.0f) && VALUE_EQUAL<float>(c[2],3.0f),56);
+                // Vector3& operator = ( const Vector3& v );
+                c = a;
+                printResult(VALUE_EQUAL<float>(c.x, 1.0f) && VALUE_EQUAL<float>(c[1], 2.0f) && VALUE_EQUAL<float>(c[2], 3.0f), 56);
 
-            // Vector3( T* v);
-            float pp[] = { 1.2f, 3.6f, 5.12f}; float3 d(pp);
-            printResult(VALUE_EQUAL<float>(d.x, 1.2f) && VALUE_EQUAL<float>(d[1],3.6f) && VALUE_EQUAL<float>(d[2],5.12f),57);
+                // Vector3( T* v);
+                float pp[] = { 1.2f, 3.6f, 5.12f }; float3 d(pp);
+                printResult(VALUE_EQUAL<float>(d.x, 1.2f) && VALUE_EQUAL<float>(d[1], 3.6f) && VALUE_EQUAL<float>(d[2], 5.12f), 57);
 
-            // Vector3& operator = ( const T* v );
-            c = pp;
-            printResult(VALUE_EQUAL<float>(c.x, 1.2f) && VALUE_EQUAL<float>(c[1],3.6f) && VALUE_EQUAL<float>(c[2],5.12f) ,58);
+                // Vector3& operator = ( const T* v );
+                c = pp;
+                printResult(VALUE_EQUAL<float>(c.x, 1.2f) && VALUE_EQUAL<float>(c[1], 3.6f) && VALUE_EQUAL<float>(c[2], 5.12f), 58);
 
-            // ==, !=
-            float3 xx(1.2f,3.5f, 1.5f);
-            float3 xx2(1.2f,3.5f,1.5f);
-            float3 xx3(2.2f,4.5f, 3.0f);
-            float  xxArr[] = {1.2f,3.5f, 1.5f};
-            float  xxArr2[]= {1.3f,3.5f, 1.1f};
-            printResult(xxArr == xx,59);
-            printResult(xxArr2 != xx,60);
-            printResult(xx3 != xx,61);
-            printResult(xx2 == xx,62);
+                // ==, !=
+                float3 xx(1.2f, 3.5f, 1.5f);
+                float3 xx2(1.2f, 3.5f, 1.5f);
+                float3 xx3(2.2f, 4.5f, 3.0f);
+                float  xxArr[] = { 1.2f,3.5f, 1.5f };
+                float  xxArr2[] = { 1.3f,3.5f, 1.1f };
+                printResult(xxArr == xx, 59);
+                printResult(xxArr2 != xx, 60);
+                printResult(xx3 != xx, 61);
+                printResult(xx2 == xx, 62);
 
-            // +
-            float3 xx4 = xx + xx2;
-            printResult( VALUE_EQUAL<float>(xx4.x,2.4f) && VALUE_EQUAL<float>(xx4.y, 7.0f) && VALUE_EQUAL<float>(xx4.z, 3.0f),63);
-            float3 xx5 = xx + xxArr;
-            printResult( VALUE_EQUAL<float>(xx5.x,2.4f) && VALUE_EQUAL<float>(xx5.y,7.0f) && VALUE_EQUAL<float>(xx5.z,3.0f),64);
-            float3 xx6 = xxArr + xx2;
-            printResult( VALUE_EQUAL<float>(xx6.x,2.4f) && VALUE_EQUAL<float>(xx6.y,7.0f) && VALUE_EQUAL<float>(xx6.z,3.0f),65);
-            float3 xx7 = 6.7f + xx2;
-            printResult( VALUE_EQUAL<float>(xx7.x,7.9f) && VALUE_EQUAL<float>(xx7.y, 10.2f) && VALUE_EQUAL<float>(xx7.z, 8.2f),66);
+                // +
+                float3 xx4 = xx + xx2;
+                printResult(VALUE_EQUAL<float>(xx4.x, 2.4f) && VALUE_EQUAL<float>(xx4.y, 7.0f) && VALUE_EQUAL<float>(xx4.z, 3.0f), 63);
+                float3 xx5 = xx + xxArr;
+                printResult(VALUE_EQUAL<float>(xx5.x, 2.4f) && VALUE_EQUAL<float>(xx5.y, 7.0f) && VALUE_EQUAL<float>(xx5.z, 3.0f), 64);
+                float3 xx6 = xxArr + xx2;
+                printResult(VALUE_EQUAL<float>(xx6.x, 2.4f) && VALUE_EQUAL<float>(xx6.y, 7.0f) && VALUE_EQUAL<float>(xx6.z, 3.0f), 65);
+                float3 xx7 = 6.7f + xx2;
+                printResult(VALUE_EQUAL<float>(xx7.x, 7.9f) && VALUE_EQUAL<float>(xx7.y, 10.2f) && VALUE_EQUAL<float>(xx7.z, 8.2f), 66);
+            }
 
             // -
             {
@@ -456,80 +458,83 @@ namespace ZH{
         {
             std::cout<<"\n\n\nTesting 'Vector4'..."<<std::endl;
 
-            // Vector4();
-            float4 a;
-            printResult(VALUE_EQUAL<float>(a.x,0.0f) && VALUE_EQUAL<float>(a.y,0.0f) && VALUE_EQUAL<float>(a.z,0.0f) && VALUE_EQUAL<float>(a.w,0.0f),
-                102);
+            {
+                // Vector4();
+                float4 a;
+                printResult(VALUE_EQUAL<float>(a.x, 0.0f) && VALUE_EQUAL<float>(a.y, 0.0f) && VALUE_EQUAL<float>(a.z, 0.0f) && VALUE_EQUAL<float>(a.w, 0.0f),
+                    102);
 
-            // Member data
-            a.x = 1; a.y = 2; a.z = 3; a.w = 4.0f;
-            printResult(VALUE_EQUAL<float>(a.x,1.0f) && VALUE_EQUAL<float>(a.y,2.0f) && VALUE_EQUAL<float>(a.z,3.0f) && VALUE_EQUAL<float>(a.w,4.0f),
-                103);
+                // Member data
+                a.x = 1; a.y = 2; a.z = 3; a.w = 4.0f;
+                printResult(VALUE_EQUAL<float>(a.x, 1.0f) && VALUE_EQUAL<float>(a.y, 2.0f) && VALUE_EQUAL<float>(a.z, 3.0f) && VALUE_EQUAL<float>(a.w, 4.0f),
+                    103);
 
-            // Vector4( T a, T b, T c);
-            float4 b(6,3,1,-2);
-            printResult(VALUE_EQUAL<float>(b.x,6.0f) && VALUE_EQUAL<float>(b.y,3.0f) && VALUE_EQUAL<float>(b.z,1.0f) && VALUE_EQUAL<float>(b.w,-2.0f),
-                104);
+                // Vector4( T a, T b, T c);
+                float4 b(6, 3, 1, -2);
+                printResult(VALUE_EQUAL<float>(b.x, 6.0f) && VALUE_EQUAL<float>(b.y, 3.0f) && VALUE_EQUAL<float>(b.z, 1.0f) && VALUE_EQUAL<float>(b.w, -2.0f),
+                    104);
 
-            // Vector4( const Vector4& v );
-            float4 c(a);
-            printResult(VALUE_EQUAL<float>(c.x,1.0f) && VALUE_EQUAL<float>(c.y,2.0f) && VALUE_EQUAL<float>(c.z,3.0f) && VALUE_EQUAL<float>(c.w,4.0f),
-                105);
+                // Vector4( const Vector4& v );
+                float4 c(a);
+                printResult(VALUE_EQUAL<float>(c.x, 1.0f) && VALUE_EQUAL<float>(c.y, 2.0f) && VALUE_EQUAL<float>(c.z, 3.0f) && VALUE_EQUAL<float>(c.w, 4.0f),
+                    105);
 
-            // T& operator [] ( unsigned int idx );
-            c[0] = 19; c[1] = 82; c[2] = -2.5f; c[3] = 3.0f;
-            printResult(VALUE_EQUAL<float>(c.x,19.0f) && VALUE_EQUAL<float>(c.y,82.0f) && VALUE_EQUAL<float>(c.z, -2.5f) && VALUE_EQUAL<float>(c.w, 3.0f),
-                106);
+                // T& operator [] ( unsigned int idx );
+                c[0] = 19; c[1] = 82; c[2] = -2.5f; c[3] = 3.0f;
+                printResult(VALUE_EQUAL<float>(c.x, 19.0f) && VALUE_EQUAL<float>(c.y, 82.0f) && VALUE_EQUAL<float>(c.z, -2.5f) && VALUE_EQUAL<float>(c.w, 3.0f),
+                    106);
 
-            // Member data
-            float singlef = c.w;
-            printResult(VALUE_EQUAL<float>(singlef,3.0f),
-                107);
+                // Member data
+                float singlef = c.w;
+                printResult(VALUE_EQUAL<float>(singlef, 3.0f),
+                    107);
 
-            // T operator [] ( unsigned int idx )const;
-            singlef = c[2];
-            printResult(VALUE_EQUAL<float>(singlef,-2.5f),
-                108);
+                // T operator [] ( unsigned int idx )const;
+                singlef = c[2];
+                printResult(VALUE_EQUAL<float>(singlef, -2.5f),
+                    108);
 
-            // Vector4& operator = ( const Vector4& v );
-            c = a;
-            printResult(VALUE_EQUAL<float>(c.x,1.0f) && VALUE_EQUAL<float>(c[1],2.0f) && VALUE_EQUAL<float>(c[2],3.0f) && VALUE_EQUAL<float>(c[3],4.0f),
-                109);
+                // Vector4& operator = ( const Vector4& v );
+                c = a;
+                printResult(VALUE_EQUAL<float>(c.x, 1.0f) && VALUE_EQUAL<float>(c[1], 2.0f) && VALUE_EQUAL<float>(c[2], 3.0f) && VALUE_EQUAL<float>(c[3], 4.0f),
+                    109);
 
-            // Vector4( T* v);
-            float pp[] = { 1.2f, 3.6f, 5.12f, 2.2f}; float4 d(pp);
-            printResult(VALUE_EQUAL<float>(d.x, 1.2f) && VALUE_EQUAL<float>(d[1],3.6f) && VALUE_EQUAL<float>(d[2],5.12f) && VALUE_EQUAL<float>(d[3],2.2f),
-                110);
+                // Vector4( T* v);
+                float pp[] = { 1.2f, 3.6f, 5.12f, 2.2f }; float4 d(pp);
+                printResult(VALUE_EQUAL<float>(d.x, 1.2f) && VALUE_EQUAL<float>(d[1], 3.6f) && VALUE_EQUAL<float>(d[2], 5.12f) && VALUE_EQUAL<float>(d[3], 2.2f),
+                    110);
 
-            // Vector4& operator = ( const T* v );
-            c = pp;
-            printResult(VALUE_EQUAL<float>(c.x, 1.2f) && VALUE_EQUAL<float>(c[1],3.6f) && VALUE_EQUAL<float>(c[2],5.12f) && VALUE_EQUAL<float>(c[3],2.2f),
-                111);
+                // Vector4& operator = ( const T* v );
+                c = pp;
+                printResult(VALUE_EQUAL<float>(c.x, 1.2f) && VALUE_EQUAL<float>(c[1], 3.6f) && VALUE_EQUAL<float>(c[2], 5.12f) && VALUE_EQUAL<float>(c[3], 2.2f),
+                    111);
 
-            // ==, !=
-            float4 xx(1.2f,3.5f, 1.5f, 2.0f);
-            float4 xx2(1.2f,3.5f,1.5f, 2.0f);
-            float4 xx3(2.2f,4.5f, 3.0f, -2.0f);
-            float  xxArr[] = {1.2f,3.5f, 1.5f, 2.0f};
-            float  xxArr2[]= {1.3f,3.5f, 1.1f, -20.0f};
-            printResult(xxArr == xx,102);
-            printResult(xxArr2 != xx,103);
-            printResult(xx3 != xx,104);
-            printResult(xx2 == xx,105);
+                // ==, !=
+                float4 xx(1.2f, 3.5f, 1.5f, 2.0f);
+                float4 xx2(1.2f, 3.5f, 1.5f, 2.0f);
+                float4 xx3(2.2f, 4.5f, 3.0f, -2.0f);
+                float  xxArr[] = { 1.2f,3.5f, 1.5f, 2.0f };
+                float  xxArr2[] = { 1.3f,3.5f, 1.1f, -20.0f };
+                printResult(xxArr == xx, 102);
+                printResult(xxArr2 != xx, 103);
+                printResult(xx3 != xx, 104);
+                printResult(xx2 == xx, 105);
 
-            // +
-            float4 xx4 = xx + xx2;
-            printResult( VALUE_EQUAL<float>(xx4.x,2.4f) && VALUE_EQUAL<float>(xx4.y, 7.0f) && VALUE_EQUAL<float>(xx4.z, 3.0f) && VALUE_EQUAL<float>(xx4.w, 4.0f),
-                112);
-            float4 xx5 = xx + xxArr;
-            printResult( VALUE_EQUAL<float>(xx5.x,2.4f) && VALUE_EQUAL<float>(xx5.y,7.0f) && VALUE_EQUAL<float>(xx5.z,3.0f) && VALUE_EQUAL<float>(xx5.w,4.0f),
-                113);
-            float4 xx6 = xxArr + xx2;
-            printResult( VALUE_EQUAL<float>(xx6.x,2.4f) && VALUE_EQUAL<float>(xx6.y,7.0f) && VALUE_EQUAL<float>(xx6.z,3.0f) && VALUE_EQUAL<float>(xx6.w,4.0f),
-                114);
-            float4 xx7 = 6.7f + xx2;
-            printResult( VALUE_EQUAL<float>(xx7.x,7.9f) && VALUE_EQUAL<float>(xx7.y, 10.2f) && VALUE_EQUAL<float>(xx7.z, 8.2f) && VALUE_EQUAL<float>(xx7.w, 8.7f),
-                115);
+                // +
+                float4 xx4 = xx + xx2;
+                printResult(VALUE_EQUAL<float>(xx4.x, 2.4f) && VALUE_EQUAL<float>(xx4.y, 7.0f) && VALUE_EQUAL<float>(xx4.z, 3.0f) && VALUE_EQUAL<float>(xx4.w, 4.0f),
+                    112);
+                float4 xx5 = xx + xxArr;
+                printResult(VALUE_EQUAL<float>(xx5.x, 2.4f) && VALUE_EQUAL<float>(xx5.y, 7.0f) && VALUE_EQUAL<float>(xx5.z, 3.0f) && VALUE_EQUAL<float>(xx5.w, 4.0f),
+                    113);
+                float4 xx6 = xxArr + xx2;
+                printResult(VALUE_EQUAL<float>(xx6.x, 2.4f) && VALUE_EQUAL<float>(xx6.y, 7.0f) && VALUE_EQUAL<float>(xx6.z, 3.0f) && VALUE_EQUAL<float>(xx6.w, 4.0f),
+                    114);
+                float4 xx7 = 6.7f + xx2;
+                printResult(VALUE_EQUAL<float>(xx7.x, 7.9f) && VALUE_EQUAL<float>(xx7.y, 10.2f) && VALUE_EQUAL<float>(xx7.z, 8.2f) && VALUE_EQUAL<float>(xx7.w, 8.7f),
+                    115);
+
+            }
 
             // -
             {

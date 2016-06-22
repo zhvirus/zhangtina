@@ -389,7 +389,7 @@ namespace ZH{
         
         float float4::length() const
         {
-            return sqrt( (float)(x * x + y * y + z * z + w * w ) );
+            return (float)sqrt(x * x + y * y + z * z + w * w);
         }
 
         
@@ -407,7 +407,7 @@ namespace ZH{
         
         void float4::normalizeIt()
         {
-            const float length = sqrt( (float)(x * x + y * y + z*z + w*w) );
+            const float length = (float)sqrt(x * x + y * y + z*z + w*w);
             assert( length > 0.0f );
             if ( length > 0.0f ){
                 x = (float)(x/length);
@@ -420,7 +420,7 @@ namespace ZH{
         
         float4 float4::normalize() const
         {
-            const float length = sqrt( (float)(x * x + y * y + z*z + w*w) );
+            const float length = (float)sqrt(x * x + y * y + z*z + w*w);
             assert( length > 0.0f );
             if ( length > 0.0f ){
                 return float4((float)(x/length), (float)(y/length), (float)(z/length), (float)(w/length));

@@ -346,7 +346,7 @@ namespace ZH{
         // Non-operator functions
         float float3::length() const
         {
-            return sqrt( (x * x + y * y + z*z ) );
+            return (float)sqrt(x * x + y * y + z*z);
         }
 
 
@@ -368,7 +368,7 @@ namespace ZH{
 
         void float3::normalizeIt()
         {
-            const float length = sqrt( (float)(x * x + y * y + z*z ) );
+            const float length = (float)sqrt(x * x + y * y + z*z);
             assert( length > 0.0f );
             if ( length > 0.0f ){
                 x = (float)(x/length);
@@ -379,7 +379,7 @@ namespace ZH{
 
         float3 float3::normalize() const
         {
-            const float length = sqrt( (float)(x * x + y * y + z*z ) );
+            const float length = (float)sqrt(x * x + y * y + z*z);
             assert( length > 0.0f );
             if ( length > 0.0f ){
                 return float3((float)(x/length), (float)(y/length), (float)(z/length));
