@@ -51,6 +51,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{303AFDA7-1F72-4D80-BFF1-1CC86BCB939D}</ProjectGuid>
     <RootNamespace>TinaWidget</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.10586.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -96,23 +97,23 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)\x86-debug\</OutDir>
+    <OutDir>$(ProjectDir)\..\x86-debug\</OutDir>
     <IntDir>x86-debug\</IntDir>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <TargetExt>.dll</TargetExt>
-    <OutDir>$(SolutionDir)\x64-debug\</OutDir>
+    <OutDir>$(ProjectDir)\..\x64-debug\</OutDir>
     <IntDir>x64-debug\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)\x86-release\</OutDir>
+    <OutDir>$(ProjectDir)\..\x86-release\</OutDir>
     <IntDir>x86-release\</IntDir>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <TargetExt>.dll</TargetExt>
-    <OutDir>$(SolutionDir)\x64-release\</OutDir>
+    <OutDir>$(ProjectDir)\..\x64-release\</OutDir>
     <IntDir>x64-release\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -121,7 +122,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(SolutionDir)includes</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\..\includes</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4201</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -136,7 +137,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(SolutionDir)includes</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\..\includes</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4201</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -153,7 +154,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(SolutionDir)includes</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\..\includes</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4201</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -172,7 +173,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(SolutionDir)includes</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\..\includes</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4201</DisableSpecificWarnings>
     </ClCompile>
     <Link>
