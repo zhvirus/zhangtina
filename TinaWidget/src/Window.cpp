@@ -342,6 +342,12 @@ namespace ZH{
                 }
             }
 
+            // Adjust window with desired client area size
+            RECT windowRect = { 0, 0, w, h };
+            {
+                AdjustWindowRect(&windowRect, WS_OVERLAPPEDWINDOW, FALSE);
+            }
+
             //Create window
             HWND hWnd = nullptr;
             {
@@ -351,10 +357,10 @@ namespace ZH{
                     WS_OVERLAPPEDWINDOW,        //
                     x,    //
                     y,    //
-                    w,    //
-                    h,    //
-                    nullptr, //
-                    nullptr, //
+                    windowRect.right - windowRect.left,    //
+                    windowRect.bottom - windowRect.top,    //
+                    nullptr, // We have no parent window.
+                    nullptr, // We aren't using menus.
                     nullptr, //
                     nullptr  //
                     );
