@@ -2,37 +2,35 @@
 #define WINDOWS_H
 
 #include "Common/ZHSTD.h"
-#include "Widget/WindowCallbacks.h"
+
+#include <map>
 #include <windows.h>
+
+#include "Widget/WindowCallbacks.h"
 
 
 namespace ZH{
     namespace Widgets{
+
+
         class ZH_WIDGET_DLL WindowsInfo
         {
         public:
-            WindowsInfo();
-            ~WindowsInfo(){}
-            HWND         m_winHandle;
-            unsigned int m_startPosX;
-            unsigned int m_startPosY;
-            unsigned int m_width;
-            unsigned int m_height;
+            WindowsInfo() = default;
+            ~WindowsInfo() = default;
+            HWND         m_winHandle{nullptr};
+            unsigned int m_startPosX{0};
+            unsigned int m_startPosY{0};
+            unsigned int m_width{0};
+            unsigned int m_height{0};
             TCHAR        m_title[100];
         };
+
 
         class ZH_WIDGET_DLL Window
         {
         public:
-            static Window* Create(
-                TCHAR* title,
-                unsigned int x,
-                unsigned int y,
-                unsigned int w,
-                unsigned int h,
-                bool debug=false);
-
-            static void Destroy(Window*& window);
+            Window(WindowsInfo& winInfo, bool debug);
 
             void ShowWindow();
             void EnterMsgLoop();
@@ -61,16 +59,6 @@ namespace ZH{
                 m_callbacks.fRenderFuncPtr = funcPtr;
             }
         private:
-            static LRESULT CALLBACK _ZHMsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-            Window(bool debug);
-            virtual ~Window();
-
-            bool CreateWinImp(
-                TCHAR* title,
-                unsigned int x,
-                unsigned int y,
-                unsigned int w,
-                unsigned int h);
 
             // Windows information
             WindowsInfo m_winInfo;
@@ -79,12 +67,46 @@ namespace ZH{
             WindowCallbacks m_callbacks;
 
             // Current mouse position
-            int m_curMouseX;
-            int m_curMouseY;
+            int m_curMouseX{0};
+            int m_curMouseY{0};
 
             // if print some debug info
             bool m_debug;
+
+            friend class WindowFactory;
         };
+
+        /*
+            This class is the main entry to create/query/destroy windows.
+        */
+        class ZH_WIDGET_DLL WindowFactory
+        {
+        public:
+            static WindowFactory& instance();
+
+            std::shared_ptr<Window> createWindow(
+                TCHAR* title,
+                unsigned int x,
+                unsigned int y,
+                unsigned int w,
+                unsigned int h,
+                bool debug = false);
+
+            void destroyWindow(std::shared_ptr<Window>& w);
+
+            std::shared_ptr<Window> getWindowByHandle(HWND hWnd);
+
+        private:
+            static LRESULT CALLBACK _ZHMsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+            void* _blindData{nullptr};
+        private:
+            WindowFactory();
+            ~WindowFactory();
+            void operator = (WindowFactory&){}
+        };
+
+
+
     }
 
 }
