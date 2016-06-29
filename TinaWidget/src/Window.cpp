@@ -1,9 +1,12 @@
 #ifndef _ZH_WIGET_DLL_
 #define _ZH_WIGET_DLL_
 #endif
+
 #include "Widget/Window.h"
 #include "Widget/WidgetCommonDefine.h"
 #include "Internal/Common/Internal_common.h"
+
+#include <time.h>
 
 #define WINMAP_CAST_PTR(P) ((std::map<HWND, std::shared_ptr<Window>>*)(P))
 
@@ -60,6 +63,13 @@ namespace ZH{
                 // Custom override renderer
                 if ( m_callbacks.fRenderFuncPtr ){
                     m_callbacks.fRenderFuncPtr();
+                    
+                    if (m_debug) {
+                        clock_t curClock = clock();
+                        unsigned int curMilliSec = (unsigned int)(curClock);
+                        m_fps.updateByCurTime((unsigned int)curMilliSec);
+                        m_fps.printFPS((unsigned int)curMilliSec);
+                    }
                 }
             }
         }
@@ -343,7 +353,7 @@ namespace ZH{
             }
 
             // Adjust window with desired client area size
-            RECT windowRect = { 0, 0, w, h };
+            RECT windowRect = { 0, 0, (LONG)w, (LONG)h };
             {
                 AdjustWindowRect(&windowRect, WS_OVERLAPPEDWINDOW, FALSE);
             }

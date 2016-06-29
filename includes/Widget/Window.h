@@ -7,6 +7,7 @@
 #include <windows.h>
 
 #include "Widget/WindowCallbacks.h"
+#include "Widget/FPSHelper.h"
 
 
 namespace ZH{
@@ -69,6 +70,9 @@ namespace ZH{
             // Current mouse position
             int m_curMouseX{0};
             int m_curMouseY{0};
+
+            // FPS helper
+            FPSHelper m_fps;
 
             // if print some debug info
             bool m_debug;
